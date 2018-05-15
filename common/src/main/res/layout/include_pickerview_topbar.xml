@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rv_topbar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/layout_cancel"
+        android:layout_width="@dimen/common_item_height_normal"
+        android:layout_height="@dimen/common_item_height_normal"
+        android:layout_centerVertical="true">
+
+        <Button
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ic_cancel"
+            android:clickable="false" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:textColor="@color/common_btn_gray_normal"
+        android:textSize="@dimen/common_font_size_content_small" />
+
+    <RelativeLayout
+        android:id="@+id/layout_confirm"
+        android:layout_width="@dimen/common_item_height_normal"
+        android:layout_height="@dimen/common_item_height_normal"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true">
+
+        <Button
+            android:layout_width="18dp"
+            android:layout_height="13dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ic_confirm"
+            android:clickable="false" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

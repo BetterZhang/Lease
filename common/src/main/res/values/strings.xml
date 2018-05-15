@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">common</string>
+
+    <string name="text_error_server">未能连接到服务器</string>
+    <string name="text_error_timeout">连接超时，请稍后重试</string>
+
+    <string name="text_loading">加载中...</string>
+    <string name="text_loading_overtime">加载页面超时</string>
+
+    <string name="text_close">关闭</string>
+
+    <!-- Dialog Common -->
+    <string name="common_dialog_title">操作提示</string>
+    <string name="common_dialog_confirm">确定</string>
+    <string name="common_dialog_cancle">取消</string>
+
+    <string name="common_text_cancle">取消</string>
+    <string name="common_text_confirm">确定</string>
+
+    <!-- 登录页面-->
+    <string name="common_label_copyright">大泰技术 版权所有</string>
+    <string name="common_text_copyright">Copyright © 2017 Datai All Rights Reserved.</string>
+
+</resources>

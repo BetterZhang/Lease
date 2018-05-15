@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 界面所有Font字体的颜色配置-->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <!--标题及标题（未选）的颜色-->
+    <color name="common_font_title">#222222</color>
+    <color name="common_font_title_unchecked">#CEF5B4B8</color>
+    <!--副标题的颜色-->
+    <color name="common_font_subtitle">@android:color/white</color>
+    <!--List的列表头的颜色-->
+    <color name="common_font_item_title">#222222</color>
+    <!--正文主体-->
+    <color name="common_font_content">#222222</color>
+    <color name="common_font_content_white">@android:color/white</color>
+    <!--正文主体灰色，非重要信息或者hint-->
+    <color name="common_font_content_hint">#BBBBBB</color>
+    <color name="common_font_gray">#999999</color>
+    <color name="common_font_gray_666">#666666</color>
+    <color name="common_font_gray_333">#333333</color>
+    <!--按键上默认文字颜色-->
+    <color name="common_font_button">@android:color/white</color>
+    <color name="common_font_button_gray">#C4201F</color>
+    <!-- 界面所有字体的颜色配置 End-->
+
+    <!-- 程序主色调 -->
+    <color name="common_app_main_color">#FFFFFF</color>
+    <color name="common_background">#f2f2f2</color>
+    <color name="common_item_background">#FFFFFF</color>
+
+    <!--分割线颜色-->
+    <color name="common_line_divider">#d4d4d4</color>
+
+    <!-- 下拉刷新时，颜色值 -->
+    <color name="common_swiperefresh_1">#ffff6633</color>
+    <color name="common_swiperefresh_2">#ffffbb33</color>
+    <color name="common_swiperefresh_3">#ff00ddff</color>
+    <color name="common_swiperefresh_4">#ffaa66cc</color>
+
+    <!-- 按钮的三种状态下的颜色 -->
+    <color name="common_btn_normal">#bd132b</color>
+    <color name="common_btn_pressed">#760a19</color>
+    <color name="common_btn_disable">#cccccc</color>
+
+    <color name="common_btn_gray_normal">#666666</color>
+    <color name="common_btn_gray_pressed">#333333</color>
+    
+    <color name="common_text_gray_9b9b9b">#9b9b9b</color>
+
+    <color name="balance_in">#fb590d</color>
+    <color name="balance_out">#66cc33</color>
+</resources>
