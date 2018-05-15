@@ -9,7 +9,7 @@ import com.anshi.lease.ui.base.LeaseBaseActivity;
  * Author : zhangzhongqiang
  * Email  : betterzhang.dev@gmail.com
  * Time   : 2018/05/15 下午 12:10
- * Desc   : description
+ * Desc   : App主页面
  */
 public class MainActivity extends LeaseBaseActivity {
 

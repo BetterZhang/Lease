@@ -14,6 +14,8 @@
         <item name="android:textColorHint">@color/common_font_gray</item>
         <item name="android:textSize">14sp</item>
         <item name="android:minHeight">45dp</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
     </style>
 
     <style name="Button">
