@@ -9,7 +9,7 @@ import com.jme.common.ui.base.BaseActivity;
  * Author : zhangzhongqiang
  * Email  : betterzhang.dev@gmail.com
  * Time   : 2018/05/15 下午 12:10
- * Desc   : description
+ * Desc   : LeaseBaseActivity
  */
 public abstract class LeaseBaseActivity extends BaseActivity {
 

@@ -8,7 +8,7 @@ import com.jme.common.app.BaseApplication;
  * Author : zhangzhongqiang
  * Email  : betterzhang.dev@gmail.com
  * Time   : 2018/05/15 下午 1:03
- * Desc   : description
+ * Desc   : LeaseApplication
  */
 public class LeaseApplication extends BaseApplication {
 

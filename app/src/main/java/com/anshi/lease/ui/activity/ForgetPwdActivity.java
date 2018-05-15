@@ -8,7 +8,7 @@ import com.anshi.lease.ui.base.LeaseBaseActivity;
  * Author : zhangzhongqiang
  * Email  : betterzhang.dev@gmail.com
  * Time   : 2018/05/15 下午 3:16
- * Desc   : description
+ * Desc   : 找回密码页面
  */
 public class ForgetPwdActivity extends LeaseBaseActivity {
 
