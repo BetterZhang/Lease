@@ -1,8 +1,15 @@
 package com.anshi.lease.ui.activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import com.anshi.lease.R;
 import com.anshi.lease.ui.base.LeaseBaseActivity;
+import butterknife.BindView;
 
 /**
  * Created by Android Studio.
@@ -13,6 +20,13 @@ import com.anshi.lease.ui.base.LeaseBaseActivity;
  */
 public class MainActivity extends LeaseBaseActivity {
 
+    @BindView(R.id.layout_drawer)
+    DrawerLayout layout_drawer;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.navigation_view)
+    NavigationView navigation_view;
+
     @Override
     protected int getContentViewId() {
         return R.layout.activity_main;
@@ -21,6 +35,11 @@ public class MainActivity extends LeaseBaseActivity {
     @Override
     protected void initView() {
         super.initView();
+        initToolbar("小哥乐途", false);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, layout_drawer, toolbar, R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+        layout_drawer.addDrawerListener(toggle);
+        toggle.syncState();
     }
 
     @Override
@@ -31,6 +50,15 @@ public class MainActivity extends LeaseBaseActivity {
     @Override
     protected void initListener() {
         super.initListener();
+        navigation_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+
+                }
+                return false;
+            }
+        });
     }
 
 }

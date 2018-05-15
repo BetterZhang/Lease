@@ -25,7 +25,7 @@
     <!-- 界面所有字体的颜色配置 End-->
 
     <!-- 程序主色调 -->
-    <color name="common_app_main_color">#FFFFFF</color>
+    <color name="common_app_main_color">#1DCB90</color>
     <color name="common_background">#f2f2f2</color>
     <color name="common_item_background">#FFFFFF</color>
 

@@ -23,6 +23,7 @@ public class LoginActivity extends LeaseBaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
+                startAnimActivity(MainActivity.class);
                 break;
             case R.id.tv_register:
                 startAnimActivity(RegisterActivity.class);
