@@ -16,11 +16,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
-import com.jme.common.R;
 import com.jme.common.network.API;
 import com.jme.common.network.AsynCommon;
 import com.jme.common.network.DTRequest;
@@ -28,7 +26,6 @@ import com.jme.common.network.Head;
 import com.jme.common.network.OnResultListener;
 import com.jme.common.ui.view.LoadingDialog;
 import com.jme.common.util.AppManager;
-import com.jme.common.util.ScreenUtil;
 import java.util.HashMap;
 import butterknife.ButterKnife;
 
@@ -76,14 +73,14 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
 
 //        StatusBarUtil.FlymeSetStatusBarLightMode(getWindow(), true);
 //        StatusBarUtil.MIUISetStatusBarLightMode(getWindow(), true);
-//
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window window = getWindow();
-            // Translucent status bar
-            window.setFlags(
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            Window window = getWindow();
+//            // Translucent status bar
+//            window.setFlags(
+//                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+//                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        }
 
         if (getContentViewId() != 0 && !mUseBinding) {
             setContentView(getContentViewId());
@@ -91,6 +88,7 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
             mBindingUtil = DataBindingUtil.setContentView(this, getContentViewId());
         }
 
+        /*
         //设置 paddingTop
         ViewGroup rootView = (ViewGroup) getWindow().getDecorView().findViewById(android.R.id.content);
         rootView.setPadding(0, ScreenUtil.getStatusBarHeight(this), 0, 0);
@@ -104,6 +102,7 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
                 ScreenUtil.getStatusBarHeight(this));
         statusBarView.setBackgroundResource(R.drawable.bg_toolbar);
         decorView.addView(statusBarView, lp);
+        */
 
         ButterKnife.bind(this);
         initView();
