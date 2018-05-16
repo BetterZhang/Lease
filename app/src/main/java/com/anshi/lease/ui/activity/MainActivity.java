@@ -54,11 +54,40 @@ public class MainActivity extends LeaseBaseActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-
+                    case R.id.item_bike:
+                        gotoBikeActivity();
+                        break;
+                    case R.id.item_personal:
+                        gotoPersonalActivity();
+                        break;
+                    case R.id.item_editpwd:
+                        gotoEditPwdActivity();
+                        break;
+                    case R.id.item_logout:
+                        logout();
+                        break;
+                    default:
+                        break;
                 }
                 return false;
             }
         });
+    }
+
+    private void gotoBikeActivity() {
+
+    }
+
+    private void gotoPersonalActivity() {
+        startAnimActivity(PersonalActivity.class);
+    }
+
+    private void gotoEditPwdActivity() {
+        startAnimActivity(EditPwdActivity.class);
+    }
+
+    private void logout() {
+        showShortToast("登出成功");
     }
 
 }

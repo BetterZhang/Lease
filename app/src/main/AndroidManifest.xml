@@ -34,6 +34,14 @@
             android:name=".ui.activity.ForgetPwdActivity"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".ui.activity.PersonalActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".ui.activity.EditPwdActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>
