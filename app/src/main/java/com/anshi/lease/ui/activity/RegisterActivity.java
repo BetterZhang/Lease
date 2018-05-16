@@ -17,4 +17,9 @@ public class RegisterActivity extends LeaseBaseActivity {
         return R.layout.activity_register;
     }
 
+    @Override
+    protected void initView() {
+        super.initView();
+        initToolbar("注册", true);
+    }
 }

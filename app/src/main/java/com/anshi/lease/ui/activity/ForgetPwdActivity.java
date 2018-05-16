@@ -17,4 +17,9 @@ public class ForgetPwdActivity extends LeaseBaseActivity {
         return R.layout.activity_forget_pwd;
     }
 
+    @Override
+    protected void initView() {
+        super.initView();
+        initToolbar("找回密码", true);
+    }
 }

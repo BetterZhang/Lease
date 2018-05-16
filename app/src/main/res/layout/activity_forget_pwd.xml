@@ -2,66 +2,88 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.activity.LoginActivity"
-    android:layout_margin="30dp">
+    android:orientation="vertical">
 
-    <include layout="@layout/layout_logo"/>
+    <include layout="@layout/layout_toolbar" />
 
-    <com.jme.common.ui.view.ClearEditText
-        android:id="@+id/et_phone"
-        style="@style/EditText"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_edit_text"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="20dp"
-        android:inputType="phone"
-        android:maxLength="11"
-        android:hint="请输入账号"/>
+        android:layout_height="match_parent">
 
-    <com.jme.common.ui.view.ClearEditText
-        android:id="@+id/et_image_code"
-        style="@style/EditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_edit_text"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="20dp"
-        android:hint="图形验证码"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="30dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
-    <com.jme.common.ui.view.ClearEditText
-        android:id="@+id/et_sms_code"
-        style="@style/EditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_edit_text"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="20dp"
-        android:hint="短信验证码"/>
+            <include layout="@layout/layout_logo"/>
 
-    <com.jme.common.ui.view.ClearEditText
-        android:id="@+id/et_password"
-        style="@style/EditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_edit_text"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="20dp"
-        android:inputType="textPassword"
-        android:hint="请输入密码"/>
+            <com.jme.common.ui.view.ClearEditText
+                android:id="@+id/et_phone"
+                style="@style/EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_edit_text"
+                android:layout_marginTop="20dp"
+                android:drawableLeft="@mipmap/ic_phone"
+                android:drawablePadding="20dp"
+                android:inputType="phone"
+                android:maxLength="11"
+                android:hint="请输入账号"/>
 
-    <TextView
-        android:id="@+id/btn_submit"
-        style="@style/Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/selector_text_button"
-        android:layout_marginTop="20dp"
-        android:clickable="true"
-        android:gravity="center"
-        android:text="提交"/>
+            <com.jme.common.ui.view.ClearEditText
+                android:id="@+id/et_image_code"
+                style="@style/EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_edit_text"
+                android:layout_marginTop="20dp"
+                android:drawableLeft="@mipmap/ic_code"
+                android:drawablePadding="20dp"
+                android:hint="图形验证码"/>
+
+            <com.jme.common.ui.view.ClearEditText
+                android:id="@+id/et_sms_code"
+                style="@style/EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_edit_text"
+                android:layout_marginTop="20dp"
+                android:drawableLeft="@mipmap/ic_code"
+                android:drawablePadding="20dp"
+                android:hint="短信验证码"/>
+
+            <com.jme.common.ui.view.ClearEditText
+                android:id="@+id/et_password"
+                style="@style/EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_edit_text"
+                android:layout_marginTop="20dp"
+                android:drawableLeft="@mipmap/ic_pwd"
+                android:drawablePadding="20dp"
+                android:inputType="textPassword"
+                android:hint="请输入密码"/>
+
+            <TextView
+                android:id="@+id/btn_submit"
+                style="@style/Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_text_button"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="提交"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
