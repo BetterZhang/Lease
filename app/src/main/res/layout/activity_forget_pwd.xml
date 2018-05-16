@@ -36,27 +36,68 @@
                 android:maxLength="11"
                 android:hint="请输入账号"/>
 
-            <com.jme.common.ui.view.ClearEditText
-                android:id="@+id/et_image_code"
-                style="@style/EditText"
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_edit_text"
-                android:layout_marginTop="20dp"
-                android:drawableLeft="@mipmap/ic_code"
-                android:drawablePadding="20dp"
-                android:hint="图形验证码"/>
+                android:layout_marginTop="20dp">
 
-            <com.jme.common.ui.view.ClearEditText
-                android:id="@+id/et_sms_code"
-                style="@style/EditText"
+                <com.jme.common.ui.view.ClearEditText
+                    android:id="@+id/et_image_code"
+                    style="@style/EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_edit_text"
+                    android:drawableLeft="@mipmap/ic_code"
+                    android:drawablePadding="20dp"
+                    android:hint="图形验证码"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="15dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/iv_code"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:background="@color/colorPrimary"/>
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_edit_text"
-                android:layout_marginTop="20dp"
-                android:drawableLeft="@mipmap/ic_code"
-                android:drawablePadding="20dp"
-                android:hint="短信验证码"/>
+                android:layout_marginTop="20dp">
+
+                <com.jme.common.ui.view.ClearEditText
+                    android:id="@+id/et_sms_code"
+                    style="@style/EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_edit_text"
+                    android:drawableLeft="@mipmap/ic_code"
+                    android:drawablePadding="20dp"
+                    android:hint="短信验证码"/>
+
+                <TextView
+                    android:id="@+id/tv_send_sms"
+                    style="@style/Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:gravity="center"
+                    android:background="@drawable/selector_text_button"
+                    android:text="获取验证码"
+                    android:textSize="14sp"/>
+
+            </FrameLayout>
 
             <com.jme.common.ui.view.ClearEditText
                 android:id="@+id/et_password"
