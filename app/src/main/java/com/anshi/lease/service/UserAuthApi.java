@@ -50,4 +50,13 @@ public interface UserAuthApi {
     @POST("/mobile/v1/auth/register")
     Call<DTResponse> register(@Body HashMap<String, String> params);
 
+
+    /**
+     * 重置密码
+     * @param params
+     * @return
+     */
+    @POST("/mobile/v1/auth/resetpassword")
+    Call<DTResponse> resetpassword(@Body HashMap<String, String> params);
+
 }

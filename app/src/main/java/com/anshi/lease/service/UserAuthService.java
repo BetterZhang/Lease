@@ -2,6 +2,7 @@ package com.anshi.lease.service;
 
 import com.anshi.lease.common.Constants;
 import com.anshi.lease.domain.CaptchaVo;
+import com.anshi.lease.domain.SmsVo;
 import com.anshi.lease.domain.UserVo;
 import com.jme.common.network.API;
 import com.jme.common.network.DTResponse;
@@ -56,7 +57,7 @@ public class UserAuthService extends IService<UserAuthApi> {
         }
     };
 
-    public API sendsms = new API<String>("sendsms") {
+    public API sendsms = new API<SmsVo>("sendsms") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             return mApi.sendsms(params);
@@ -67,6 +68,13 @@ public class UserAuthService extends IService<UserAuthApi> {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             return mApi.register(params);
+        }
+    };
+
+    public API resetpassword = new API<String>("resetpassword") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.resetpassword(params);
         }
     };
 

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.anshi.lease.R;
 import com.anshi.lease.domain.CaptchaVo;
+import com.anshi.lease.domain.SmsVo;
 import com.anshi.lease.service.UserAuthService;
 import com.anshi.lease.ui.base.LeaseBaseActivity;
 import com.anshi.lease.util.TextUtils;
@@ -45,6 +46,7 @@ public class RegisterActivity extends LeaseBaseActivity {
     EditText et_company;
 
     private CaptchaVo mCaptchaVo;
+    private SmsVo mSmsVo;
     private Bitmap mBitmap;
     private byte[] decodedString;
 
@@ -128,7 +130,10 @@ public class RegisterActivity extends LeaseBaseActivity {
                 break;
             case "sendsms":
                 if (msgCode.equals("200")) {
-                    smsToken = (String) response;
+                    mSmsVo = (SmsVo) response;
+                    if (mSmsVo == null)
+                        return;
+                    smsToken = mSmsVo.getKey_sms_vcode_token();
                     hasSendCode = true;
                     if (timer != null) {
                         timer.start();
