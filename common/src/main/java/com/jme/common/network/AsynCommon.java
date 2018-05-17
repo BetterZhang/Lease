@@ -54,13 +54,14 @@ public class AsynCommon {
                     } else {
                         DTResponse dtResponse = (DTResponse) response.body();
 
-                        head = dtResponse.getHead();
+                        head.setCode(dtResponse.getCode());
+                        head.setMsg(dtResponse.getMessage());
 
                         try {
-                            body = new Gson().fromJson(dtResponse.getBodyToString(),
+                            body = new Gson().fromJson(dtResponse.getRespDataString(),
                                     mRequest.getApi().getEntryType());
                         } catch (Exception e) {
-                            body = dtResponse.getBodyToString();
+                            body = dtResponse.getRespDataString();
                         }
 
                     }

@@ -1,7 +1,6 @@
 package com.jme.common.network;
 
 import com.google.gson.Gson;
-
 import java.io.Serializable;
 
 /**
@@ -9,32 +8,37 @@ import java.io.Serializable;
  */
 public class DTResponse<V> implements Serializable {
 
-    // 响应数据头
-    private Head head;
-    // 响应数据体
-    private V body;
+    private String code;
 
-    public DTResponse() {
-        super();
+    private String message;
+
+    private V respData;
+
+    public String getCode() {
+        return code;
     }
 
-    public Head getHead() {
-        return head;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public void setHead(Head head) {
-        this.head = head;
+    public String getMessage() {
+        return message;
     }
 
-    public V getBody() {
-        return body;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public void setBody(V body) {
-        this.body = body;
+    public V getRespData() {
+        return respData;
     }
 
-    public String getBodyToString(){
-        return new Gson().toJson(body);
+    public void setRespData(V respData) {
+        this.respData = respData;
+    }
+
+    public String getRespDataString(){
+        return new Gson().toJson(respData);
     }
 }

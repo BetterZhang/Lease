@@ -406,7 +406,7 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
     }
 
     private void handleErrorInfo(DTRequest request, Head head) {
-        if (head.getCode() != null && !head.getCode().equals("0") && !head.getCode().equals("107")) {
+        if (head.getCode() != null && !head.getCode().equals("200")) {
             if (!request.isShowErrorMsg()) {
                 return;
             }

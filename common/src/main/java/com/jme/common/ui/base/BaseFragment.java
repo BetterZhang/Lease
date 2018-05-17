@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,6 +21,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
 import com.jme.common.network.API;
 import com.jme.common.network.AsynCommon;
 import com.jme.common.network.DTRequest;
@@ -29,7 +29,9 @@ import com.jme.common.network.Head;
 import com.jme.common.network.OnResultListener;
 import com.jme.common.ui.view.LoadingDialog;
 import com.orhanobut.logger.Logger;
+
 import java.util.HashMap;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -438,7 +440,7 @@ public abstract class BaseFragment extends Fragment implements View.OnTouchListe
     }
 
     private void handleErrorInfo(DTRequest request, Head head) {
-        if (head.getCode() != null && !head.getCode().equals("0") && !head.getCode().equals("107")) {
+        if (head.getCode() != null && !head.getCode().equals("200")) {
             if (!request.isShowErrorMsg()) {
                 return;
             }
