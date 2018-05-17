@@ -1,6 +1,7 @@
 package com.anshi.lease.service;
 
 import com.anshi.lease.common.Constants;
+import com.anshi.lease.domain.UserVo;
 import com.jme.common.network.API;
 import com.jme.common.network.DTResponse;
 import com.jme.common.network.IService;
@@ -44,6 +45,13 @@ public class UserAuthService extends IService<UserAuthApi> {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             return mApi.getcaptcha();
+        }
+    };
+
+    public API login = new API<UserVo>("login") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.login(params);
         }
     };
 

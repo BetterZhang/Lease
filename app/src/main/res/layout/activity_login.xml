@@ -11,15 +11,13 @@
     <include layout="@layout/layout_logo"/>
 
     <com.jme.common.ui.view.ClearEditText
-        android:id="@+id/et_phone"
+        android:id="@+id/et_account"
         style="@style/EditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_edit_text"
         android:layout_marginTop="50dp"
         android:paddingLeft="20dp"
-        android:inputType="phone"
-        android:maxLength="11"
         android:hint="请输入账号"/>
 
     <com.jme.common.ui.view.ClearEditText

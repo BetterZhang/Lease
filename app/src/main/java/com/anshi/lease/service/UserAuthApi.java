@@ -2,7 +2,10 @@ package com.anshi.lease.service;
 
 import com.jme.common.network.DTResponse;
 
+import java.util.HashMap;
+
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 /**
@@ -20,5 +23,13 @@ public interface UserAuthApi {
      */
     @POST("/mobile/v1/auth/getcaptcha")
     Call<DTResponse> getcaptcha();
+
+
+    /**
+     * 登录
+     * @return
+     */
+    @POST("/mobile/v1/auth/login")
+    Call<DTResponse> login(@Body HashMap<String, String> params);
 
 }
