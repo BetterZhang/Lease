@@ -1,11 +1,10 @@
 package com.anshi.lease.service;
 
 import com.jme.common.network.DTResponse;
-
 import java.util.HashMap;
-
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 /**
@@ -58,5 +57,50 @@ public interface UserAuthApi {
      */
     @POST("/mobile/v1/auth/resetpassword")
     Call<DTResponse> resetpassword(@Body HashMap<String, String> params);
+
+
+    /**
+     * 登出
+     * @param params
+     * @return
+     */
+    @POST("/mobile/v1/auth/logout")
+    Call<DTResponse> logout(@Body HashMap<String, String> params);
+
+
+    /**
+     * 补全用户信息
+     * @param params
+     * @return
+     */
+    @POST("/mobile/v1/auth/updateuserinfo")
+    Call<DTResponse> updateUserInfo(@Body HashMap<String, String> params);
+
+
+    /**
+     * 上传用户头像
+     * @param params
+     * @return
+     */
+    @POST("/mobile/v1/auth/uplodeusericon")
+    Call<DTResponse> uplodeUserIcon(@Body HashMap<String, String> params);
+
+
+    /**
+     * 手机端用户注册时，需要看的所有企业
+     * @param params
+     * @return
+     */
+    @GET("/mobile/v1/auth/userBindOrg")
+    Call<DTResponse> userBindOrg(@Body HashMap<String, String> params);
+
+
+    /**
+     * 用户实名认证
+     * @param params
+     * @return
+     */
+    @POST("/mobile/v1/auth/userrealnameauth")
+    Call<DTResponse> userRealNameAuth(@Body HashMap<String, String> params);
 
 }

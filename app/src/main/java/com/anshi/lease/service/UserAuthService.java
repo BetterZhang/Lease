@@ -78,4 +78,39 @@ public class UserAuthService extends IService<UserAuthApi> {
         }
     };
 
+    public API logout = new API<String>("logout") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.logout(params);
+        }
+    };
+
+    public API updateUserInfo = new API<String>("updateUserInfo") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.updateUserInfo(params);
+        }
+    };
+
+    public API uplodeUserIcon = new API<String>("uplodeUserIcon") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.uplodeUserIcon(params);
+        }
+    };
+
+    public API userBindOrg = new API<String>("userBindOrg") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.userBindOrg(params);
+        }
+    };
+
+    public API userRealNameAuth = new API<String>("userRealNameAuth") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.userRealNameAuth(params);
+        }
+    };
+
 }
