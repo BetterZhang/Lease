@@ -5,4 +5,5 @@
     <color name="colorAccent">#1DCB90</color>
 
     <color name="colorPressed">#09B67B</color>
+    <color name="colorDisable">#98e9cd</color>
 </resources>

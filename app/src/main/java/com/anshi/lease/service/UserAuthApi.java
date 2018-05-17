@@ -32,4 +32,22 @@ public interface UserAuthApi {
     @POST("/mobile/v1/auth/login")
     Call<DTResponse> login(@Body HashMap<String, String> params);
 
+
+    /**
+     * 发送短信验证码
+     * @param params
+     * @return
+     */
+    @POST("/mobile/v1/auth/sendsms")
+    Call<DTResponse> sendsms(@Body HashMap<String, String> params);
+
+
+    /**
+     * 用户注册
+     * @param params
+     * @return
+     */
+    @POST("/mobile/v1/auth/register")
+    Call<DTResponse> register(@Body HashMap<String, String> params);
+
 }

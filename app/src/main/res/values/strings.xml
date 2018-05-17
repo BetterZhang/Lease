@@ -3,4 +3,5 @@
 
     <string name="navigation_drawer_open">navigation_drawer_open</string>
     <string name="navigation_drawer_close">navigation_drawer_close</string>
+    <string name="text_get_verification_code">获取验证码</string>
 </resources>
