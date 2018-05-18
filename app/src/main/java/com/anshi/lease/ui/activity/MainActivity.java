@@ -109,7 +109,10 @@ public class MainActivity extends LeaseBaseActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.item_bike:
-                        gotoBikeActivity();
+                        if (mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED"))
+                            gotoBikeActivity();
+                        else
+                            gotoAuthTipActivity();
                         break;
                     case R.id.item_personal:
                         gotoPersonalActivity();
@@ -126,6 +129,10 @@ public class MainActivity extends LeaseBaseActivity {
                 return false;
             }
         });
+    }
+
+    private void gotoAuthTipActivity() {
+        startAnimActivity(AuthTipActivity.class);
     }
 
     private void gotoBikeActivity() {

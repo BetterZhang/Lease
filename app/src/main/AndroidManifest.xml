@@ -48,6 +48,10 @@
             android:name=".ui.activity.EditNickNameActivity"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".ui.activity.AuthTipActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>
