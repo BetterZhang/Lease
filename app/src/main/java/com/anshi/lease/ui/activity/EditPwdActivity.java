@@ -9,6 +9,7 @@ import com.anshi.lease.ui.base.LeaseBaseActivity;
 import com.anshi.lease.util.TextUtils;
 import com.jme.common.network.DTRequest;
 import com.jme.common.util.SecurityUtils;
+import com.jme.common.util.StringUtils;
 import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -50,12 +51,8 @@ public class EditPwdActivity extends LeaseBaseActivity {
             showShortToast("请输入原始密码");
             return;
         }
-        if (TextUtils.isEmpty(et_new_pwd)) {
-            showShortToast("请输入新密码");
-            return;
-        }
-        if (TextUtils.isEmpty(et_new_pwd_confirm)) {
-            showShortToast("请输入新密码的确认密码");
+        if (!StringUtils.isPasswordRight(TextUtils.getText(et_new_pwd))) {
+            showShortToast("请输入6-10位字母数字混合的密码");
             return;
         }
         if (!TextUtils.getText(et_new_pwd).equals(TextUtils.getText(et_new_pwd_confirm))) {

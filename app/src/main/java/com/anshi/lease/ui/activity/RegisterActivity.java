@@ -165,6 +165,7 @@ public class RegisterActivity extends LeaseBaseActivity {
                         return;
                     smsToken = mSmsVo.getKey_sms_vcode_token();
                     hasSendCode = true;
+                    showShortToast("短信验证码已发送");
                     if (timer != null) {
                         timer.start();
                     }
@@ -218,10 +219,6 @@ public class RegisterActivity extends LeaseBaseActivity {
     }
 
     private void handleSendSms() {
-        if (TextUtils.isEmpty(et_phone)) {
-            showShortToast("请输入手机号");
-            return;
-        }
         if (!StringUtils.isPhoneNumber(et_phone.getText().toString())) {
             showShortToast("请输入正确的手机号");
             return;
@@ -234,10 +231,6 @@ public class RegisterActivity extends LeaseBaseActivity {
     }
 
     private void handleRegister() {
-        if (TextUtils.isEmpty(et_phone)) {
-            showShortToast("请输入手机号");
-            return;
-        }
         if (!StringUtils.isPhoneNumber(et_phone.getText().toString())) {
             showShortToast("请输入正确的手机号");
             return;
@@ -250,8 +243,8 @@ public class RegisterActivity extends LeaseBaseActivity {
             showShortToast("请输入短信验证码");
             return;
         }
-        if (TextUtils.isEmpty(et_password)) {
-            showShortToast("请输入密码");
+        if (!StringUtils.isPasswordRight(TextUtils.getText(et_password))) {
+            showShortToast("请输入6-10位字母数字混合的密码");
             return;
         }
         if (TextUtils.isEmpty(tv_company)) {

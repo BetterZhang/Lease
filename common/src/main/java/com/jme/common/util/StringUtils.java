@@ -137,7 +137,7 @@ public class StringUtils {
      * @return 王者荣*
      */
     public static boolean isPasswordRight(String password) {
-        String REGEX_PASSWORD = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$";
+        String REGEX_PASSWORD = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,10}$";
 
         return Pattern.matches(REGEX_PASSWORD, password);
     }
