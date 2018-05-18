@@ -3,6 +3,7 @@ package com.anshi.lease.ui.activity;
 import android.view.View;
 import android.widget.EditText;
 import com.anshi.lease.R;
+import com.anshi.lease.common.UserInfo;
 import com.anshi.lease.domain.UserVo;
 import com.anshi.lease.service.UserAuthService;
 import com.anshi.lease.ui.base.LeaseBaseActivity;
@@ -84,6 +85,7 @@ public class LoginActivity extends LeaseBaseActivity {
                     UserVo userVo = (UserVo) response;
                     if (userVo == null)
                         return;
+                    UserInfo.getInstance().login(userVo);
                     showShortToast("登录成功");
                     SharedPreUtils.setString(this, RxBusConfig.HEADER_LOGIN_TOKEN, userVo.getKey_login_token());
                     startAnimActivity(MainActivity.class);
