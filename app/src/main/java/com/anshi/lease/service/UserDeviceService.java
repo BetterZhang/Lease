@@ -43,7 +43,7 @@ public class UserDeviceService extends IService<UserDeviceApi> {
     public API modifypassword = new API<String>("modifypassword") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.modifypassword();
+            return mApi.modifypassword(params);
         }
     };
 

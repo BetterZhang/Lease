@@ -1,7 +1,9 @@
 package com.anshi.lease.service;
 
 import com.jme.common.network.DTResponse;
+import java.util.HashMap;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 /**
@@ -18,7 +20,7 @@ public interface UserDeviceApi {
      * @return
      */
     @POST("/mobile/v1/device/modifypassword")
-    Call<DTResponse> modifypassword();
+    Call<DTResponse> modifypassword(@Body HashMap<String, String> params);
 
 
     /**
