@@ -113,17 +113,17 @@
                 android:inputType="textPassword"
                 android:hint="请输入6-10位字母数字混合密码"/>
 
-            <EditText
-                android:id="@+id/et_company"
+            <TextView
+                android:id="@+id/tv_company"
                 style="@style/EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:background="@drawable/shape_edit_text"
                 android:layout_marginTop="20dp"
                 android:drawableLeft="@mipmap/ic_company"
                 android:drawableRight="@mipmap/ic_more"
                 android:drawablePadding="20dp"
-                android:enabled="false"
                 android:hint="关联企业"/>
 
             <TextView

@@ -88,11 +88,10 @@ public interface UserAuthApi {
 
     /**
      * 手机端用户注册时，需要看的所有企业
-     * @param params
      * @return
      */
     @GET("/mobile/v1/auth/userBindOrg")
-    Call<DTResponse> userBindOrg(@Body HashMap<String, String> params);
+    Call<DTResponse> userBindOrg();
 
 
     /**

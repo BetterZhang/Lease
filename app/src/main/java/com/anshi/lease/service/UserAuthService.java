@@ -1,6 +1,7 @@
 package com.anshi.lease.service;
 
 import com.anshi.lease.common.Constants;
+import com.anshi.lease.domain.BindOrgVo;
 import com.anshi.lease.domain.CaptchaVo;
 import com.anshi.lease.domain.SmsVo;
 import com.anshi.lease.domain.UserVo;
@@ -9,6 +10,7 @@ import com.jme.common.network.DTResponse;
 import com.jme.common.network.IService;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -99,10 +101,10 @@ public class UserAuthService extends IService<UserAuthApi> {
         }
     };
 
-    public API userBindOrg = new API<String>("userBindOrg") {
+    public API userBindOrg = new API<List<BindOrgVo>>("userBindOrg") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.userBindOrg(params);
+            return mApi.userBindOrg();
         }
     };
 

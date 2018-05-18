@@ -8,16 +8,23 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.anshi.lease.R;
+import com.anshi.lease.domain.BindOrgVo;
 import com.anshi.lease.domain.CaptchaVo;
 import com.anshi.lease.domain.SmsVo;
 import com.anshi.lease.service.UserAuthService;
 import com.anshi.lease.ui.base.LeaseBaseActivity;
 import com.anshi.lease.util.TextUtils;
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.jme.common.network.DTRequest;
 import com.jme.common.ui.base.CountDownTimer;
 import com.jme.common.util.Base64;
+import com.jme.common.util.SecurityUtils;
 import com.jme.common.util.StringUtils;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -42,8 +49,8 @@ public class RegisterActivity extends LeaseBaseActivity {
     TextView tv_send_sms;
     @BindView(R.id.et_password)
     EditText et_password;
-    @BindView(R.id.et_company)
-    EditText et_company;
+    @BindView(R.id.tv_company)
+    TextView tv_company;
 
     private CaptchaVo mCaptchaVo;
     private SmsVo mSmsVo;
@@ -56,6 +63,13 @@ public class RegisterActivity extends LeaseBaseActivity {
     private CountDownTimer timer;
     private boolean hasSendCode = false;
 
+    private List<BindOrgVo> mBindOrgVoList = new ArrayList<>();
+    private List<String> orgNameList = new ArrayList<>();
+    private OptionsPickerView mPickerView;
+    private BindOrgVo mBindOrgVo;
+    private String orgName = "";
+    private String orgId = "";
+
     @Override
     protected int getContentViewId() {
         return R.layout.activity_register;
@@ -65,6 +79,16 @@ public class RegisterActivity extends LeaseBaseActivity {
     protected void initView() {
         super.initView();
         initToolbar("注册", true);
+
+        mPickerView = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                mBindOrgVo = mBindOrgVoList.get(options1);
+                orgName = orgNameList.get(options1);
+                tv_company.setText(orgName);
+                orgId = mBindOrgVo.getId();
+            }
+        }).build();
     }
 
     @Override
@@ -73,6 +97,7 @@ public class RegisterActivity extends LeaseBaseActivity {
         timer = new CountDownTimer(this, 30000, 1000, tv_send_sms,
                 getString(R.string.text_get_verification_code), R.color.white);
         getCaptcha();
+        getUserBindOrg();
     }
 
     @Override
@@ -91,6 +116,11 @@ public class RegisterActivity extends LeaseBaseActivity {
         sendRequest(UserAuthService.getInstance().getcaptcha, params, true);
     }
 
+    private void getUserBindOrg() {
+        HashMap<String, String> params = new HashMap<>();
+        sendRequest(UserAuthService.getInstance().userBindOrg, params, true);
+    }
+
     private void sendSms() {
         HashMap<String, String> params = new HashMap<>();
         params.put("mobile", TextUtils.getText(et_phone));
@@ -104,12 +134,12 @@ public class RegisterActivity extends LeaseBaseActivity {
         HashMap<String, String> params = new HashMap<>();
         params.put("loginName", "");
         params.put("userMobile", TextUtils.getText(et_phone));
-        params.put("password", TextUtils.getText(et_password));
+        params.put("password", SecurityUtils.getMD5(TextUtils.getText(et_password), true));
         params.put("createUser", "");
         params.put("updateUser", "");
         params.put("smsToken", smsToken);
         params.put("smsVCode", TextUtils.getText(et_sms_code));
-        params.put("orgId", "");
+        params.put("orgId", orgId);
         sendRequest(UserAuthService.getInstance().register, params, true);
     }
 
@@ -149,12 +179,24 @@ public class RegisterActivity extends LeaseBaseActivity {
                     this.finish();
                 }
                 break;
+            case "userBindOrg":
+                if (msgCode.equals("200")) {
+                    mBindOrgVoList = (List<BindOrgVo>) response;
+                    if (mBindOrgVoList == null)
+                        return;
+                    for (BindOrgVo bindOrgVo : mBindOrgVoList) {
+                        if (!android.text.TextUtils.isEmpty(bindOrgVo.getOrgName()))
+                           orgNameList.add(bindOrgVo.getOrgName());
+                    }
+                    mPickerView.setPicker(orgNameList, null, null);
+                }
+                break;
             default:
                 break;
         }
     }
 
-    @OnClick({R.id.iv_code, R.id.tv_send_sms, R.id.btn_register})
+    @OnClick({R.id.iv_code, R.id.tv_send_sms, R.id.btn_register, R.id.tv_company})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_code:
@@ -165,6 +207,10 @@ public class RegisterActivity extends LeaseBaseActivity {
                 break;
             case R.id.btn_register:
                 handleRegister();
+                break;
+            case R.id.tv_company:
+                if (mPickerView != null)
+                    mPickerView.show();
                 break;
             default:
                 break;
@@ -208,7 +254,7 @@ public class RegisterActivity extends LeaseBaseActivity {
             showShortToast("请输入密码");
             return;
         }
-        if (TextUtils.isEmpty(et_company)) {
+        if (TextUtils.isEmpty(tv_company)) {
             showShortToast("请选择关联企业");
             return;
         }

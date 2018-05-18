@@ -1,6 +1,7 @@
 package com.anshi.lease.util;
 
 import android.widget.EditText;
+import android.widget.TextView;
 
 /**
  * Created by Android Studio.
@@ -13,6 +14,10 @@ public class TextUtils {
 
     public static boolean isEmpty(EditText editText) {
         return android.text.TextUtils.isEmpty(editText.getText().toString().trim());
+    }
+
+    public static boolean isEmpty(TextView textView) {
+        return android.text.TextUtils.isEmpty(textView.getText().toString().trim());
     }
 
     public static String getText(EditText editText) {
