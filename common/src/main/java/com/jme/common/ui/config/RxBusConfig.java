@@ -6,7 +6,7 @@ package com.jme.common.ui.config;
 
 public class RxBusConfig {
 
-    public static final String SET_COOKIE = "cookie";
+    public static final String HEADER_LOGIN_TOKEN = "header-login-token";
 
 
 }

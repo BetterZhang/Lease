@@ -8,7 +8,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import com.anshi.lease.R;
+import com.anshi.lease.service.UserAuthService;
 import com.anshi.lease.ui.base.LeaseBaseActivity;
+import com.jme.common.network.DTRequest;
+import java.util.HashMap;
 import butterknife.BindView;
 
 /**
@@ -45,6 +48,27 @@ public class MainActivity extends LeaseBaseActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+    }
+
+    private void logout() {
+        HashMap<String, String> params = new HashMap<>();
+        sendRequest(UserAuthService.getInstance().logout, params, true);
+    }
+
+    @Override
+    protected void DataReturn(DTRequest request, String msgCode, Object response) {
+        super.DataReturn(request, msgCode, response);
+        switch (request.getApi().getName()) {
+            case "logout":
+                if (msgCode.equals("200")) {
+                    showShortToast("登出成功");
+                    startAnimActivity(LoginActivity.class);
+                    this.finish();
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -84,10 +108,6 @@ public class MainActivity extends LeaseBaseActivity {
 
     private void gotoEditPwdActivity() {
         startAnimActivity(EditPwdActivity.class);
-    }
-
-    private void logout() {
-        showShortToast("登出成功");
     }
 
 }

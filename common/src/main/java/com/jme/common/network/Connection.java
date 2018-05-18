@@ -1,7 +1,6 @@
 package com.jme.common.network;
 
 import android.text.TextUtils;
-
 import com.jme.common.BuildConfig;
 import com.jme.common.app.BaseApplication;
 import com.jme.common.ui.config.RxBusConfig;
@@ -68,9 +67,8 @@ public class Connection {
                 public Response intercept(Chain chain) throws IOException {
                     Request request = chain.request();
                     Request.Builder builder1 = request.newBuilder();
-                    builder1.addHeader("request_source", "deyu-android");
-                    if (!TextUtils.isEmpty(SharedPreUtils.getString(BaseApplication.getContext(), RxBusConfig.SET_COOKIE))) {
-                        builder1.addHeader(RxBusConfig.SET_COOKIE, SharedPreUtils.getString(BaseApplication.getContext(), RxBusConfig.SET_COOKIE));
+                    if (!TextUtils.isEmpty(SharedPreUtils.getString(BaseApplication.getContext(), RxBusConfig.HEADER_LOGIN_TOKEN))) {
+                        builder1.addHeader(RxBusConfig.HEADER_LOGIN_TOKEN, SharedPreUtils.getString(BaseApplication.getContext(), RxBusConfig.HEADER_LOGIN_TOKEN));
                     }
                     Response response = chain.proceed(builder1.build());
                     return response;

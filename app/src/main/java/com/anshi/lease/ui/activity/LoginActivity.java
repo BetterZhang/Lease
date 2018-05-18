@@ -3,11 +3,14 @@ package com.anshi.lease.ui.activity;
 import android.view.View;
 import android.widget.EditText;
 import com.anshi.lease.R;
+import com.anshi.lease.domain.UserVo;
 import com.anshi.lease.service.UserAuthService;
 import com.anshi.lease.ui.base.LeaseBaseActivity;
 import com.anshi.lease.util.TextUtils;
 import com.jme.common.network.DTRequest;
+import com.jme.common.ui.config.RxBusConfig;
 import com.jme.common.util.SecurityUtils;
+import com.jme.common.util.SharedPreUtils;
 import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -78,7 +81,11 @@ public class LoginActivity extends LeaseBaseActivity {
         switch (request.getApi().getName()) {
             case "login":
                 if (msgCode.equals("200")) {
+                    UserVo userVo = (UserVo) response;
+                    if (userVo == null)
+                        return;
                     showShortToast("登录成功");
+                    SharedPreUtils.setString(this, RxBusConfig.HEADER_LOGIN_TOKEN, userVo.getKey_login_token());
                     startAnimActivity(MainActivity.class);
                     this.finish();
                 }
