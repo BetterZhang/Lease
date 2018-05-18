@@ -23,6 +23,7 @@ public final class Constants {
         public static int Envi = Test_LAN;
 
         public static String URL_BASE;
+        public static String URL_BASE_IMG;
 
         private HttpConst() {
 
@@ -31,10 +32,13 @@ public final class Constants {
         static {
             if (Envi == Test_LAN) {
                 URL_BASE = "http://106.14.172.38:8081";
+                URL_BASE_IMG = "http://106.14.172.38:8990/leaseupload/usericon/";
             } else if (Envi == Test_WAN) {
                 URL_BASE = "http://106.14.172.38:8081";
+                URL_BASE_IMG = "http://106.14.172.38:8990/leaseupload/usericon/";
             } else if (Envi == Produce) {
                 URL_BASE = "http://106.14.172.38:8081";
+                URL_BASE_IMG = "http://106.14.172.38:8990/leaseupload/usericon/";
             }
         }
     }

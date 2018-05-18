@@ -7,10 +7,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import com.anshi.lease.R;
+import com.anshi.lease.common.Constants;
+import com.anshi.lease.common.UserInfo;
+import com.anshi.lease.domain.UserVo;
 import com.anshi.lease.service.UserAuthService;
 import com.anshi.lease.ui.base.LeaseBaseActivity;
 import com.jme.common.network.DTRequest;
+import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import butterknife.BindView;
 
@@ -30,6 +37,12 @@ public class MainActivity extends LeaseBaseActivity {
     @BindView(R.id.navigation_view)
     NavigationView navigation_view;
 
+    ImageView iv_head;
+    TextView tv_name;
+    TextView tv_status;
+
+    private UserVo mUserVo;
+
     @Override
     protected int getContentViewId() {
         return R.layout.activity_main;
@@ -43,11 +56,28 @@ public class MainActivity extends LeaseBaseActivity {
                 R.string.navigation_drawer_close);
         layout_drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        View headerLayout = navigation_view.getHeaderView(0);
+        iv_head = headerLayout.findViewById(R.id.iv_head);
+        tv_name = headerLayout.findViewById(R.id.tv_name);
+        tv_status = headerLayout.findViewById(R.id.tv_status);
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        mUserVo = UserInfo.getInstance().getCurrentUser();
+        if (mUserVo != null)
+            setUserData();
+    }
+
+    private void setUserData() {
+        Picasso.with(this)
+                .load(Constants.HttpConst.URL_BASE_IMG + mUserVo.getKey_user_info().getUserIcon())
+                .placeholder(R.mipmap.ic_head_default)
+                .into(iv_head);
+        tv_name.setText(mUserVo.getKey_user_info().getNickName());
+        tv_status.setText(mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED") ? "已实名" : "未实名");
     }
 
     private void logout() {
