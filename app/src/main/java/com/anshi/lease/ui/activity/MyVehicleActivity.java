@@ -6,6 +6,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
 import com.anshi.lease.R;
 import com.anshi.lease.common.UserInfo;
 import com.anshi.lease.domain.UserVo;
@@ -15,9 +16,11 @@ import com.anshi.lease.ui.base.LeaseBaseActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.jme.common.network.DTRequest;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import butterknife.BindView;
 
 /**
@@ -91,7 +94,13 @@ public class MyVehicleActivity extends LeaseBaseActivity {
         rcv_vehicle.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                showShortToast("点击了item");
+                UserVo.KeyVehicleInfoBean vehicleInfoBean = mVehicleInfoBeans.get(position);
+                if (vehicleInfoBean == null)
+                    return;
+                Bundle bundle = new Bundle();
+                bundle.putString("id", vehicleInfoBean.getId());
+                bundle.putSerializable("vehicleInfo", vehicleInfoBean);
+                startAnimActivity(VehicleDetailActivity.class, bundle);
             }
         });
     }

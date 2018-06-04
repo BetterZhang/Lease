@@ -2,13 +2,13 @@ package com.anshi.lease.service;
 
 import com.anshi.lease.common.Constants;
 import com.anshi.lease.domain.UserVo;
+import com.google.gson.JsonArray;
 import com.jme.common.network.API;
 import com.jme.common.network.DTResponse;
 import com.jme.common.network.IService;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -22,6 +22,9 @@ import retrofit2.Call;
  * Desc   : description
  */
 public class UserDeviceService extends IService<UserDeviceApi> {
+
+    private String ids;
+    private String[] idArray;
 
     public UserDeviceService() {
         super(Constants.HttpConst.URL_BASE, true);
@@ -50,10 +53,10 @@ public class UserDeviceService extends IService<UserDeviceApi> {
         }
     };
 
-    public API getByPK = new API<String>("getByPK") {
+    public API getByPK = new API<UserVo.KeyVehicleInfoBean>("getByPK") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.getByPK();
+            return mApi.getByPK(params);
         }
     };
 
@@ -67,7 +70,12 @@ public class UserDeviceService extends IService<UserDeviceApi> {
     public API getLocByVehiclePK = new API<String>("getLocByVehiclePK") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.getLocByVehiclePK();
+            ids = params.get("ids");
+            idArray = ids.split(",");
+            JsonArray jsonArray = new JsonArray();
+            for (String id : idArray)
+                jsonArray.add(id);
+            return mApi.getLocByVehiclePK(jsonArray);
         }
     };
 

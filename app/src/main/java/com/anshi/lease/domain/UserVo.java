@@ -1,5 +1,6 @@
 package com.anshi.lease.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -262,7 +263,7 @@ public class UserVo {
         }
     }
 
-    public static class KeyVehicleInfoBean {
+    public static class KeyVehicleInfoBean implements Serializable {
         /**
          * bizBatteries : [{"batteryBrand":"骆驼牌","batteryCode":"8","batteryName":"锂电池","batteryParameters":"12AH","batteryPn":"36V","batteryStatus":"NORMAL","bindTime":1526389839000,"mfrsName":"超威集团"}]
          * bizPartss : [{"bindTime":1526350210000,"createTime":1526350193000,"createUser":"admin","id":"56eb103dc1094551b28986bad222c6ab","mfrsName":"东莞市凯瑞德电瓶车有限公司","partsBrand":"17","partsCode":"17","partsName":"17","partsParameters":"17","partsPn":"17","partsStatus":"NORMAL","partsType":"SEATS","updateTime":1526350193000,"updateUser":"admin"}]

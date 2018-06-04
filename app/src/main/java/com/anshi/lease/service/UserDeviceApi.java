@@ -1,5 +1,6 @@
 package com.anshi.lease.service;
 
+import com.google.gson.JsonArray;
 import com.jme.common.network.DTResponse;
 import java.util.HashMap;
 import retrofit2.Call;
@@ -28,7 +29,7 @@ public interface UserDeviceApi {
      * @return
      */
     @POST("/mobile/v1/device/getbypk")
-    Call<DTResponse> getByPK();
+    Call<DTResponse> getByPK(@Body HashMap<String, String> params);
 
 
     /**
@@ -44,7 +45,7 @@ public interface UserDeviceApi {
      * @return
      */
     @POST("/mobile/v1/device/getlocbyvehiclepk")
-    Call<DTResponse> getLocByVehiclePK();
+    Call<DTResponse> getLocByVehiclePK(@Body JsonArray jsonArray);
 
 
     /**
