@@ -2,6 +2,7 @@ package com.anshi.lease.ui.activity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.TextView;
 import com.anshi.lease.R;
 import com.anshi.lease.domain.UserVo;
@@ -10,6 +11,7 @@ import com.anshi.lease.ui.base.LeaseBaseActivity;
 import com.jme.common.network.DTRequest;
 import java.util.HashMap;
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by Android Studio.
@@ -148,4 +150,24 @@ public class VehicleDetailActivity extends LeaseBaseActivity {
                 break;
         }
     }
+
+    @OnClick({R.id.tv_parts_info, R.id.tv_set_default})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_parts_info:
+                gotoPartsInfoActivity();
+                break;
+            case R.id.tv_set_default:
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void gotoPartsInfoActivity() {
+        Bundle bundle = new Bundle();
+        bundle.putString("id", id);
+        startAnimActivity(PartsInfoActivity.class, bundle);
+    }
+
 }

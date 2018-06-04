@@ -37,7 +37,7 @@ public interface UserDeviceApi {
      * @return
      */
     @POST("/mobile/v1/device/getbypr")
-    Call<DTResponse> getByPR();
+    Call<DTResponse> getByPR(@Body HashMap<String, String> params);
 
 
     /**

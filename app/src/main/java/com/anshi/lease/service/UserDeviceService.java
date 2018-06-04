@@ -60,10 +60,10 @@ public class UserDeviceService extends IService<UserDeviceApi> {
         }
     };
 
-    public API getByPR = new API<String>("getByPR") {
+    public API getByPR = new API<List<UserVo.KeyVehicleInfoBean.BizPartssBean>>("getByPR") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.getByPR();
+            return mApi.getByPR(params);
         }
     };
 

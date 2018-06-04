@@ -60,6 +60,10 @@
             android:name=".ui.activity.VehicleDetailActivity"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".ui.activity.PartsInfoActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>
