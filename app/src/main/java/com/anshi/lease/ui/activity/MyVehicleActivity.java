@@ -9,11 +9,14 @@ import android.view.View;
 import com.anshi.lease.R;
 import com.anshi.lease.common.UserInfo;
 import com.anshi.lease.domain.UserVo;
+import com.anshi.lease.service.UserDeviceService;
 import com.anshi.lease.ui.adapter.VehicleAdapter;
 import com.anshi.lease.ui.base.LeaseBaseActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.jme.common.network.DTRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import butterknife.BindView;
 
@@ -56,10 +59,30 @@ public class MyVehicleActivity extends LeaseBaseActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        mVehicleInfoBeans = UserInfo.getInstance().getCurrentUser().getKey_vehicle_info();
-        if (mVehicleInfoBeans == null)
-            return;
-        mAdapter.setNewData(mVehicleInfoBeans);
+        getVehicleByUserId();
+    }
+
+    private void getVehicleByUserId() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("id", UserInfo.getInstance().getCurrentUser().getKey_user_info().getId());
+        sendRequest(UserDeviceService.getInstance().getVehicleByUserId, params, true);
+    }
+
+    @Override
+    protected void DataReturn(DTRequest request, String msgCode, Object response) {
+        super.DataReturn(request, msgCode, response);
+        switch (request.getApi().getName()) {
+            case "getVehicleByUserId":
+                if (msgCode.equals("200")) {
+                    mVehicleInfoBeans = (List<UserVo.KeyVehicleInfoBean>) response;
+                    if (mVehicleInfoBeans == null)
+                        return;
+                    mAdapter.setNewData(mVehicleInfoBeans);
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     @Override

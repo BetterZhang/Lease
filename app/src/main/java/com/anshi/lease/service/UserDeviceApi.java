@@ -68,6 +68,6 @@ public interface UserDeviceApi {
      * @return
      */
     @POST("/mobile/v1/device/getVehicleByUserId")
-    Call<DTResponse> getVehicleByUserId();
+    Call<DTResponse> getVehicleByUserId(@Body HashMap<String, String> params);
 
 }

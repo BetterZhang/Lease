@@ -12,6 +12,7 @@ import com.anshi.lease.domain.UserVo;
 public class UserInfo {
 
     private UserVo userVo;
+    private String defaultVehicleCode;
 
     private static UserInfo userInfo = null;
 
@@ -30,12 +31,19 @@ public class UserInfo {
         return userVo;
     }
 
+    public String getDefaultVehicleCode() {
+        return defaultVehicleCode;
+    }
+
     public void login(UserVo userVo) {
         this.userVo = userVo;
+        if (userVo.getKey_vehicle_info() != null && userVo.getKey_vehicle_info().size() > 0)
+            defaultVehicleCode = userVo.getKey_vehicle_info().get(0).getVehicleCode();
     }
 
     public void logout() {
         userVo = null;
+        defaultVehicleCode = null;
     }
 
     public boolean isLogin() {

@@ -1,11 +1,14 @@
 package com.anshi.lease.service;
 
 import com.anshi.lease.common.Constants;
+import com.anshi.lease.domain.UserVo;
 import com.jme.common.network.API;
 import com.jme.common.network.DTResponse;
 import com.jme.common.network.IService;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -82,10 +85,10 @@ public class UserDeviceService extends IService<UserDeviceApi> {
         }
     };
 
-    public API getVehicleByUserId = new API<String>("getVehicleByUserId") {
+    public API getVehicleByUserId = new API<List<UserVo.KeyVehicleInfoBean>>("getVehicleByUserId") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.getVehicleByUserId();
+            return mApi.getVehicleByUserId(params);
         }
     };
 
