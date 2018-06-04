@@ -110,7 +110,7 @@ public class MainActivity extends LeaseBaseActivity {
                 switch (item.getItemId()) {
                     case R.id.item_bike:
                         if (mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED"))
-                            gotoBikeActivity();
+                            gotoMyVehicleActivity();
                         else
                             gotoAuthTipActivity();
                         break;
@@ -135,8 +135,8 @@ public class MainActivity extends LeaseBaseActivity {
         startAnimActivity(AuthTipActivity.class);
     }
 
-    private void gotoBikeActivity() {
-
+    private void gotoMyVehicleActivity() {
+        startAnimActivity(MyVehicleActivity.class);
     }
 
     private void gotoPersonalActivity() {
