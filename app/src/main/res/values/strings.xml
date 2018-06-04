@@ -4,4 +4,7 @@
     <string name="navigation_drawer_open">navigation_drawer_open</string>
     <string name="navigation_drawer_close">navigation_drawer_close</string>
     <string name="text_get_verification_code">获取验证码</string>
+
+    <string name="text_auth_tip">很遗憾您的名下没有车辆，赶快实名认证，去企业申请车辆吧！</string>
+
 </resources>

@@ -7,4 +7,23 @@
 
     <include layout="@layout/layout_toolbar" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/text_auth_tip"
+        android:padding="20dp"
+        android:textSize="16sp"
+        android:lineSpacingExtra="8dp"/>
+
+    <TextView
+        android:id="@+id/tv_auth"
+        style="@style/Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:text="实名认证"
+        android:background="@drawable/selector_text_button"/>
+
 </LinearLayout>
