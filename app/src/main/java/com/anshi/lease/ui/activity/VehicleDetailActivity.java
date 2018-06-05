@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 import com.anshi.lease.R;
+import com.anshi.lease.common.UserInfo;
 import com.anshi.lease.domain.UserVo;
 import com.anshi.lease.service.UserDeviceService;
 import com.anshi.lease.ui.base.LeaseBaseActivity;
@@ -158,6 +159,7 @@ public class VehicleDetailActivity extends LeaseBaseActivity {
                 gotoPartsInfoActivity();
                 break;
             case R.id.tv_set_default:
+                setDefaultVehicle();
                 break;
             default:
                 break;
@@ -168,6 +170,12 @@ public class VehicleDetailActivity extends LeaseBaseActivity {
         Bundle bundle = new Bundle();
         bundle.putString("id", id);
         startAnimActivity(PartsInfoActivity.class, bundle);
+    }
+
+    private void setDefaultVehicle() {
+        UserInfo.getInstance().setDefaultVehicleCode(vehicleInfo.getVehicleCode());
+        setResult(RESULT_OK);
+        this.finish();
     }
 
 }

@@ -35,6 +35,10 @@ public class UserInfo {
         return defaultVehicleCode;
     }
 
+    public void setDefaultVehicleCode(String vehicleCode) {
+        this.defaultVehicleCode = vehicleCode;
+    }
+
     public void login(UserVo userVo) {
         this.userVo = userVo;
         if (userVo.getKey_vehicle_info() != null && userVo.getKey_vehicle_info().size() > 0)

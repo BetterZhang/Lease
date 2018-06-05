@@ -22,11 +22,11 @@ public class VehicleAdapter extends BaseQuickAdapter<UserVo.KeyVehicleInfoBean, 
 
     public VehicleAdapter(@Nullable List<UserVo.KeyVehicleInfoBean> data) {
         super(R.layout.item_vehicle, data);
-        defaultVehicleCode = UserInfo.getInstance().getDefaultVehicleCode();
     }
 
     @Override
     protected void convert(BaseViewHolder helper, UserVo.KeyVehicleInfoBean item) {
+        defaultVehicleCode = UserInfo.getInstance().getDefaultVehicleCode();
         position = helper.getLayoutPosition() + 1;
         helper.setText(R.id.tv_vehicle, "我的车辆" + position);
         if (defaultVehicleCode != null && defaultVehicleCode.equals(item.getVehicleCode()))
