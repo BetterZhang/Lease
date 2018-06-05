@@ -28,7 +28,7 @@ import butterknife.BindView;
  * Time   : 2018/05/15 下午 12:10
  * Desc   : App主页面
  */
-public class MainActivity extends LeaseBaseActivity {
+public class MainActivity extends LeaseBaseActivity implements View.OnClickListener {
 
     @BindView(R.id.layout_drawer)
     DrawerLayout layout_drawer;
@@ -101,6 +101,10 @@ public class MainActivity extends LeaseBaseActivity {
         }
     }
 
+    private void gotoAuthIdCardActivity() {
+        startAnimActivity(AuthIdCardActivity.class);
+    }
+
     @Override
     protected void initListener() {
         super.initListener();
@@ -129,6 +133,7 @@ public class MainActivity extends LeaseBaseActivity {
                 return false;
             }
         });
+        tv_status.setOnClickListener(this);
     }
 
     private void gotoAuthTipActivity() {
@@ -147,4 +152,12 @@ public class MainActivity extends LeaseBaseActivity {
         startAnimActivity(EditPwdActivity.class);
     }
 
+    @Override
+    public void onClick(View view) {
+        if (mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED")) {
+            showShortToast("您已经实名认证，请勿重复提交");
+        } else {
+            gotoAuthIdCardActivity();
+        }
+    }
 }

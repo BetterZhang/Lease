@@ -2,31 +2,24 @@ package com.anshi.lease.ui.activity;
 
 import com.anshi.lease.R;
 import com.anshi.lease.ui.base.LeaseBaseActivity;
-import butterknife.OnClick;
 
 /**
  * Created by Android Studio.
  * Author : zhangzhongqiang
  * Email  : betterzhang.dev@gmail.com
- * Time   : 2018/05/18 下午 5:22
- * Desc   : AuthTipActivity
+ * Time   : 2018/06/05 下午11:18
+ * Desc   : description
  */
-public class AuthTipActivity extends LeaseBaseActivity {
+public class AuthIdCardActivity extends LeaseBaseActivity {
 
     @Override
     protected int getContentViewId() {
-        return R.layout.activity_auth_tip;
+        return R.layout.activity_auth_idcard;
     }
 
     @Override
     protected void initView() {
         super.initView();
-        initToolbar("我的车辆", true);
+        initToolbar("实名认证", true);
     }
-
-    @OnClick({R.id.tv_auth})
-    public void onClick() {
-        startAnimActivity(AuthIdCardActivity.class);
-    }
-
 }
