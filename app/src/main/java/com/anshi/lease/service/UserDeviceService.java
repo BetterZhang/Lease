@@ -23,6 +23,7 @@ import retrofit2.Call;
  */
 public class UserDeviceService extends IService<UserDeviceApi> {
 
+    private String id;
     private String ids;
     private String[] idArray;
 
@@ -63,7 +64,10 @@ public class UserDeviceService extends IService<UserDeviceApi> {
     public API getByPR = new API<List<UserVo.KeyVehicleInfoBean.BizPartssBean>>("getByPR") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.getByPR(params);
+            id = params.get("id");
+            JsonArray jsonArray = new JsonArray();
+            jsonArray.add(id);
+            return mApi.getByPR(jsonArray);
         }
     };
 
