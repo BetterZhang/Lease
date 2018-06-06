@@ -1,6 +1,7 @@
 package com.anshi.lease.app;
 
 import android.content.Context;
+import com.baidu.mapapi.SDKInitializer;
 import com.jme.common.app.BaseApplication;
 
 /**
@@ -20,6 +21,7 @@ public class LeaseApplication extends BaseApplication {
         super.onCreate();
         instance = this;
         context = this.getApplicationContext();
+        SDKInitializer.initialize(getApplicationContext());
     }
 
     public static LeaseApplication getInstance() {

@@ -30,6 +30,12 @@
 
             <include layout="@layout/layout_toolbar" />
 
+            <com.baidu.mapapi.map.MapView
+                android:id="@+id/mapView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true" />
+
         </LinearLayout>
         
     </FrameLayout>
