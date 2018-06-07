@@ -1,7 +1,11 @@
 package com.anshi.lease.ui.activity;
 
+import android.widget.EditText;
 import com.anshi.lease.R;
 import com.anshi.lease.ui.base.LeaseBaseActivity;
+import com.anshi.lease.util.TextUtils;
+import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by Android Studio.
@@ -11,6 +15,9 @@ import com.anshi.lease.ui.base.LeaseBaseActivity;
  * Desc   : description
  */
 public class AuthIdCardActivity extends LeaseBaseActivity {
+
+    @BindView(R.id.et_idcard)
+    EditText et_idcard;
 
     @Override
     protected int getContentViewId() {
@@ -22,4 +29,14 @@ public class AuthIdCardActivity extends LeaseBaseActivity {
         super.initView();
         initToolbar("实名认证", true);
     }
+
+    @OnClick(R.id.tv_next_step)
+    public void onClick() {
+        if (TextUtils.isEmpty(et_idcard)) {
+            showShortToast("请输入身份证号");
+            return;
+        }
+        startAnimActivity(UploadIdCardctivity.class);
+    }
+
 }

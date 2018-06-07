@@ -24,21 +24,21 @@
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/tv_step_one"
+            android:id="@+id/tv_step_three"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="步骤1："
+            android:text="步骤3："
             android:textSize="18sp"
             android:textStyle="bold"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/tv_step_one"
-            android:layout_below="@+id/tv_step_one"
+            android:layout_toRightOf="@+id/tv_step_three"
+            android:layout_below="@+id/tv_step_three"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:text="输入身份证号"
+            android:text="等待审核"
             android:textStyle="bold"/>
 
     </RelativeLayout>
@@ -52,40 +52,27 @@
         android:layout_marginBottom="15dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:orientation="horizontal"
         android:background="@color/common_item_background">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="身份证号："
+            android:text="请耐心等待企业审核"
             android:textSize="16sp"/>
-
-        <com.jme.common.ui.view.ClearEditText
-            android:id="@+id/et_idcard"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:singleLine="true"
-            android:textSize="14sp"
-            android:digits="01234567890Xx"
-            android:hint="请输入身份证号"
-            android:textColorHint="@color/common_font_gray"
-            android:layout_marginLeft="20dp"
-            android:background="@null"/>
 
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_next_step"
+        android:id="@+id/tv_complete"
         style="@style/Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:gravity="center"
-        android:text="下一步"
+        android:text="完成"
         android:background="@drawable/selector_text_button"/>
 
 </LinearLayout>
