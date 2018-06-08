@@ -55,6 +55,7 @@
             <include layout="@layout/item_line_vertical"/>
 
             <TextView
+                android:id="@+id/tv_front"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="15dp"
@@ -68,11 +69,14 @@
                 android:drawableRight="@mipmap/ic_down"/>
 
             <LinearLayout
+                android:id="@+id/layout_front"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="180dp"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:padding="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:visibility="gone"
                 android:background="@color/common_item_background">
 
                 <ImageView
@@ -92,6 +96,7 @@
             <include layout="@layout/item_line_vertical"/>
 
             <TextView
+                android:id="@+id/tv_back"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:paddingLeft="10dp"
@@ -104,11 +109,14 @@
                 android:drawableRight="@mipmap/ic_down"/>
 
             <LinearLayout
+                android:id="@+id/layout_back"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="180dp"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:padding="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:visibility="gone"
                 android:background="@color/common_item_background">
 
                 <ImageView
@@ -128,6 +136,7 @@
             <include layout="@layout/item_line_vertical"/>
 
             <TextView
+                android:id="@+id/tv_group"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:paddingLeft="10dp"
@@ -140,11 +149,14 @@
                 android:drawableRight="@mipmap/ic_down"/>
 
             <LinearLayout
+                android:id="@+id/layout_group"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="180dp"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:padding="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:visibility="gone"
                 android:background="@color/common_item_background">
 
                 <ImageView

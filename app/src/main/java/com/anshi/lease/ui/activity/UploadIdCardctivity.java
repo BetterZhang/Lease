@@ -6,9 +6,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
-
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import com.anshi.lease.R;
 import com.anshi.lease.common.UserInfo;
 import com.anshi.lease.domain.AuthDataVo;
@@ -36,6 +38,18 @@ public class UploadIdCardctivity extends LeaseBaseActivity implements Imageutils
     ImageView iv_back;
     @BindView(R.id.iv_group)
     ImageView iv_group;
+    @BindView(R.id.layout_front)
+    LinearLayout layout_front;
+    @BindView(R.id.layout_back)
+    LinearLayout layout_back;
+    @BindView(R.id.layout_group)
+    LinearLayout layout_group;
+    @BindView(R.id.tv_front)
+    TextView tv_front;
+    @BindView(R.id.tv_back)
+    TextView tv_back;
+    @BindView(R.id.tv_group)
+    TextView tv_group;
 
     private Imageutils mImageutils;
     private Bitmap frontBitmap;
@@ -44,6 +58,10 @@ public class UploadIdCardctivity extends LeaseBaseActivity implements Imageutils
     private String frontFileName;
     private String backFileName;
     private String groupFileName;
+
+    private boolean frontFlag = false;
+    private boolean backFlag = false;
+    private boolean groupFlag = false;
 
     @Override
     protected int getContentViewId() {
@@ -62,7 +80,8 @@ public class UploadIdCardctivity extends LeaseBaseActivity implements Imageutils
         mImageutils = new Imageutils(this);
     }
 
-    @OnClick({R.id.tv_upload, R.id.iv_front, R.id.iv_back, R.id.iv_group})
+    @OnClick({R.id.tv_upload, R.id.iv_front, R.id.iv_back, R.id.iv_group,
+                R.id.tv_front, R.id.tv_back, R.id.tv_group})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_upload:
@@ -76,6 +95,18 @@ public class UploadIdCardctivity extends LeaseBaseActivity implements Imageutils
                 break;
             case R.id.iv_group:
                 mImageutils.imagepicker(3);
+                break;
+            case R.id.tv_front:
+                frontFlag = !frontFlag;
+                setFrontLayoutStatus();
+                break;
+            case R.id.tv_back:
+                backFlag = !backFlag;
+                setBackLayoutStatus();
+                break;
+            case R.id.tv_group:
+                groupFlag = !groupFlag;
+                setGroupLayoutStatus();
                 break;
             default:
                 break;
@@ -113,6 +144,36 @@ public class UploadIdCardctivity extends LeaseBaseActivity implements Imageutils
                 break;
             default:
                 break;
+        }
+    }
+
+    private void setFrontLayoutStatus() {
+        if (frontFlag) {
+            layout_front.setVisibility(View.VISIBLE);
+            tv_front.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(this, R.mipmap.ic_up), null);
+        } else {
+            layout_front.setVisibility(View.GONE);
+            tv_front.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(this, R.mipmap.ic_down), null);
+        }
+    }
+
+    private void setBackLayoutStatus() {
+        if (backFlag) {
+            layout_back.setVisibility(View.VISIBLE);
+            tv_back.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(this, R.mipmap.ic_up), null);
+        } else {
+            layout_back.setVisibility(View.GONE);
+            tv_back.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(this, R.mipmap.ic_down), null);
+        }
+    }
+
+    private void setGroupLayoutStatus() {
+        if (groupFlag) {
+            layout_group.setVisibility(View.VISIBLE);
+            tv_group.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(this, R.mipmap.ic_up), null);
+        } else {
+            layout_group.setVisibility(View.GONE);
+            tv_group.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(this, R.mipmap.ic_down), null);
         }
     }
 
