@@ -10,64 +10,171 @@
 
     <include layout="@layout/layout_toolbar"/>
 
-    <View
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="30dp"/>
+        android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/common_item_background"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="15dp"
-        android:padding="5dp">
-
-        <TextView
-            android:id="@+id/tv_step_two"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="步骤2："
-            android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/tv_step_two"
-            android:layout_below="@+id/tv_step_two"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:text="上传身份证图片"
-            android:textStyle="bold"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
 
-    </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/common_item_background"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="15dp"
+                android:padding="5dp">
 
-    <include layout="@layout/item_line_vertical"/>
+                <TextView
+                    android:id="@+id/tv_step_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="步骤2："
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
 
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="60dp"-->
-        <!--android:layout_marginTop="15dp"-->
-        <!--android:layout_marginBottom="15dp"-->
-        <!--android:paddingLeft="10dp"-->
-        <!--android:paddingRight="10dp"-->
-        <!--android:gravity="center_vertical"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:background="@color/common_item_background">-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tv_step_two"
+                    android:layout_below="@+id/tv_step_two"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="上传身份证图片"
+                    android:textStyle="bold"/>
 
+            </RelativeLayout>
 
-    <!--</LinearLayout>-->
+            <include layout="@layout/item_line_vertical"/>
 
-    <TextView
-        android:id="@+id/tv_upload"
-        style="@style/Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:gravity="center"
-        android:text="提交"
-        android:background="@drawable/selector_text_button"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="15dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:background="@color/common_item_background"
+                android:text="请您上传身份证正面照片"
+                android:textSize="16sp"
+                android:drawableRight="@mipmap/ic_down"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:background="@color/common_item_background">
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="@color/colorPrimary"/>
+
+                <ImageView
+                    android:id="@+id/iv_front"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/colorPrimary"/>
+
+            </LinearLayout>
+
+            <include layout="@layout/item_line_vertical"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:background="@color/common_item_background"
+                android:text="请您上传身份证反面照片"
+                android:textSize="16sp"
+                android:drawableRight="@mipmap/ic_down"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:background="@color/common_item_background">
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="@color/colorPrimary"/>
+
+                <ImageView
+                    android:id="@+id/iv_back"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/colorPrimary"/>
+
+            </LinearLayout>
+
+            <include layout="@layout/item_line_vertical"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:background="@color/common_item_background"
+                android:text="请您上传手持身份证正面照片"
+                android:textSize="16sp"
+                android:drawableRight="@mipmap/ic_down"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:background="@color/common_item_background">
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="@color/colorPrimary"/>
+
+                <ImageView
+                    android:id="@+id/iv_group"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/colorPrimary"/>
+
+            </LinearLayout>
+
+            <include layout="@layout/item_line_vertical"/>
+
+            <TextView
+                android:id="@+id/tv_upload"
+                style="@style/Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:gravity="center"
+                android:text="提交"
+                android:background="@drawable/selector_text_button"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

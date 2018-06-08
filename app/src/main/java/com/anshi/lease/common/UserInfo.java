@@ -1,5 +1,6 @@
 package com.anshi.lease.common;
 
+import com.anshi.lease.domain.AuthDataVo;
 import com.anshi.lease.domain.UserVo;
 
 /**
@@ -13,6 +14,7 @@ public class UserInfo {
 
     private UserVo userVo;
     private String defaultVehicleCode;
+    private AuthDataVo authDataVo;
 
     private static UserInfo userInfo = null;
 
@@ -54,4 +56,15 @@ public class UserInfo {
         return userVo != null;
     }
 
+    public AuthDataVo getAuthDataVo() {
+        return authDataVo;
+    }
+
+    public void setAuthDataVo(AuthDataVo authDataVo) {
+        this.authDataVo = authDataVo;
+    }
+
+    public void resetAuthDataVo() {
+        this.authDataVo = null;
+    }
 }

@@ -1,5 +1,6 @@
 package com.anshi.lease.ui.activity;
 
+import android.content.Intent;
 import com.anshi.lease.R;
 import com.anshi.lease.ui.base.LeaseBaseActivity;
 import butterknife.OnClick;
@@ -27,6 +28,14 @@ public class AuthCompleteActivity extends LeaseBaseActivity {
     @OnClick(R.id.tv_complete)
     public void onClick() {
         this.finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        super.onBackPressed();
     }
 
 }
