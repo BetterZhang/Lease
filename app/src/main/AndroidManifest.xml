@@ -118,6 +118,10 @@
             android:name=".ui.activity.AuthCompleteActivity"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".ui.activity.UploadHeadActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

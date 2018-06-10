@@ -78,11 +78,13 @@ public class PersonalActivity extends LeaseBaseActivity {
         tv_user_status.setText(TextUtils.isEmpty(mKeyUserInfoBean.getUserStatus()) ? "" : getUserStatus(mKeyUserInfoBean.getUserStatus()));
     }
 
-    @OnClick({R.id.tv_nick_name})
+    @OnClick({R.id.tv_nick_name, R.id.layout_head})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_nick_name:
                 startAnimActivity(EditNickNameActivity.class);
+                break;
+            case R.id.layout_head:
                 break;
             default:
                 break;
