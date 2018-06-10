@@ -85,6 +85,7 @@ public class PersonalActivity extends LeaseBaseActivity {
                 startAnimActivity(EditNickNameActivity.class);
                 break;
             case R.id.layout_head:
+                startAnimActivity(UploadHeadActivity.class);
                 break;
             default:
                 break;
