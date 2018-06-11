@@ -3,6 +3,7 @@ package com.anshi.lease.ui.activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -50,6 +51,8 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     NavigationView navigation_view;
     @BindView(R.id.mapView)
     MapView mapView;
+    @BindView(R.id.iv_head)
+    ImageView iv_head_back;
 
     ImageView iv_head;
     TextView tv_name;
@@ -85,6 +88,8 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
         layout_drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        toggle.setDrawerIndicatorEnabled(false);
+
         View headerLayout = navigation_view.getHeaderView(0);
         iv_head = headerLayout.findViewById(R.id.iv_head);
         tv_name = headerLayout.findViewById(R.id.tv_name);
@@ -102,6 +107,11 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     }
 
     private void setUserData() {
+        iv_head_back.setVisibility(View.VISIBLE);
+        Picasso.with(this)
+                .load(Constants.HttpConst.URL_BASE_IMG + mUserVo.getKey_user_info().getUserIcon())
+                .placeholder(R.mipmap.ic_head_default)
+                .into(iv_head_back);
         Picasso.with(this)
                 .load(Constants.HttpConst.URL_BASE_IMG + mUserVo.getKey_user_info().getUserIcon())
                 .placeholder(R.mipmap.ic_head_default)
@@ -138,6 +148,12 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     @Override
     protected void initListener() {
         super.initListener();
+        iv_head_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggle();
+            }
+        });
         navigation_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -164,6 +180,16 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
             }
         });
         tv_status.setOnClickListener(this);
+    }
+
+    private void toggle() {
+        int drawerLockMode = layout_drawer.getDrawerLockMode(GravityCompat.START);
+        if (layout_drawer.isDrawerVisible(GravityCompat.START)
+                && (drawerLockMode != DrawerLayout.LOCK_MODE_LOCKED_OPEN)) {
+            layout_drawer.closeDrawer(GravityCompat.START);
+        } else if (drawerLockMode != DrawerLayout.LOCK_MODE_LOCKED_CLOSED) {
+            layout_drawer.openDrawer(GravityCompat.START);
+        }
     }
 
     private void gotoAuthTipActivity() {
