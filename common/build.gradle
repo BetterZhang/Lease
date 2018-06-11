@@ -48,4 +48,5 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
     api 'com.squareup.picasso:picasso:2.5.2'
+    api 'de.hdodenhof:circleimageview:2.2.0'
 }
