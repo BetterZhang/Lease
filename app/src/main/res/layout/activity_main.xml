@@ -37,6 +37,29 @@
                 android:clickable="true" />
 
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_vehicle"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical"
+            android:background="@drawable/shape_circle"
+            android:layout_gravity="bottom|center_horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_vehicle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="车辆信息"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:drawableTop="@mipmap/ic_vehicle"
+                android:drawablePadding="3dp"/>
+
+        </LinearLayout>
         
     </FrameLayout>
 

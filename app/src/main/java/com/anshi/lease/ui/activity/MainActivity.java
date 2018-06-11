@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.anshi.lease.R;
@@ -53,6 +54,8 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     MapView mapView;
     @BindView(R.id.iv_head)
     ImageView iv_head_back;
+    @BindView(R.id.layout_vehicle)
+    LinearLayout layout_vehicle;
 
     ImageView iv_head;
     TextView tv_name;
@@ -180,6 +183,7 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
             }
         });
         tv_status.setOnClickListener(this);
+        layout_vehicle.setOnClickListener(this);
     }
 
     private void toggle() {
@@ -210,10 +214,21 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        if (mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED")) {
-            showShortToast("您已经实名认证，请勿重复提交");
-        } else {
-            gotoAuthIdCardActivity();
+        switch (view.getId()) {
+            case R.id.tv_status:
+                if (mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED")) {
+                    showShortToast("您已经实名认证，请勿重复提交");
+                } else {
+                    gotoAuthIdCardActivity();
+                }
+                break;
+            case R.id.layout_vehicle:
+                if (!mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED")) {
+                    showShortToast("请先进行实名认证并从企业申领车辆后才能使用本功能");
+                } else {
+
+                }
+                break;
         }
     }
 
