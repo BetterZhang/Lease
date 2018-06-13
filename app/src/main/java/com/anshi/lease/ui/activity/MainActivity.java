@@ -157,8 +157,18 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                         return;
                     }
                     mVehicleInfoVo = mVehicleInfoVoList.get(0);
+
+                    LatLng ll = new LatLng(mVehicleInfoVo.getLAT(), mVehicleInfoVo.getLON());
+                    MapStatus.Builder builder = new MapStatus.Builder();
+                    builder.target(ll).zoom(18.0f);
+                    mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
                 } else {
                     showShortToast("未查询到本车辆的定位信息");
+                }
+                break;
+            case "getPowerByVehiclePK":
+                if (msgCode.equals("200")) {
+
                 }
                 break;
             default:
@@ -263,6 +273,14 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
         sendRequest(UserDeviceService.getInstance().getLocByVehiclePK, params, true);
     }
 
+    private void getPowerByVehiclePK() {
+        if (TextUtils.isEmpty(UserInfo.getInstance().getDefaultVehicleId()))
+            return;
+        HashMap<String, String> params = new HashMap<>();
+        params.put("id", UserInfo.getInstance().getDefaultVehicleId());
+        sendRequest(UserDeviceService.getInstance().getPowerByVehiclePK, params, true);
+    }
+
     private void initMap() {
         //获取地图控件引用
         mBaiduMap = mapView.getMap();
@@ -291,8 +309,7 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     //配置定位SDK参数
     private void initLocation() {
         LocationClientOption option = new LocationClientOption();
-        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy
-        );//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
         option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系
         int span = 1000;
         option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
@@ -364,12 +381,14 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
         // 在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
         mapView.onDestroy();
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         // 在activity执行onResume时执行mMapView. onResume ()，实现地图生命周期管理
         mapView.onResume();
     }
+
     @Override
     protected void onPause() {
         super.onPause();
