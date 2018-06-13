@@ -14,6 +14,7 @@ public class UserInfo {
 
     private UserVo userVo;
     private String defaultVehicleCode;
+    private String defaultVehicleId;
     private AuthDataVo authDataVo;
 
     private static UserInfo userInfo = null;
@@ -37,19 +38,30 @@ public class UserInfo {
         return defaultVehicleCode;
     }
 
+    public String getDefaultVehicleId() {
+        return defaultVehicleId;
+    }
+
     public void setDefaultVehicleCode(String vehicleCode) {
         this.defaultVehicleCode = vehicleCode;
     }
 
+    public void setDefaultVehicleId(String vehicleId) {
+        this.defaultVehicleId = vehicleId;
+    }
+
     public void login(UserVo userVo) {
         this.userVo = userVo;
-        if (userVo.getKey_vehicle_info() != null && userVo.getKey_vehicle_info().size() > 0)
+        if (userVo.getKey_vehicle_info() != null && userVo.getKey_vehicle_info().size() > 0) {
             defaultVehicleCode = userVo.getKey_vehicle_info().get(0).getVehicleCode();
+            defaultVehicleId = userVo.getKey_vehicle_info().get(0).getId();
+        }
     }
 
     public void logout() {
         userVo = null;
         defaultVehicleCode = null;
+        defaultVehicleId = null;
     }
 
     public boolean isLogin() {

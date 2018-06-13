@@ -174,6 +174,7 @@ public class VehicleDetailActivity extends LeaseBaseActivity {
 
     private void setDefaultVehicle() {
         UserInfo.getInstance().setDefaultVehicleCode(vehicleInfo.getVehicleCode());
+        UserInfo.getInstance().setDefaultVehicleId(vehicleInfo.getId());
         setResult(RESULT_OK);
         this.finish();
     }

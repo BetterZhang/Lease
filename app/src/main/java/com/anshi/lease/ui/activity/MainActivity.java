@@ -7,17 +7,21 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.anshi.lease.R;
 import com.anshi.lease.common.Constants;
 import com.anshi.lease.common.UserInfo;
 import com.anshi.lease.domain.UserVo;
+import com.anshi.lease.domain.VehicleInfoVo;
 import com.anshi.lease.service.UserAuthService;
+import com.anshi.lease.service.UserDeviceService;
 import com.anshi.lease.ui.base.LeaseBaseActivity;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -32,7 +36,11 @@ import com.baidu.mapapi.model.LatLng;
 import com.jme.common.network.DTRequest;
 import com.jme.common.ui.base.ToolbarHelper;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 import butterknife.BindView;
 
 /**
@@ -62,6 +70,8 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     TextView tv_status;
 
     private UserVo mUserVo;
+    private List<VehicleInfoVo> mVehicleInfoVoList = new ArrayList<>();
+    private VehicleInfoVo mVehicleInfoVo;
 
     private BaiduMap mBaiduMap;
     public LocationClient mLocationClient;
@@ -137,6 +147,18 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                     showShortToast("登出成功");
                     startAnimActivity(LoginActivity.class);
                     this.finish();
+                }
+                break;
+            case "getLocByVehiclePK":
+                if (msgCode.equals("200")) {
+                    mVehicleInfoVoList = (List<VehicleInfoVo>) response;
+                    if (mVehicleInfoVoList == null || mVehicleInfoVoList.size() == 0) {
+                        showShortToast("未查询到本车辆的定位信息");
+                        return;
+                    }
+                    mVehicleInfoVo = mVehicleInfoVoList.get(0);
+                } else {
+                    showShortToast("未查询到本车辆的定位信息");
                 }
                 break;
             default:
@@ -223,13 +245,22 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                 }
                 break;
             case R.id.layout_vehicle:
-                if (!mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED")) {
+                if (!mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED") ||
+                        mUserVo.getKey_vehicle_info().size() == 0) {
                     showShortToast("请先进行实名认证并从企业申领车辆后才能使用本功能");
                 } else {
-
+                    getLocByVehiclePK();
                 }
                 break;
         }
+    }
+
+    private void getLocByVehiclePK() {
+        if (TextUtils.isEmpty(UserInfo.getInstance().getDefaultVehicleId()))
+            return;
+        HashMap<String, String> params = new HashMap<>();
+        params.put("id", UserInfo.getInstance().getDefaultVehicleId());
+        sendRequest(UserDeviceService.getInstance().getLocByVehiclePK, params, true);
     }
 
     private void initMap() {

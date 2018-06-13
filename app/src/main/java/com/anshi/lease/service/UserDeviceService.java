@@ -2,6 +2,7 @@ package com.anshi.lease.service;
 
 import com.anshi.lease.common.Constants;
 import com.anshi.lease.domain.UserVo;
+import com.anshi.lease.domain.VehicleInfoVo;
 import com.google.gson.JsonArray;
 import com.jme.common.network.API;
 import com.jme.common.network.DTResponse;
@@ -71,14 +72,12 @@ public class UserDeviceService extends IService<UserDeviceApi> {
         }
     };
 
-    public API getLocByVehiclePK = new API<String>("getLocByVehiclePK") {
+    public API getLocByVehiclePK = new API<List<VehicleInfoVo>>("getLocByVehiclePK") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            ids = params.get("ids");
-            idArray = ids.split(",");
+            id = params.get("id");
             JsonArray jsonArray = new JsonArray();
-            for (String id : idArray)
-                jsonArray.add(id);
+            jsonArray.add(id);
             return mApi.getLocByVehiclePK(jsonArray);
         }
     };
