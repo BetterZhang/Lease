@@ -1,7 +1,10 @@
 package com.anshi.lease.common;
 
+import com.anshi.lease.app.LeaseApplication;
 import com.anshi.lease.domain.AuthDataVo;
 import com.anshi.lease.domain.UserVo;
+import com.jme.common.ui.config.RxBusConfig;
+import com.jme.common.util.SharedPreUtils;
 
 /**
  * Created by Android Studio.
@@ -62,6 +65,8 @@ public class UserInfo {
         userVo = null;
         defaultVehicleCode = null;
         defaultVehicleId = null;
+        SharedPreUtils.setString(LeaseApplication.getContext(), RxBusConfig.LOGIN_USER_INFO, "");
+        SharedPreUtils.setString(LeaseApplication.getContext(), RxBusConfig.HEADER_LOGIN_TOKEN, "");
     }
 
     public boolean isLogin() {

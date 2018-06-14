@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.anshi.lease.R;
 import com.anshi.lease.common.Constants;
 import com.anshi.lease.common.UserInfo;
@@ -36,11 +35,9 @@ import com.baidu.mapapi.model.LatLng;
 import com.jme.common.network.DTRequest;
 import com.jme.common.ui.base.ToolbarHelper;
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import butterknife.BindView;
 
 /**
@@ -135,7 +132,7 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
 
     private void logout() {
         HashMap<String, String> params = new HashMap<>();
-        sendRequest(UserAuthService.getInstance().logout, params, true);
+        sendRequest(UserAuthService.getInstance().logout, params, false, false, false);
     }
 
     @Override
@@ -143,11 +140,10 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
         super.DataReturn(request, msgCode, response);
         switch (request.getApi().getName()) {
             case "logout":
-                if (msgCode.equals("200")) {
-                    showShortToast("登出成功");
-                    startAnimActivity(LoginActivity.class);
-                    this.finish();
-                }
+                UserInfo.getInstance().logout();
+                showShortToast("登出成功");
+                startAnimActivity(LoginActivity.class);
+                this.finish();
                 break;
             case "getLocByVehiclePK":
                 if (msgCode.equals("200")) {

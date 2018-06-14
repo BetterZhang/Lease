@@ -7,6 +7,6 @@ package com.jme.common.ui.config;
 public class RxBusConfig {
 
     public static final String HEADER_LOGIN_TOKEN = "header-login-token";
-
+    public static final String LOGIN_USER_INFO = "LoginUserInfo";
 
 }
