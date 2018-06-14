@@ -5,11 +5,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 import com.anshi.lease.R;
-import com.anshi.lease.common.UserInfo;
 import com.anshi.lease.domain.UserVo;
 import com.anshi.lease.service.UserDeviceService;
 import com.anshi.lease.ui.base.LeaseBaseActivity;
 import com.jme.common.network.DTRequest;
+import com.jme.common.ui.config.RxBusConfig;
+import com.jme.common.util.SharedPreUtils;
 import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -173,8 +174,8 @@ public class VehicleDetailActivity extends LeaseBaseActivity {
     }
 
     private void setDefaultVehicle() {
-        UserInfo.getInstance().setDefaultVehicleCode(vehicleInfo.getVehicleCode());
-        UserInfo.getInstance().setDefaultVehicleId(vehicleInfo.getId());
+        SharedPreUtils.setString(this, RxBusConfig.DEFAULT_VEHICLE_CODE, vehicleInfo.getVehicleCode());
+        SharedPreUtils.setString(this, RxBusConfig.DEFAULT_VEHICLE_ID, vehicleInfo.getId());
         setResult(RESULT_OK);
         this.finish();
     }

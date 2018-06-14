@@ -2,10 +2,11 @@ package com.anshi.lease.ui.adapter;
 
 import android.support.annotation.Nullable;
 import com.anshi.lease.R;
-import com.anshi.lease.common.UserInfo;
 import com.anshi.lease.domain.UserVo;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.jme.common.ui.config.RxBusConfig;
+import com.jme.common.util.SharedPreUtils;
 import java.util.List;
 
 /**
@@ -26,10 +27,12 @@ public class VehicleAdapter extends BaseQuickAdapter<UserVo.KeyVehicleInfoBean, 
 
     @Override
     protected void convert(BaseViewHolder helper, UserVo.KeyVehicleInfoBean item) {
-        defaultVehicleCode = UserInfo.getInstance().getDefaultVehicleCode();
+        defaultVehicleCode = SharedPreUtils.getString(mContext, RxBusConfig.DEFAULT_VEHICLE_CODE);
         position = helper.getLayoutPosition() + 1;
         helper.setText(R.id.tv_vehicle, "我的车辆" + position);
         if (defaultVehicleCode != null && defaultVehicleCode.equals(item.getVehicleCode()))
             helper.setText(R.id.tv_default_flag, "默认车辆");
+        else
+            helper.setText(R.id.tv_default_flag, "");
     }
 }

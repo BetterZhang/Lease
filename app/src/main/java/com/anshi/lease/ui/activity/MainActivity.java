@@ -41,6 +41,8 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.jme.common.network.DTRequest;
 import com.jme.common.ui.base.ToolbarHelper;
+import com.jme.common.ui.config.RxBusConfig;
+import com.jme.common.util.SharedPreUtils;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -334,18 +336,18 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     }
 
     private void getLocByVehiclePK() {
-        if (TextUtils.isEmpty(UserInfo.getInstance().getDefaultVehicleId()))
+        if (TextUtils.isEmpty(SharedPreUtils.getString(this, RxBusConfig.DEFAULT_VEHICLE_ID)))
             return;
         HashMap<String, String> params = new HashMap<>();
-        params.put("id", UserInfo.getInstance().getDefaultVehicleId());
+        params.put("id", SharedPreUtils.getString(this, RxBusConfig.DEFAULT_VEHICLE_ID));
         sendRequest(UserDeviceService.getInstance().getLocByVehiclePK, params, true);
     }
 
     private void getPowerByVehiclePK() {
-        if (TextUtils.isEmpty(UserInfo.getInstance().getDefaultVehicleId()))
+        if (TextUtils.isEmpty(SharedPreUtils.getString(this, RxBusConfig.DEFAULT_VEHICLE_ID)))
             return;
         HashMap<String, String> params = new HashMap<>();
-        params.put("id", UserInfo.getInstance().getDefaultVehicleId());
+        params.put("id", SharedPreUtils.getString(this, RxBusConfig.DEFAULT_VEHICLE_ID));
         sendRequest(UserDeviceService.getInstance().getPowerByVehiclePK, params, true);
     }
 
