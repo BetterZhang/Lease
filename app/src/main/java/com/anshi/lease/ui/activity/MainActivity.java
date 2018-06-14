@@ -26,11 +26,18 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.search.geocode.GeoCodeResult;
+import com.baidu.mapapi.search.geocode.GeoCoder;
+import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.jme.common.network.DTRequest;
 import com.jme.common.ui.base.ToolbarHelper;
 import com.squareup.picasso.Picasso;
@@ -46,7 +53,10 @@ import butterknife.BindView;
  * Time   : 2018/05/15 下午 12:10
  * Desc   : App主页面
  */
-public class MainActivity extends LeaseBaseActivity implements View.OnClickListener {
+public class MainActivity extends LeaseBaseActivity implements View.OnClickListener, OnGetGeoCoderResultListener {
+
+    private static final int accuracyCircleFillColor = 0xAAFFFF88;
+    private static final int accuracyCircleStrokeColor = 0xAA00FF00;
 
     @BindView(R.id.layout_drawer)
     DrawerLayout layout_drawer;
@@ -80,6 +90,9 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     private float mCurrentAccracy;
 
     private MyLocationData locData;
+
+    BitmapDescriptor mCurrentMarker;
+    GeoCoder mSearch = null; // 搜索模块，也可去掉地图模块独立使用
 
     @Override
     protected int getContentViewId() {
@@ -116,6 +129,9 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        // 初始化搜索模块，注册事件监听
+        mSearch = GeoCoder.newInstance();
+        mSearch.setOnGetGeoCodeResultListener(this);
         mUserVo = UserInfo.getInstance().getCurrentUser();
         if (mUserVo != null)
             setUserData();
@@ -159,10 +175,22 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                     }
                     mVehicleInfoVo = mVehicleInfoVoList.get(0);
 
+                    mBaiduMap.clear();
                     LatLng ll = new LatLng(mVehicleInfoVo.getLAT(), mVehicleInfoVo.getLON());
                     MapStatus.Builder builder = new MapStatus.Builder();
                     builder.target(ll).zoom(18.0f);
-                    mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+//                    // 修改为自定义marker
+//                    mCurrentMarker = BitmapDescriptorFactory
+//                            .fromResource(R.drawable.icon_geo);
+//                    mBaiduMap.setMyLocationConfiguration(new MyLocationConfiguration(
+//                            MyLocationConfiguration.LocationMode.NORMAL, true, mCurrentMarker,
+//                            accuracyCircleFillColor, accuracyCircleStrokeColor));
+//                    mBaiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+
+                    mBaiduMap.addOverlay(new MarkerOptions().position(ll)
+                            .icon(BitmapDescriptorFactory
+                                    .fromResource(R.drawable.icon_geo)));
+                    mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(ll));
                 } else {
                     showShortToast("未查询到本车辆的定位信息");
                 }
@@ -330,6 +358,16 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
         option.setCoorType("bd09ll"); // 设置坐标类型
         option.setScanSpan(1000);
         mLocationClient.setLocOption(option);
+    }
+
+    @Override
+    public void onGetGeoCodeResult(GeoCodeResult result) {
+
+    }
+
+    @Override
+    public void onGetReverseGeoCodeResult(ReverseGeoCodeResult result) {
+
     }
 
     /**
