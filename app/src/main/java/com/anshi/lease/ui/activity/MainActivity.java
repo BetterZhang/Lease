@@ -1,5 +1,6 @@
 package com.anshi.lease.ui.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,9 +30,11 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
@@ -88,6 +92,8 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     private MyLocationData locData;
 
     BitmapDescriptor mCurrentMarker;
+    private Marker mMarker;
+    private InfoWindow mInfoWindow;
 
     @Override
     protected int getContentViewId() {
@@ -179,9 +185,9 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
 //                            accuracyCircleFillColor, accuracyCircleStrokeColor));
 //                    mBaiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
 
-                    mBaiduMap.addOverlay(new MarkerOptions().position(ll)
-                            .icon(BitmapDescriptorFactory
-                                    .fromResource(R.drawable.icon_geo)));
+                    MarkerOptions markerOptions = new MarkerOptions().position(ll).
+                            icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_geo));
+                    mMarker = (Marker) mBaiduMap.addOverlay(markerOptions);
                     mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(ll));
                 } else {
                     showShortToast("未查询到本车辆的定位信息");
@@ -208,6 +214,33 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
             @Override
             public void onClick(View view) {
                 toggle();
+            }
+        });
+        mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                if (marker == mMarker) {
+                    Button button = new Button(getApplicationContext());
+                    button.setBackgroundResource(R.drawable.popup);
+                    button.setText("更改位置");
+                    button.setTextColor(Color.BLACK);
+                    button.setWidth(300);
+
+                    InfoWindow.OnInfoWindowClickListener listener = new InfoWindow.OnInfoWindowClickListener() {
+                        public void onInfoWindowClick() {
+//                            LatLng ll = marker.getPosition();
+//                            LatLng llNew = new LatLng(ll.latitude + 0.005,
+//                                    ll.longitude + 0.005);
+//                            marker.setPosition(llNew);
+                            mBaiduMap.hideInfoWindow();
+                        }
+                    };
+
+                    LatLng ll = marker.getPosition();
+                    mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(button), ll, -47, listener);
+                    mBaiduMap.showInfoWindow(mInfoWindow);
+                }
+                return true;
             }
         });
         navigation_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
