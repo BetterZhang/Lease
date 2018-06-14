@@ -3,6 +3,7 @@ package com.anshi.lease.service;
 import com.anshi.lease.common.Constants;
 import com.anshi.lease.domain.UserVo;
 import com.anshi.lease.domain.VehicleInfoVo;
+import com.anshi.lease.domain.VehiclePowerVo;
 import com.google.gson.JsonArray;
 import com.jme.common.network.API;
 import com.jme.common.network.DTResponse;
@@ -82,10 +83,13 @@ public class UserDeviceService extends IService<UserDeviceApi> {
         }
     };
 
-    public API getPowerByVehiclePK = new API<String>("getPowerByVehiclePK") {
+    public API getPowerByVehiclePK = new API<List<VehiclePowerVo>>("getPowerByVehiclePK") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.getPowerByVehiclePK();
+            id = params.get("id");
+            JsonArray jsonArray = new JsonArray();
+            jsonArray.add(id);
+            return mApi.getPowerByVehiclePK(jsonArray);
         }
     };
 

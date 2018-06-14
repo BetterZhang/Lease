@@ -53,7 +53,7 @@ public interface UserDeviceApi {
      * @return
      */
     @POST("/mobile/v1/device/getpowerbyvehiclepk")
-    Call<DTResponse> getPowerByVehiclePK();
+    Call<DTResponse> getPowerByVehiclePK(@Body JsonArray jsonArray);
 
 
     /**

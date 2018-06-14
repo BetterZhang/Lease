@@ -20,6 +20,7 @@ import com.anshi.lease.common.Constants;
 import com.anshi.lease.common.UserInfo;
 import com.anshi.lease.domain.UserVo;
 import com.anshi.lease.domain.VehicleInfoVo;
+import com.anshi.lease.domain.VehiclePowerVo;
 import com.anshi.lease.service.UserAuthService;
 import com.anshi.lease.service.UserDeviceService;
 import com.anshi.lease.ui.base.LeaseBaseActivity;
@@ -94,6 +95,9 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     BitmapDescriptor mCurrentMarker;
     private Marker mMarker;
     private InfoWindow mInfoWindow;
+
+    private List<VehiclePowerVo> mVehiclePowerVoList = new ArrayList<>();
+    private VehiclePowerVo mVehiclePowerVo;
 
     @Override
     protected int getContentViewId() {
@@ -195,12 +199,40 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                 break;
             case "getPowerByVehiclePK":
                 if (msgCode.equals("200")) {
-
+                    mVehiclePowerVoList = (List<VehiclePowerVo>) response;
+                    if (mVehiclePowerVoList == null || mVehiclePowerVoList.size() == 0)
+                        return;
+                    mVehiclePowerVo = mVehiclePowerVoList.get(0);
+                    if (mVehiclePowerVo == null)
+                        return;
+                    aa();
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    private void aa() {
+        Button button = new Button(getApplicationContext());
+        button.setBackgroundResource(R.drawable.popup);
+        button.setText("剩余电量" + mVehiclePowerVo.getRSOC() + "%");
+        button.setTextColor(Color.BLACK);
+        button.setWidth(300);
+
+        InfoWindow.OnInfoWindowClickListener listener = new InfoWindow.OnInfoWindowClickListener() {
+            public void onInfoWindowClick() {
+//                            LatLng ll = marker.getPosition();
+//                            LatLng llNew = new LatLng(ll.latitude + 0.005,
+//                                    ll.longitude + 0.005);
+//                            marker.setPosition(llNew);
+                mBaiduMap.hideInfoWindow();
+            }
+        };
+
+        LatLng ll = mMarker.getPosition();
+        mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(button), ll, -47, listener);
+        mBaiduMap.showInfoWindow(mInfoWindow);
     }
 
     private void gotoAuthIdCardActivity() {
@@ -220,25 +252,7 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
             @Override
             public boolean onMarkerClick(Marker marker) {
                 if (marker == mMarker) {
-                    Button button = new Button(getApplicationContext());
-                    button.setBackgroundResource(R.drawable.popup);
-                    button.setText("更改位置");
-                    button.setTextColor(Color.BLACK);
-                    button.setWidth(300);
-
-                    InfoWindow.OnInfoWindowClickListener listener = new InfoWindow.OnInfoWindowClickListener() {
-                        public void onInfoWindowClick() {
-//                            LatLng ll = marker.getPosition();
-//                            LatLng llNew = new LatLng(ll.latitude + 0.005,
-//                                    ll.longitude + 0.005);
-//                            marker.setPosition(llNew);
-                            mBaiduMap.hideInfoWindow();
-                        }
-                    };
-
-                    LatLng ll = marker.getPosition();
-                    mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(button), ll, -47, listener);
-                    mBaiduMap.showInfoWindow(mInfoWindow);
+                    getPowerByVehiclePK();
                 }
                 return true;
             }
