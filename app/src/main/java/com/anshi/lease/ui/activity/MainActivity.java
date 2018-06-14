@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.anshi.lease.R;
 import com.anshi.lease.common.Constants;
 import com.anshi.lease.common.UserInfo;
@@ -72,9 +71,15 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
 
     private BaiduMap mBaiduMap;
     public LocationClient mLocationClient;
-    public BDLocationListener myListener = new MyLocationListener();
-    private LatLng latLng;
+    public BDLocationListener myListener = new MyLocationListenner();
     private boolean isFirstLoc = true; // 是否首次定位
+
+    private int mCurrentDirection = 0;
+    private double mCurrentLat = 0.0;
+    private double mCurrentLon = 0.0;
+    private float mCurrentAccracy;
+
+    private MyLocationData locData;
 
     @Override
     protected int getContentViewId() {
@@ -280,9 +285,6 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     private void initMap() {
         //获取地图控件引用
         mBaiduMap = mapView.getMap();
-        //普通地图
-        mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
-        mBaiduMap.setMyLocationEnabled(true);
 
         //默认显示普通地图
         mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
@@ -324,22 +326,26 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
         mLocationClient.setLocOption(option);
     }
 
-    //实现BDLocationListener接口,BDLocationListener为结果监听接口，异步获取定位结果
-    public class MyLocationListener implements BDLocationListener {
+    /**
+     * 定位SDK监听函数
+     */
+    public class MyLocationListenner implements BDLocationListener {
 
         @Override
         public void onReceiveLocation(BDLocation location) {
-            latLng = new LatLng(location.getLatitude(), location.getLongitude());
-            // 构造定位数据
-            MyLocationData locData = new MyLocationData.Builder()
+            // map view 销毁后不在处理新接收的位置
+            if (location == null || mapView == null) {
+                return;
+            }
+            mCurrentLat = location.getLatitude();
+            mCurrentLon = location.getLongitude();
+            mCurrentAccracy = location.getRadius();
+            locData = new MyLocationData.Builder()
                     .accuracy(location.getRadius())
                     // 此处设置开发者获取到的方向信息，顺时针0-360
-                    .direction(100).latitude(location.getLatitude())
+                    .direction(mCurrentDirection).latitude(location.getLatitude())
                     .longitude(location.getLongitude()).build();
-            // 设置定位数据
             mBaiduMap.setMyLocationData(locData);
-            // 当不需要定位图层时关闭定位图层
-            //mBaiduMap.setMyLocationEnabled(false);
             if (isFirstLoc) {
                 isFirstLoc = false;
                 LatLng ll = new LatLng(location.getLatitude(),
@@ -347,48 +353,37 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                 MapStatus.Builder builder = new MapStatus.Builder();
                 builder.target(ll).zoom(18.0f);
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
-
-                if (location.getLocType() == BDLocation.TypeGpsLocation) {
-                    // GPS定位结果
-                    Toast.makeText(MainActivity.this, location.getAddrStr(), Toast.LENGTH_SHORT).show();
-                } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {
-                    // 网络定位结果
-                    Toast.makeText(MainActivity.this, location.getAddrStr(), Toast.LENGTH_SHORT).show();
-
-                } else if (location.getLocType() == BDLocation.TypeOffLineLocation) {
-                    // 离线定位结果
-                    Toast.makeText(MainActivity.this, location.getAddrStr(), Toast.LENGTH_SHORT).show();
-
-                } else if (location.getLocType() == BDLocation.TypeServerError) {
-                    Toast.makeText(MainActivity.this, "服务器错误，请检查", Toast.LENGTH_SHORT).show();
-                } else if (location.getLocType() == BDLocation.TypeNetWorkException) {
-                    Toast.makeText(MainActivity.this, "网络错误，请检查", Toast.LENGTH_SHORT).show();
-                } else if (location.getLocType() == BDLocation.TypeCriteriaException) {
-                    Toast.makeText(MainActivity.this, "手机模式错误，请检查是否飞行", Toast.LENGTH_SHORT).show();
-                }
             }
         }
-    }
 
+        public void onReceivePoi(BDLocation poiLocation) {
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // 在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
-        mapView.onDestroy();
+        }
     }
 
     @Override
     protected void onResume() {
-        super.onResume();
         // 在activity执行onResume时执行mMapView. onResume ()，实现地图生命周期管理
         mapView.onResume();
+        super.onResume();
     }
 
     @Override
     protected void onPause() {
-        super.onPause();
         // 在activity执行onPause时执行mMapView. onPause ()，实现地图生命周期管理
         mapView.onPause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        // 退出时销毁定位
+        mLocationClient.stop();
+        // 关闭定位图层
+        mBaiduMap.setMyLocationEnabled(false);
+        // 在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
+        mapView.onDestroy();
+        mapView = null;
+        super.onDestroy();
     }
 }
