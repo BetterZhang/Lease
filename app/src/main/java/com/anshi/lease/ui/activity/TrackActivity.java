@@ -1,5 +1,7 @@
 package com.anshi.lease.ui.activity;
 
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.anshi.lease.R;
 import com.anshi.lease.ui.base.LeaseBaseActivity;
@@ -13,7 +15,11 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.jzxiang.pickerview.TimePickerDialog;
+import com.jzxiang.pickerview.data.Type;
+import com.jzxiang.pickerview.listener.OnDateSetListener;
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by Android Studio.
@@ -22,16 +28,24 @@ import butterknife.BindView;
  * Time   : 2018/06/07 下午9:37
  * Desc   : 行车轨迹页面
  */
-public class TrackActivity extends LeaseBaseActivity {
+public class TrackActivity extends LeaseBaseActivity implements OnDateSetListener {
 
     @BindView(R.id.mapView)
     MapView mapView;
+    @BindView(R.id.tv_start_time)
+    TextView tv_start_time;
+    @BindView(R.id.tv_end_time)
+    TextView tv_end_time;
+    @BindView(R.id.tv_confirm)
+    TextView tv_confirm;
 
     private BaiduMap mBaiduMap;
     public LocationClient mLocationClient;
     public BDLocationListener myListener = new MyLocationListener();
     private LatLng latLng;
     private boolean isFirstLoc = true; // 是否首次定位
+
+    private TimePickerDialog mDialogAll;
 
     @Override
     protected int getContentViewId() {
@@ -43,7 +57,44 @@ public class TrackActivity extends LeaseBaseActivity {
         super.initView();
         initToolbar("行车轨迹", true);
 
+        long tenYears = 10L * 365 * 1000 * 60 * 60 * 24L;
+
+        mDialogAll = new TimePickerDialog.Builder()
+                .setCallBack(this)
+                .setCancelStringId("Cancel")
+                .setSureStringId("Sure")
+                .setTitleStringId("TimePicker")
+                .setYearText("Year")
+                .setMonthText("Month")
+                .setDayText("Day")
+                .setHourText("Hour")
+                .setMinuteText("Minute")
+                .setCyclic(false)
+                .setMinMillseconds(System.currentTimeMillis())
+                .setMaxMillseconds(System.currentTimeMillis() + tenYears)
+                .setCurrentMillseconds(System.currentTimeMillis())
+                .setThemeColor(getResources().getColor(R.color.timepicker_dialog_bg))
+                .setType(Type.ALL)
+                .setWheelItemTextNormalColor(getResources().getColor(R.color.timetimepicker_default_text_color))
+                .setWheelItemTextSelectorColor(getResources().getColor(R.color.timepicker_toolbar_bg))
+                .setWheelItemTextSize(12)
+                .build();
+
         initMap();
+    }
+
+    @OnClick({R.id.tv_start_time, R.id.tv_end_time, R.id.tv_confirm})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_start_time:
+                mDialogAll.show(getSupportFragmentManager(), "StartTime");
+                break;
+            case R.id.tv_end_time:
+                mDialogAll.show(getSupportFragmentManager(), "EndTime");
+                break;
+            case R.id.tv_confirm:
+                break;
+        }
     }
 
     private void initMap() {
@@ -92,6 +143,11 @@ public class TrackActivity extends LeaseBaseActivity {
         option.SetIgnoreCacheException(false);//可选，默认false，设置是否收集CRASH信息，默认收集
         option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤GPS仿真结果，默认需要
         mLocationClient.setLocOption(option);
+    }
+
+    @Override
+    public void onDateSet(TimePickerDialog timePickerView, long millseconds) {
+
     }
 
     //实现BDLocationListener接口,BDLocationListener为结果监听接口，异步获取定位结果

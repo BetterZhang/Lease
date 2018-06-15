@@ -7,9 +7,81 @@
 
     <include layout="@layout/layout_toolbar"/>
 
-    <com.baidu.mapapi.map.MapView
-        android:id="@+id/mapView"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:background="@drawable/shape_track_time">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/ic_time_line"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="5dp">
+
+                    <TextView
+                        android:id="@+id/tv_start_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="起始时间"
+                        android:textSize="16sp"
+                        android:textColor="@color/common_font_gray"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_line_height"
+                        android:background="@color/common_line_divider"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_end_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="终止时间"
+                        android:textSize="16sp"
+                        android:textColor="@color/common_font_gray"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_confirm"
+                style="@style/Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_text_button"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:clickable="true"
+                android:visibility="gone"
+                android:gravity="center"
+                android:text="确认"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
 
 </LinearLayout>
