@@ -35,9 +35,9 @@ public class UserInfo {
         return userVo;
     }
 
-    public void login(UserVo userVo) {
+    public void login(UserVo userVo, boolean resetDefaultVehicleId) {
         this.userVo = userVo;
-        if (userVo.getKey_vehicle_info() != null && userVo.getKey_vehicle_info().size() > 0) {
+        if (resetDefaultVehicleId && userVo.getKey_vehicle_info() != null && userVo.getKey_vehicle_info().size() > 0) {
             String defaultVehicleCode = userVo.getKey_vehicle_info().get(0).getVehicleCode();
             String defaultVehicleId = userVo.getKey_vehicle_info().get(0).getId();
             SharedPreUtils.setString(LeaseApplication.getContext(), RxBusConfig.DEFAULT_VEHICLE_CODE, defaultVehicleCode);

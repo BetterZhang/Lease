@@ -52,7 +52,7 @@ public class LoginActivity extends LeaseBaseActivity {
         }
 
         if (mUserVo != null) {
-            UserInfo.getInstance().login(mUserVo);
+            UserInfo.getInstance().login(mUserVo, false);
             startAnimActivity(MainActivity.class);
             this.finish();
         }
@@ -108,7 +108,7 @@ public class LoginActivity extends LeaseBaseActivity {
                     UserVo userVo = (UserVo) response;
                     if (userVo == null)
                         return;
-                    UserInfo.getInstance().login(userVo);
+                    UserInfo.getInstance().login(userVo, true);
                     showShortToast("登录成功");
 
                     String loginUserInfoJson = gson.toJson(userVo, type);
