@@ -192,7 +192,7 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
 //                    mBaiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
 
                     MarkerOptions markerOptions = new MarkerOptions().position(ll).
-                            icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_geo));
+                            icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_locate_vehicle));
                     mMarker = (Marker) mBaiduMap.addOverlay(markerOptions);
                     mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(ll));
                 } else {
