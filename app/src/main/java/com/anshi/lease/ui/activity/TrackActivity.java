@@ -1,8 +1,11 @@
 package com.anshi.lease.ui.activity;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 import com.anshi.lease.R;
+import com.anshi.lease.domain.TrackVo;
+import com.anshi.lease.service.UserDeviceService;
 import com.anshi.lease.ui.base.LeaseBaseActivity;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -14,11 +17,18 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.jme.common.network.DTRequest;
+import com.jme.common.ui.config.RxBusConfig;
+import com.jme.common.util.SharedPreUtils;
 import com.jzxiang.pickerview.TimePickerDialog;
 import com.jzxiang.pickerview.data.Type;
 import com.jzxiang.pickerview.listener.OnDateSetListener;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -54,7 +64,11 @@ public class TrackActivity extends LeaseBaseActivity implements OnDateSetListene
     private MyLocationData locData;
 
     private TimePickerDialog mDialogAll;
-    SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private String startTime;
+    private String endTime;
+
+    private List<TrackVo> mTrackVoList = new ArrayList<>();
 
     @Override
     protected int getContentViewId() {
@@ -92,6 +106,35 @@ public class TrackActivity extends LeaseBaseActivity implements OnDateSetListene
         initMap();
     }
 
+    private void getTrackByTime() {
+        if (TextUtils.isEmpty(SharedPreUtils.getString(this, RxBusConfig.DEFAULT_VEHICLE_ID))
+                || TextUtils.isEmpty(startTime)
+                || TextUtils.isEmpty(endTime))
+            return;
+        HashMap<String, String> params = new HashMap<>();
+        params.put("id", SharedPreUtils.getString(this, RxBusConfig.DEFAULT_VEHICLE_ID));
+        params.put("startTime", startTime);
+        params.put("endTime", endTime);
+        sendRequest(UserDeviceService.getInstance().getTrackByTime, params, true);
+    }
+
+    @Override
+    protected void DataReturn(DTRequest request, String msgCode, Object response) {
+        super.DataReturn(request, msgCode, response);
+        switch (request.getApi().getName()) {
+            case "getTrackByTime":
+                if (msgCode.equals("200")) {
+                    mTrackVoList = (List<TrackVo>) response;
+                    if (mTrackVoList == null || mTrackVoList.size() == 0)
+                        return;
+
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     @OnClick({R.id.tv_start_time, R.id.tv_end_time, R.id.tv_confirm})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -102,6 +145,7 @@ public class TrackActivity extends LeaseBaseActivity implements OnDateSetListene
                 mDialogAll.show(getSupportFragmentManager(), "EndTime");
                 break;
             case R.id.tv_confirm:
+                getTrackByTime();
                 break;
         }
     }
@@ -162,9 +206,11 @@ public class TrackActivity extends LeaseBaseActivity implements OnDateSetListene
         String text = getDateToString(millseconds);
         switch (timePickerView.getTag()) {
             case "StartTime":
+                startTime = text;
                 tv_start_time.setText("起始时间  "+ text);
                 break;
             case "EndTime":
+                endTime = text;
                 tv_end_time.setText("终止时间  "+ text);
                 tv_confirm.setVisibility(View.VISIBLE);
                 break;

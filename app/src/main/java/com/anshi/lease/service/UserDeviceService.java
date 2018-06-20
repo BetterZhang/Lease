@@ -1,6 +1,7 @@
 package com.anshi.lease.service;
 
 import com.anshi.lease.common.Constants;
+import com.anshi.lease.domain.TrackVo;
 import com.anshi.lease.domain.UserVo;
 import com.anshi.lease.domain.VehicleInfoVo;
 import com.anshi.lease.domain.VehiclePowerVo;
@@ -93,10 +94,10 @@ public class UserDeviceService extends IService<UserDeviceApi> {
         }
     };
 
-    public API getTrackByTime = new API<String>("getTrackByTime") {
+    public API getTrackByTime = new API<List<TrackVo>>("getTrackByTime") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.getTrackByTime();
+            return mApi.getTrackByTime(params);
         }
     };
 
