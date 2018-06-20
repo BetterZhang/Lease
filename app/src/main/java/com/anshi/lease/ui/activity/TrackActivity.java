@@ -1,5 +1,6 @@
 package com.anshi.lease.ui.activity;
 
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -16,6 +17,8 @@ import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.map.Polyline;
+import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.jme.common.network.DTRequest;
 import com.jme.common.ui.config.RxBusConfig;
@@ -28,7 +31,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -69,6 +71,8 @@ public class TrackActivity extends LeaseBaseActivity implements OnDateSetListene
     private String endTime;
 
     private List<TrackVo> mTrackVoList = new ArrayList<>();
+    List<LatLng> polylines = new ArrayList<>();
+    private Polyline mPolyline;
 
     @Override
     protected int getContentViewId() {
@@ -124,10 +128,25 @@ public class TrackActivity extends LeaseBaseActivity implements OnDateSetListene
         switch (request.getApi().getName()) {
             case "getTrackByTime":
                 if (msgCode.equals("200")) {
+                    mTrackVoList.clear();
+                    polylines.clear();
+                    mBaiduMap.clear();
                     mTrackVoList = (List<TrackVo>) response;
-                    if (mTrackVoList == null || mTrackVoList.size() == 0)
+                    if (mTrackVoList == null || mTrackVoList.size() == 0) {
+                        showShortToast("该时间段内暂无行车轨迹记录");
                         return;
+                    }
+                    for (int i = 0; i < mTrackVoList.size(); i++) {
+                        polylines.add(new LatLng(mTrackVoList.get(i).getLAT(), mTrackVoList.get(i).getLON()));
+                    }
 
+                    PolylineOptions polylineOptions = new PolylineOptions().points(polylines).width(5).color(Color.RED);
+                    mPolyline = (Polyline) mBaiduMap.addOverlay(polylineOptions);
+
+                    LatLng ll = new LatLng(mTrackVoList.get(0).getLAT(), mTrackVoList.get(0).getLON());
+                    MapStatus.Builder builder = new MapStatus.Builder();
+                    builder.target(ll).zoom(18.0f);
+                    mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(ll));
                 }
                 break;
             default:
@@ -207,11 +226,11 @@ public class TrackActivity extends LeaseBaseActivity implements OnDateSetListene
         switch (timePickerView.getTag()) {
             case "StartTime":
                 startTime = text;
-                tv_start_time.setText("起始时间  "+ text);
+                tv_start_time.setText("起始时间  "+ text.substring(0, text.length() - 3));
                 break;
             case "EndTime":
                 endTime = text;
-                tv_end_time.setText("终止时间  "+ text);
+                tv_end_time.setText("终止时间  "+ text.substring(0, text.length() - 3));
                 tv_confirm.setVisibility(View.VISIBLE);
                 break;
         }
