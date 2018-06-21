@@ -101,6 +101,8 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     private List<VehiclePowerVo> mVehiclePowerVoList = new ArrayList<>();
     private VehiclePowerVo mVehiclePowerVo;
 
+    private String userIconUrl;
+
     @Override
     protected int getContentViewId() {
         return R.layout.activity_main;
@@ -441,6 +443,18 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
         // 在activity执行onResume时执行mMapView. onResume ()，实现地图生命周期管理
         mapView.onResume();
         super.onResume();
+
+        userIconUrl = SharedPreUtils.getString(this, RxBusConfig.LOGIN_USER_ICON);
+        if (!TextUtils.isEmpty(userIconUrl)) {
+            Picasso.with(this)
+                    .load(userIconUrl)
+                    .placeholder(R.mipmap.ic_head_default)
+                    .into(iv_head_back);
+            Picasso.with(this)
+                    .load(userIconUrl)
+                    .placeholder(R.mipmap.ic_head_default)
+                    .into(iv_head);
+        }
     }
 
     @Override

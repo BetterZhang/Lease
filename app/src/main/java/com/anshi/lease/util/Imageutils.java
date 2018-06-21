@@ -144,7 +144,7 @@ public class Imageutils {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 80, baos);
         byte[] b = baos.toByteArray();
-        String temp = Base64.encodeToString(b, Base64.DEFAULT);
+        String temp = Base64.encodeToString(b, Base64.NO_WRAP);
         return temp;
     }
 

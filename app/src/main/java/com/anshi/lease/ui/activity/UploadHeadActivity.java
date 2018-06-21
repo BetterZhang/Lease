@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import com.anshi.lease.R;
@@ -14,6 +15,8 @@ import com.anshi.lease.service.UserAuthService;
 import com.anshi.lease.ui.base.LeaseBaseActivity;
 import com.anshi.lease.util.Imageutils;
 import com.jme.common.network.DTRequest;
+import com.jme.common.ui.config.RxBusConfig;
+import com.jme.common.util.SharedPreUtils;
 import com.theartofdev.edmodo.cropper.CropImage;
 import java.util.HashMap;
 import butterknife.BindView;
@@ -85,7 +88,11 @@ public class UploadHeadActivity extends LeaseBaseActivity implements Imageutils.
     protected void DataReturn(DTRequest request, String msgCode, Object response) {
         super.DataReturn(request, msgCode, response);
         if (msgCode.equals("200")) {
+            String userIconUrl = (String) response;
+            if (!TextUtils.isEmpty(userIconUrl))
+                SharedPreUtils.setString(this, RxBusConfig.LOGIN_USER_ICON, userIconUrl);
 
+            this.finish();
         }
     }
 
