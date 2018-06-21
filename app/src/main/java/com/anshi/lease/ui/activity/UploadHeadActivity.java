@@ -77,7 +77,7 @@ public class UploadHeadActivity extends LeaseBaseActivity implements Imageutils.
         HashMap<String, String> params = new HashMap<>();
         params.put("id", mUserVo.getKey_user_info().getId());
         params.put("userIcon", mImageutils.BitMapToString(bitmap));
-        params.put("updateUser", mUserVo.getKey_user_info().getUserName());
+        params.put("updateUser", mUserVo.getKey_user_info().getLoginName());
         sendRequest(UserAuthService.getInstance().uplodeUserIcon, params, true);
     }
 

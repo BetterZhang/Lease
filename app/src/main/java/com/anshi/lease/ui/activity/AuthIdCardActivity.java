@@ -41,7 +41,7 @@ public class AuthIdCardActivity extends LeaseBaseActivity {
         super.initData(savedInstanceState);
         mAuthDataVo = new AuthDataVo();
         mAuthDataVo.setId(UserInfo.getInstance().getCurrentUser().getKey_user_info().getId());
-        mAuthDataVo.setUpdateUser(UserInfo.getInstance().getCurrentUser().getKey_user_info().getUserName());
+        mAuthDataVo.setUpdateUser(UserInfo.getInstance().getCurrentUser().getKey_user_info().getLoginName());
         UserInfo.getInstance().setAuthDataVo(mAuthDataVo);
     }
 
