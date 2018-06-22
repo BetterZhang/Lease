@@ -138,7 +138,7 @@ public class UploadIdCardctivity extends LeaseBaseActivity implements Imageutils
         super.DataReturn(request, msgCode, response);
         switch (request.getApi().getName()) {
             case "userRealNameAuth":
-                if (msgCode.equals("0")) {
+                if (msgCode.equals("200")) {
                     startAnimActivity(AuthCompleteActivity.class);
                 }
                 break;
