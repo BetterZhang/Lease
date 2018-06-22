@@ -209,7 +209,7 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                     mVehiclePowerVo = mVehiclePowerVoList.get(0);
                     if (mVehiclePowerVo == null)
                         return;
-                    aa();
+                    showPopWindow();
                 }
                 break;
             default:
@@ -217,7 +217,7 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
         }
     }
 
-    private void aa() {
+    private void showPopWindow() {
         Button button = new Button(getApplicationContext());
         button.setBackgroundResource(R.drawable.popup);
         button.setText("剩余电量" + mVehiclePowerVo.getRSOC() + "%");
