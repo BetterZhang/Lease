@@ -60,9 +60,7 @@ public class UploadHeadActivity extends LeaseBaseActivity implements Imageutils.
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_upload:
-                CropImage.activity()
-//                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .start(this);
+                CropImage.activity().start(this);
                 break;
             case R.id.tv_commit:
                 if (uploadFlag)
