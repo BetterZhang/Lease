@@ -389,21 +389,21 @@ public class Imageutils {
 
         if (isDeviceSupportCamera()) {
             items = new CharSequence[2];
-            items[0] = "Camera";
-            items[1] = "Gallery";
+            items[0] = "拍照";
+            items[1] = "相册";
         } else {
             items = new CharSequence[1];
-            items[0] = "Gallery";
+            items[0] = "相册";
         }
 
         android.app.AlertDialog.Builder alertdialog = new android.app.AlertDialog.Builder(current_activity);
-        alertdialog.setTitle("Add Image");
+        alertdialog.setTitle("选择照片");
         alertdialog.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
-                if (items[item].equals("Camera")) {
+                if (items[item].equals("拍照")) {
                     launchCamera(from);
-                } else if (items[item].equals("Gallery")) {
+                } else if (items[item].equals("相册")) {
                     launchGallery(from);
                 }
             }
@@ -425,7 +425,7 @@ public class Imageutils {
             if (!ActivityCompat.shouldShowRequestPermissionRationale(current_activity,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 
-                showMessageOKCancel("For adding images , You need to provide permission to access your files",
+                showMessageOKCancel("选择照片需要开始访问文件权限",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -468,7 +468,7 @@ public class Imageutils {
             if (!ActivityCompat.shouldShowRequestPermissionRationale(current_activity,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 
-                showMessageOKCancel("For adding images , You need to provide permission to access your files",
+                showMessageOKCancel("选择照片需要开始访问文件权限",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -497,8 +497,8 @@ public class Imageutils {
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(current_activity)
                 .setMessage(message)
-                .setPositiveButton("OK", okListener)
-                .setNegativeButton("Cancel", null)
+                .setPositiveButton("确定", okListener)
+                .setNegativeButton("取消", null)
                 .create()
                 .show();
     }
