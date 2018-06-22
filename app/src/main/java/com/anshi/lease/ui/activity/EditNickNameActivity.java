@@ -8,8 +8,13 @@ import com.anshi.lease.domain.UserVo;
 import com.anshi.lease.service.UserAuthService;
 import com.anshi.lease.ui.base.LeaseBaseActivity;
 import com.anshi.lease.util.TextUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jme.common.network.DTRequest;
 import com.jme.common.ui.base.ToolbarHelper;
+import com.jme.common.ui.config.RxBusConfig;
+import com.jme.common.util.SharedPreUtils;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import butterknife.BindView;
 
@@ -26,6 +31,9 @@ public class EditNickNameActivity extends LeaseBaseActivity {
     EditText et_nick_name;
 
     private UserVo mUserVo;
+
+    private Gson gson = new Gson();
+    private Type type;
 
     @Override
     protected int getContentViewId() {
@@ -76,6 +84,10 @@ public class EditNickNameActivity extends LeaseBaseActivity {
                 if (msgCode.equals("200")) {
                     showShortToast("昵称修改成功");
                     mUserVo.getKey_user_info().setNickName(TextUtils.getText(et_nick_name));
+
+                    type = new TypeToken<UserVo>() {}.getType();
+                    String loginUserInfoJson = gson.toJson(UserInfo.getInstance().getCurrentUser(), type);
+                    SharedPreUtils.setString(this, RxBusConfig.LOGIN_USER_INFO, loginUserInfoJson);
                     this.finish();
                 }
                 break;
