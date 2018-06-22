@@ -45,6 +45,15 @@
         android:supportsRtl="true"
         android:hardwareAccelerated="true"
         android:theme="@style/AppTheme">
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.anshi.lease.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="lLE85GXUThnzRY3qFVkQMhe6fFQ2gVN6" />
@@ -126,6 +135,10 @@
         </activity>
         <activity
             android:name=".ui.activity.UploadHeadActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".ui.activity.ClipHeaderActivity"
             android:screenOrientation="portrait">
         </activity>
     </application>
