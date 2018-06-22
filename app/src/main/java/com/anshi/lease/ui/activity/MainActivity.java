@@ -444,6 +444,7 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
         mapView.onResume();
         super.onResume();
 
+        tv_name.setText(mUserVo.getKey_user_info().getNickName());
         userIconUrl = SharedPreUtils.getString(this, RxBusConfig.LOGIN_USER_ICON);
         if (!TextUtils.isEmpty(userIconUrl)) {
             Picasso.with(this)
