@@ -111,10 +111,14 @@ public class TrackActivity extends LeaseBaseActivity implements OnDateSetListene
     }
 
     private void getTrackByTime() {
-        if (TextUtils.isEmpty(SharedPreUtils.getString(this, RxBusConfig.DEFAULT_VEHICLE_ID))
-                || TextUtils.isEmpty(startTime)
-                || TextUtils.isEmpty(endTime))
+        if (TextUtils.isEmpty(SharedPreUtils.getString(this, RxBusConfig.DEFAULT_VEHICLE_ID))) {
+            showShortToast("请从企业申领车辆后再使用本功能");
             return;
+        }
+        if (TextUtils.isEmpty(startTime) || TextUtils.isEmpty(endTime)) {
+            showShortToast("时间选择有误");
+            return;
+        }
         HashMap<String, String> params = new HashMap<>();
         params.put("id", SharedPreUtils.getString(this, RxBusConfig.DEFAULT_VEHICLE_ID));
         params.put("startTime", startTime);
