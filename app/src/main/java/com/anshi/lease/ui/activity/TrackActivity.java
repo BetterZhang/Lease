@@ -1,11 +1,14 @@
 package com.anshi.lease.ui.activity;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 import com.anshi.lease.R;
+import com.anshi.lease.common.UserInfo;
 import com.anshi.lease.domain.TrackVo;
+import com.anshi.lease.domain.UserVo;
 import com.anshi.lease.service.UserDeviceService;
 import com.anshi.lease.ui.base.LeaseBaseActivity;
 import com.baidu.location.BDLocation;
@@ -74,6 +77,8 @@ public class TrackActivity extends LeaseBaseActivity implements OnDateSetListene
     List<LatLng> polylines = new ArrayList<>();
     private Polyline mPolyline;
 
+    private UserVo mUserVo;
+
     @Override
     protected int getContentViewId() {
         return R.layout.activity_track;
@@ -108,6 +113,12 @@ public class TrackActivity extends LeaseBaseActivity implements OnDateSetListene
                 .build();
 
         initMap();
+    }
+
+    @Override
+    protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
+        mUserVo = UserInfo.getInstance().getCurrentUser();
     }
 
     private void getTrackByTime() {
@@ -168,6 +179,11 @@ public class TrackActivity extends LeaseBaseActivity implements OnDateSetListene
                 mDialogAll.show(getSupportFragmentManager(), "EndTime");
                 break;
             case R.id.tv_confirm:
+                if (!mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED") ||
+                        mUserVo.getKey_vehicle_info().size() == 0) {
+                    showShortToast("请先进行实名认证并从企业申领车辆后才能使用本功能");
+                    return;
+                }
                 getTrackByTime();
                 break;
         }
