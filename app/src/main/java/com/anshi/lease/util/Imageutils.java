@@ -421,7 +421,33 @@ public class Imageutils {
         int hasWriteContactsPermission = ContextCompat.checkSelfPermission(current_activity,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
-        if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
+        int hasCameraPermission = ContextCompat.checkSelfPermission(current_activity,
+                Manifest.permission.CAMERA);
+
+        if (code == 1 && hasCameraPermission != PackageManager.PERMISSION_GRANTED) {
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(current_activity,
+                    Manifest.permission.CAMERA)) {
+
+                showMessageOKCancel("选择照片需要相机权限",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                ActivityCompat.requestPermissions(current_activity,
+                                        new String[]{Manifest.permission.CAMERA},
+                                        code);
+                            }
+                        });
+                return;
+            }
+
+            ActivityCompat.requestPermissions(current_activity,
+                    new String[]{Manifest.permission.CAMERA},
+                    code);
+            return;
+        }
+
+        if (code == 2 && hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
             if (!ActivityCompat.shouldShowRequestPermissionRationale(current_activity,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 
@@ -462,9 +488,33 @@ public class Imageutils {
         int hasWriteContactsPermission = ContextCompat.checkSelfPermission(current_activity,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
-        if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED)
+        int hasCameraPermission = ContextCompat.checkSelfPermission(current_activity,
+                Manifest.permission.CAMERA);
 
-        {
+        if (code == 1 && hasCameraPermission != PackageManager.PERMISSION_GRANTED) {
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(current_activity,
+                    Manifest.permission.CAMERA)) {
+
+                showMessageOKCancel("选择照片需要相机权限",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                current_fragment.requestPermissions(
+                                        new String[]{Manifest.permission.CAMERA},
+                                        code);
+                            }
+                        });
+                return;
+            }
+
+            current_fragment.requestPermissions(
+                    new String[]{Manifest.permission.CAMERA},
+                    code);
+            return;
+        }
+
+        if (code == 2 && hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
             if (!ActivityCompat.shouldShowRequestPermissionRationale(current_activity,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 
