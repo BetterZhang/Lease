@@ -1,5 +1,6 @@
 package com.anshi.lease.ui.activity;
 
+import android.Manifest;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -44,6 +45,7 @@ import com.jme.common.ui.base.ToolbarHelper;
 import com.jme.common.ui.config.RxBusConfig;
 import com.jme.common.util.SharedPreUtils;
 import com.squareup.picasso.Picasso;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -133,6 +135,15 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
         tv_status = headerLayout.findViewById(R.id.tv_status);
 
         initMap();
+        RxPermissions permissions = new RxPermissions(this);
+        permissions.request(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)
+                .subscribe(granted -> {
+                    if (granted) {
+                        mLocationClient.restart();
+                    } else {
+
+                    }
+                });
     }
 
     @Override
