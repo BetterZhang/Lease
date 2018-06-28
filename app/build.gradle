@@ -16,18 +16,24 @@ android {
         versionName rootProject.ext.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
+
     signingConfigs {
         config {
             keyAlias 'anshi'
             keyPassword 'anshi1234!'
-            storeFile file('/Users/chenwenwen/AndroidStudioProjects/Lease/lease.jks')
+            storeFile file('/Users/zhangzhongqiang/AndroidStudioProjects/Lease/lease.jks')
             storePassword 'anshi1234!'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            signingConfig signingConfigs.config
         }
     }
     sourceSets {
@@ -53,6 +59,8 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    productFlavors {
     }
 }
 
