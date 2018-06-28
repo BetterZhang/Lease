@@ -102,4 +102,12 @@ public interface UserAuthApi {
     @POST("/mobile/v1/auth/userrealnameauth")
     Call<DTResponse> userRealNameAuth(@Body HashMap<String, String> params);
 
+
+    /**
+     * 用户状态查询
+     * @return
+     */
+    @GET("/mobile/v1/auth/userState")
+    Call<DTResponse> userState();
+
 }

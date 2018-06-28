@@ -115,4 +115,11 @@ public class UserAuthService extends IService<UserAuthApi> {
         }
     };
 
+    public API userState = new API<UserVo>("userState") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.userState();
+        }
+    };
+
 }

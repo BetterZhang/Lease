@@ -149,9 +149,12 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        mUserVo = UserInfo.getInstance().getCurrentUser();
-        if (mUserVo != null)
-            setUserData();
+        getUserState();
+    }
+
+    private void getUserState() {
+        HashMap<String, String> params = new HashMap<>();
+        sendRequest(UserAuthService.getInstance().userState, params, true);
     }
 
     private void setUserData() {
@@ -222,6 +225,15 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                         return;
                     showPopWindow();
                 }
+                break;
+            case "userState":
+                if (msgCode.equals("200")) {
+                    mUserVo = (UserVo) response;
+                }
+                if (mUserVo == null)
+                    mUserVo = UserInfo.getInstance().getCurrentUser();
+                if (mUserVo != null)
+                    setUserData();
                 break;
             default:
                 break;
@@ -455,7 +467,8 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
         mapView.onResume();
         super.onResume();
 
-        tv_name.setText(mUserVo.getKey_user_info().getNickName());
+        if (mUserVo != null)
+            tv_name.setText(TextUtils.isEmpty(mUserVo.getKey_user_info().getNickName()) ? "" : mUserVo.getKey_user_info().getNickName());
         userIconUrl = SharedPreUtils.getString(this, RxBusConfig.LOGIN_USER_ICON);
         if (!TextUtils.isEmpty(userIconUrl)) {
             Picasso.with(this)
