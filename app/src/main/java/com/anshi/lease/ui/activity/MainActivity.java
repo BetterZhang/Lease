@@ -468,7 +468,8 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
         super.onResume();
 
         if (mUserVo != null)
-            tv_name.setText(TextUtils.isEmpty(mUserVo.getKey_user_info().getNickName()) ? "" : mUserVo.getKey_user_info().getNickName());
+            tv_name.setText(TextUtils.isEmpty(UserInfo.getInstance().getCurrentUser().getKey_user_info().getNickName()) ?
+                    "" : UserInfo.getInstance().getCurrentUser().getKey_user_info().getNickName());
         userIconUrl = SharedPreUtils.getString(this, RxBusConfig.LOGIN_USER_ICON);
         if (!TextUtils.isEmpty(userIconUrl)) {
             Picasso.with(this)
