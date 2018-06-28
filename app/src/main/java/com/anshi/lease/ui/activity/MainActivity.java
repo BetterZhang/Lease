@@ -40,12 +40,15 @@ import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jme.common.network.DTRequest;
 import com.jme.common.ui.base.ToolbarHelper;
 import com.jme.common.ui.config.RxBusConfig;
 import com.jme.common.util.SharedPreUtils;
 import com.squareup.picasso.Picasso;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -104,6 +107,8 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     private VehiclePowerVo mVehiclePowerVo;
 
     private String userIconUrl;
+    private Gson gson = new Gson();
+    private Type type;
 
     @Override
     protected int getContentViewId() {
@@ -113,6 +118,7 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     @Override
     protected void initView() {
         super.initView();
+        type = new TypeToken<UserVo>() {}.getType();
         initToolbar("小哥乐途", false);
 
         setRightNavigation("", R.mipmap.ic_track, new ToolbarHelper.OnSingleMenuItemClickListener() {
@@ -159,12 +165,16 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
 
     private void setUserData() {
         iv_head_back.setVisibility(View.VISIBLE);
+        if (mUserVo.getKey_user_info().getUserIcon().contains(Constants.HttpConst.URL_BASE_IMG))
+            userIconUrl = mUserVo.getKey_user_info().getUserIcon();
+        else
+            userIconUrl = Constants.HttpConst.URL_BASE_IMG + mUserVo.getKey_user_info().getUserIcon();
         Picasso.with(this)
-                .load(Constants.HttpConst.URL_BASE_IMG + mUserVo.getKey_user_info().getUserIcon())
+                .load(userIconUrl)
                 .placeholder(R.mipmap.ic_head_default)
                 .into(iv_head_back);
         Picasso.with(this)
-                .load(Constants.HttpConst.URL_BASE_IMG + mUserVo.getKey_user_info().getUserIcon())
+                .load(userIconUrl)
                 .placeholder(R.mipmap.ic_head_default)
                 .into(iv_head);
         tv_name.setText(mUserVo.getKey_user_info().getNickName());
@@ -230,8 +240,13 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                 if (msgCode.equals("200")) {
                     mUserVo = (UserVo) response;
                 }
-                if (mUserVo == null)
+                if (mUserVo != null) {
+                    String loginUserInfoJson = gson.toJson(mUserVo, type);
+                    SharedPreUtils.setString(this, RxBusConfig.HEADER_LOGIN_TOKEN, mUserVo.getKey_login_token());
+                    SharedPreUtils.setString(this, RxBusConfig.LOGIN_USER_INFO, loginUserInfoJson);
+                } else {
                     mUserVo = UserInfo.getInstance().getCurrentUser();
+                }
                 if (mUserVo != null)
                     setUserData();
                 break;
@@ -467,19 +482,25 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
         mapView.onResume();
         super.onResume();
 
-        if (mUserVo != null)
+        if (mUserVo != null) {
             tv_name.setText(TextUtils.isEmpty(UserInfo.getInstance().getCurrentUser().getKey_user_info().getNickName()) ?
                     "" : UserInfo.getInstance().getCurrentUser().getKey_user_info().getNickName());
-        userIconUrl = SharedPreUtils.getString(this, RxBusConfig.LOGIN_USER_ICON);
-        if (!TextUtils.isEmpty(userIconUrl)) {
-            Picasso.with(this)
-                    .load(userIconUrl)
-                    .placeholder(R.mipmap.ic_head_default)
-                    .into(iv_head_back);
-            Picasso.with(this)
-                    .load(userIconUrl)
-                    .placeholder(R.mipmap.ic_head_default)
-                    .into(iv_head);
+
+            if (mUserVo.getKey_user_info().getUserIcon().contains(Constants.HttpConst.URL_BASE_IMG))
+                userIconUrl = mUserVo.getKey_user_info().getUserIcon();
+            else
+                userIconUrl = Constants.HttpConst.URL_BASE_IMG + mUserVo.getKey_user_info().getUserIcon();
+
+            if (!TextUtils.isEmpty(userIconUrl)) {
+                Picasso.with(this)
+                        .load(userIconUrl)
+                        .placeholder(R.mipmap.ic_head_default)
+                        .into(iv_head_back);
+                Picasso.with(this)
+                        .load(userIconUrl)
+                        .placeholder(R.mipmap.ic_head_default)
+                        .into(iv_head);
+            }
         }
     }
 

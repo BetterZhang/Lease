@@ -25,8 +25,6 @@ import com.anshi.lease.service.UserAuthService;
 import com.anshi.lease.ui.base.LeaseBaseActivity;
 import com.anshi.lease.util.Imageutils;
 import com.jme.common.network.DTRequest;
-import com.jme.common.ui.config.RxBusConfig;
-import com.jme.common.util.SharedPreUtils;
 import java.io.File;
 import java.util.HashMap;
 import butterknife.BindView;
@@ -204,7 +202,7 @@ public class UploadHeadActivity extends LeaseBaseActivity implements Imageutils.
         if (msgCode.equals("200")) {
             String userIconUrl = (String) response;
             if (!TextUtils.isEmpty(userIconUrl))
-                SharedPreUtils.setString(this, RxBusConfig.LOGIN_USER_ICON, userIconUrl);
+                UserInfo.getInstance().getCurrentUser().getKey_user_info().setUserIcon(userIconUrl);
 
             this.finish();
         }
