@@ -19,12 +19,14 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import com.anshi.lease.R;
+import com.anshi.lease.common.Constants;
 import com.anshi.lease.common.UserInfo;
 import com.anshi.lease.domain.UserVo;
 import com.anshi.lease.service.UserAuthService;
 import com.anshi.lease.ui.base.LeaseBaseActivity;
 import com.anshi.lease.util.Imageutils;
 import com.jme.common.network.DTRequest;
+import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.util.HashMap;
 import butterknife.BindView;
@@ -70,6 +72,17 @@ public class UploadHeadActivity extends LeaseBaseActivity implements Imageutils.
         super.initData(savedInstanceState);
         mUserVo = UserInfo.getInstance().getCurrentUser();
         mImageutils = new Imageutils(this);
+
+        String userIconUrl = "";
+        if (mUserVo.getKey_user_info().getUserIcon().contains(Constants.HttpConst.URL_BASE_IMG))
+            userIconUrl = mUserVo.getKey_user_info().getUserIcon();
+        else
+            userIconUrl = Constants.HttpConst.URL_BASE_IMG + mUserVo.getKey_user_info().getUserIcon();
+        Picasso.get()
+                .load(userIconUrl)
+                .placeholder(R.mipmap.ic_head_default)
+                .resize(80, 80)
+                .into(iv_head);
     }
 
     /**
