@@ -154,17 +154,17 @@ public class UploadHeadActivity extends LeaseBaseActivity implements Imageutils.
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            useCamera();
-        } else {
-            // 没有获取 到权限，从新请求，或者关闭app
-            showShortToast("需要相机权限");
+        if (requestCode == 1) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                useCamera();
+            else
+                showShortToast("需要相机权限");
         }
-        if (requestCode == 2 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            selectGallery();
-        } else {
-            // 没有获取 到权限，从新请求，或者关闭app
-            showShortToast("需要存储权限");
+        if (requestCode == 2) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                selectGallery();
+            else
+                showShortToast("需要存储权限");
         }
     }
 
