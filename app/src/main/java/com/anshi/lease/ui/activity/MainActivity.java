@@ -327,6 +327,8 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                     case R.id.item_bike:
                         if (mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED"))
                             gotoMyVehicleActivity();
+                        else if (mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("TOAUTHORIZED"))
+                            showShortToast("您已经提交实名认证，请等待审核通过之后再使用该功能");
                         else
                             gotoAuthTipActivity();
                         break;
