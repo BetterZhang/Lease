@@ -155,7 +155,7 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        getUserState();
+//        getUserState();
     }
 
     private void getUserState() {
@@ -505,26 +505,28 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
         mapView.onResume();
         super.onResume();
 
-        if (mUserVo != null) {
-            tv_name.setText(TextUtils.isEmpty(UserInfo.getInstance().getCurrentUser().getKey_user_info().getNickName()) ?
-                    "" : UserInfo.getInstance().getCurrentUser().getKey_user_info().getNickName());
+        getUserState();
 
-            if (mUserVo.getKey_user_info().getUserIcon().contains(Constants.HttpConst.URL_BASE_IMG))
-                userIconUrl = mUserVo.getKey_user_info().getUserIcon();
-            else
-                userIconUrl = Constants.HttpConst.URL_BASE_IMG + mUserVo.getKey_user_info().getUserIcon();
-
-            if (!TextUtils.isEmpty(userIconUrl)) {
-                Picasso.with(this)
-                        .load(userIconUrl)
-                        .placeholder(R.mipmap.ic_head_default)
-                        .into(iv_head_back);
-                Picasso.with(this)
-                        .load(userIconUrl)
-                        .placeholder(R.mipmap.ic_head_default)
-                        .into(iv_head);
-            }
-        }
+//        if (mUserVo != null) {
+//            tv_name.setText(TextUtils.isEmpty(UserInfo.getInstance().getCurrentUser().getKey_user_info().getNickName()) ?
+//                    "" : UserInfo.getInstance().getCurrentUser().getKey_user_info().getNickName());
+//
+//            if (mUserVo.getKey_user_info().getUserIcon().contains(Constants.HttpConst.URL_BASE_IMG))
+//                userIconUrl = mUserVo.getKey_user_info().getUserIcon();
+//            else
+//                userIconUrl = Constants.HttpConst.URL_BASE_IMG + mUserVo.getKey_user_info().getUserIcon();
+//
+//            if (!TextUtils.isEmpty(userIconUrl)) {
+//                Picasso.with(this)
+//                        .load(userIconUrl)
+//                        .placeholder(R.mipmap.ic_head_default)
+//                        .into(iv_head_back);
+//                Picasso.with(this)
+//                        .load(userIconUrl)
+//                        .placeholder(R.mipmap.ic_head_default)
+//                        .into(iv_head);
+//            }
+//        }
     }
 
     @Override
