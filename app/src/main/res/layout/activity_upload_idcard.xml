@@ -93,6 +93,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layout_add1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_upload_sample"
@@ -100,9 +101,16 @@
                     android:padding="1dp">
 
                     <ImageView
+                        android:id="@+id/iv_add1"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:src="@mipmap/ic_add"/>
+
+                    <ImageView
                         android:id="@+id/iv_front"
                         android:layout_width="150dp"
-                        android:layout_height="150dp"/>
+                        android:layout_height="150dp"
+                        android:visibility="gone"/>
 
                 </LinearLayout>
 
@@ -148,6 +156,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layout_add2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_upload_sample"
@@ -155,9 +164,16 @@
                     android:padding="1dp">
 
                     <ImageView
+                        android:id="@+id/iv_add2"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:src="@mipmap/ic_add"/>
+
+                    <ImageView
                         android:id="@+id/iv_back"
                         android:layout_width="150dp"
-                        android:layout_height="150dp"/>
+                        android:layout_height="150dp"
+                        android:visibility="gone"/>
 
                 </LinearLayout>
 
@@ -204,6 +220,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layout_add3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_upload_sample"
@@ -211,9 +228,16 @@
                     android:padding="1dp">
 
                     <ImageView
+                        android:id="@+id/iv_add3"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:src="@mipmap/ic_add"/>
+
+                    <ImageView
                         android:id="@+id/iv_group"
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"/>
+                        android:layout_height="150dp"
+                        android:visibility="gone"/>
 
                 </LinearLayout>
 

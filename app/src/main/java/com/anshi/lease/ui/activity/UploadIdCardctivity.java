@@ -50,6 +50,12 @@ public class UploadIdCardctivity extends LeaseBaseActivity implements Imageutils
     TextView tv_back;
     @BindView(R.id.tv_group)
     TextView tv_group;
+    @BindView(R.id.iv_add1)
+    ImageView iv_add1;
+    @BindView(R.id.iv_add2)
+    ImageView iv_add2;
+    @BindView(R.id.iv_add3)
+    ImageView iv_add3;
 
     private Imageutils mImageutils;
     private Bitmap frontBitmap;
@@ -80,20 +86,20 @@ public class UploadIdCardctivity extends LeaseBaseActivity implements Imageutils
         mImageutils = new Imageutils(this);
     }
 
-    @OnClick({R.id.tv_upload, R.id.iv_front, R.id.iv_back, R.id.iv_group,
+    @OnClick({R.id.tv_upload, R.id.layout_add1, R.id.layout_add2, R.id.layout_add3,
                 R.id.tv_front, R.id.tv_back, R.id.tv_group})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_upload:
                 handleCommit();
                 break;
-            case R.id.iv_front:
+            case R.id.layout_add1:
                 mImageutils.imagepicker(1);
                 break;
-            case R.id.iv_back:
+            case R.id.layout_add2:
                 mImageutils.imagepicker(2);
                 break;
-            case R.id.iv_group:
+            case R.id.layout_add3:
                 mImageutils.imagepicker(3);
                 break;
             case R.id.tv_front:
@@ -180,16 +186,22 @@ public class UploadIdCardctivity extends LeaseBaseActivity implements Imageutils
     @Override
     public void image_attachment(int from, String filename, Bitmap file, Uri uri) {
         if (from == 1) {
+            iv_add1.setVisibility(View.GONE);
+            iv_front.setVisibility(View.VISIBLE);
             this.frontBitmap = file;
             this.frontFileName = filename;
             iv_front.setImageBitmap(file);
             UserInfo.getInstance().getAuthDataVo().setUserIcFront(mImageutils.BitMapToString(frontBitmap));
         } else if (from == 2) {
+            iv_add2.setVisibility(View.GONE);
+            iv_back.setVisibility(View.VISIBLE);
             this.backBitmap = file;
             this.backFileName = filename;
             iv_back.setImageBitmap(file);
             UserInfo.getInstance().getAuthDataVo().setUserIcBack(mImageutils.BitMapToString(backBitmap));
         } else if (from == 3) {
+            iv_add3.setVisibility(View.GONE);
+            iv_group.setVisibility(View.VISIBLE);
             this.groupBitmap = file;
             this.groupFileName = filename;
             iv_group.setImageBitmap(file);
