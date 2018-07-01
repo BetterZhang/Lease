@@ -21,7 +21,7 @@ android {
         config {
             keyAlias 'anshi'
             keyPassword 'anshi1234!'
-            storeFile file('/Users/zhangzhongqiang/AndroidStudioProjects/Lease/lease.jks')
+            storeFile file('/Users/chenwenwen/AndroidStudioProjects/Lease/lease.jks')
             storePassword 'anshi1234!'
         }
     }
