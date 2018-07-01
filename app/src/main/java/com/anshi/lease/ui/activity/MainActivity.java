@@ -278,7 +278,7 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
 
     private void showPopWindow() {
         Button button = new Button(getApplicationContext());
-        button.setBackgroundResource(R.drawable.popup);
+        button.setBackgroundResource(R.drawable.bg_popup);
         button.setText("剩余电量" + mVehiclePowerVo.getRSOC() + "%");
         button.setTextColor(Color.BLACK);
         button.setWidth(300);
@@ -294,7 +294,7 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
         };
 
         LatLng ll = mMarker.getPosition();
-        mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(button), ll, -47, listener);
+        mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(button), ll, -100, listener);
         mBaiduMap.showInfoWindow(mInfoWindow);
     }
 
