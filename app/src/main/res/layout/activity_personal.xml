@@ -192,9 +192,8 @@
                 android:gravity="center_vertical">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="所属企业"
                     android:textSize="16sp"/>
@@ -204,6 +203,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_marginLeft="10dp"
                     android:gravity="center_vertical|right"
                     tools:text="大数据产业基地"
                     android:textColor="@color/common_font_gray"/>

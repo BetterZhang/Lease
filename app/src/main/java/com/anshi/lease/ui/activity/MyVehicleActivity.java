@@ -77,7 +77,7 @@ public class MyVehicleActivity extends LeaseBaseActivity {
                 if (msgCode.equals("200")) {
                     mVehicleInfoBeans = (List<UserVo.KeyVehicleInfoBean>) response;
                     if (mVehicleInfoBeans == null || mVehicleInfoBeans.size() == 0) {
-                        showShortToast("暂无相关车辆");
+                        showShortToast("很遗憾您的名下没有车辆");
                         return;
                     }
                     mAdapter.setNewData(mVehicleInfoBeans);

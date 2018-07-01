@@ -390,9 +390,10 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                 }
                 break;
             case R.id.layout_vehicle:
-                if (!mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED") ||
-                        mUserVo.getKey_vehicle_info().size() == 0) {
+                if (!mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED")) {
                     showShortToast("请先进行实名认证并从企业申领车辆后才能使用本功能");
+                } else if (mUserVo.getKey_vehicle_info().size() == 0) {
+                    showShortToast("从企业申领车辆后才能使用本功能");
                 } else {
                     getLocByVehiclePK();
                 }
