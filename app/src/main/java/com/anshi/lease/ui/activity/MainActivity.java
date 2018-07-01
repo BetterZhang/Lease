@@ -178,7 +178,28 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                 .placeholder(R.mipmap.ic_head_default)
                 .into(iv_head);
         tv_name.setText(mUserVo.getKey_user_info().getNickName());
-        tv_status.setText(mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED") ? "已实名" : "未实名");
+        tv_status.setText(getUserAuthFlag(mUserVo.getKey_user_info().getUserRealNameAuthFlag()));
+    }
+
+    private String getUserAuthFlag(String userAuthStr) {
+        String userAuthFlag = "";
+        switch (userAuthStr) {
+            case "AUTHORIZED":
+                userAuthFlag = "已实名";
+                break;
+            case "UNAUTHORIZED":
+                userAuthFlag = "未实名";
+                break;
+            case "TOAUTHORIZED":
+                userAuthFlag = "待实名";
+                break;
+            case "REJECTAUTHORIZED":
+                userAuthFlag = "已驳回";
+                break;
+            default:
+                break;
+        }
+        return userAuthFlag;
     }
 
     private void logout() {
@@ -360,6 +381,8 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
             case R.id.tv_status:
                 if (mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED")) {
                     showShortToast("您已经实名认证，请勿重复提交");
+                } else if (mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("TOAUTHORIZED")) {
+                    showShortToast("您已经提交实名认证，请等待审核");
                 } else {
                     gotoAuthIdCardActivity();
                 }
