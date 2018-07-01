@@ -76,8 +76,10 @@ public class MyVehicleActivity extends LeaseBaseActivity {
             case "getVehicleByUserId":
                 if (msgCode.equals("200")) {
                     mVehicleInfoBeans = (List<UserVo.KeyVehicleInfoBean>) response;
-                    if (mVehicleInfoBeans == null)
+                    if (mVehicleInfoBeans == null || mVehicleInfoBeans.size() == 0) {
+                        showShortToast("暂无相关车辆");
                         return;
+                    }
                     mAdapter.setNewData(mVehicleInfoBeans);
                 }
                 break;
