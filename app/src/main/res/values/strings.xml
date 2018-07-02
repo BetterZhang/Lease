@@ -7,4 +7,6 @@
 
     <string name="text_auth_tip">很遗憾您的名下没有车辆，赶快实名认证，去企业申请车辆吧！</string>
 
+    <string name="text_exit_app">再按一次退出程序</string>
+    <string name="text_cancel">取消</string>
 </resources>

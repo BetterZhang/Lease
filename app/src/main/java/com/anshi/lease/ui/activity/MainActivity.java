@@ -5,11 +5,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -109,6 +112,8 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     private String userIconUrl;
     private Gson gson = new Gson();
     private Type type;
+
+    private long exitTime = 0;
 
     @Override
     protected int getContentViewId() {
@@ -549,5 +554,37 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
         mapView.onDestroy();
         mapView = null;
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (KeyEvent.KEYCODE_BACK == keyCode) {
+            if (System.currentTimeMillis() - exitTime > 2000) {
+                Snackbar snackbar = Snackbar.make(mapView, getString(R.string.text_exit_app), Snackbar.LENGTH_SHORT);
+                snackbar.setAction(getString(R.string.text_cancel), v -> exitTime = 0)
+                        .setActionTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
+                View snakebarView = snackbar.getView();
+                TextView textView = snakebarView.findViewById(android.support.design.R.id.snackbar_text);
+                textView.setTextColor(getResources().getColor(R.color.common_font_content_white));
+                snackbar.show();
+
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+                new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        System.exit(0);
+                    }
+                }.start();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
