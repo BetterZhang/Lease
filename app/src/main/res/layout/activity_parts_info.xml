@@ -30,7 +30,7 @@
         android:elevation="4dp"
         android:divider="@drawable/shape_view_divider"
         android:showDividers="middle|end"
-        android:background="@color/common_item_background">
+        android:background="@drawable/shape_layout_bg">
 
         <LinearLayout
             android:layout_width="match_parent"
