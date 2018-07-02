@@ -129,15 +129,16 @@ public class UploadHeadActivity extends LeaseBaseActivity implements Imageutils.
     }
 
     private void applyCameraPermission() {
-        String[] permissions = {Manifest.permission.CAMERA};
+        String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (Build.VERSION.SDK_INT >= 23) {
-            int check = ContextCompat.checkSelfPermission(this, permissions[0]);
+            int check0 = ContextCompat.checkSelfPermission(this, permissions[0]);
+            int check1 = ContextCompat.checkSelfPermission(this, permissions[1]);
             // 权限是否已经 授权 GRANTED---授权  DINIED---拒绝
-            if (check == PackageManager.PERMISSION_GRANTED) {
+            if (check0 == PackageManager.PERMISSION_GRANTED && check1 == PackageManager.PERMISSION_GRANTED) {
                 //调用相机
                 useCamera();
             } else {
-                requestPermissions(new String[]{Manifest.permission.CAMERA}, 1);
+                requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
             }
         } else {
             useCamera();
@@ -164,10 +165,10 @@ public class UploadHeadActivity extends LeaseBaseActivity implements Imageutils.
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 1) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED)
                 useCamera();
             else
-                showShortToast("需要相机权限");
+                showShortToast("需要相机和存储权限");
         }
         if (requestCode == 2) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
