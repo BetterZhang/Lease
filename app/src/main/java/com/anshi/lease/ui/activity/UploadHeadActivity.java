@@ -2,7 +2,6 @@ package com.anshi.lease.ui.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -47,8 +46,8 @@ public class UploadHeadActivity extends LeaseBaseActivity implements Imageutils.
 
     public final int TYPE_TAKE_PHOTO = 1;//Uri获取类型判断
 
-    @BindView(R.id.iv_head)
-    ImageView iv_head;
+    @BindView(R.id.iv_head_upload)
+    ImageView iv_head_upload;
 
     private boolean uploadFlag = false;
     private UserVo mUserVo;
@@ -81,8 +80,7 @@ public class UploadHeadActivity extends LeaseBaseActivity implements Imageutils.
         Picasso.get()
                 .load(userIconUrl)
                 .placeholder(R.mipmap.ic_head_default)
-                .resize(80, 80)
-                .into(iv_head);
+                .into(iv_head_upload);
     }
 
     /**
@@ -120,14 +118,11 @@ public class UploadHeadActivity extends LeaseBaseActivity implements Imageutils.
     private void showChooseDialog() {
         new AlertDialog.Builder(this)
                 .setCancelable(true)
-                .setItems(new String[]{"拍照", "相册"}, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == 0) {
-                            applyCameraPermission();
-                        } else {
-                            applyWritePermission();
-                        }
+                .setItems(new String[]{"拍照", "相册"}, (dialog, which) -> {
+                    if (which == 0) {
+                        applyCameraPermission();
+                    } else {
+                        applyWritePermission();
                     }
                 }).show();
     }
@@ -201,7 +196,7 @@ public class UploadHeadActivity extends LeaseBaseActivity implements Imageutils.
     private void uplodeUserIcon() {
         if (mUserVo == null)
             return;
-        Bitmap bitmap = ((BitmapDrawable) iv_head.getDrawable()).getBitmap();
+        Bitmap bitmap = ((BitmapDrawable) iv_head_upload.getDrawable()).getBitmap();
         HashMap<String, String> params = new HashMap<>();
         params.put("id", mUserVo.getKey_user_info().getId());
         params.put("userIcon", mImageutils.BitMapToString(bitmap));
@@ -258,7 +253,7 @@ public class UploadHeadActivity extends LeaseBaseActivity implements Imageutils.
         if (uri == null) {
             return;
         }
-        iv_head.setImageURI(uri);
+        iv_head_upload.setImageURI(uri);
         uploadFlag = true;
     }
 
