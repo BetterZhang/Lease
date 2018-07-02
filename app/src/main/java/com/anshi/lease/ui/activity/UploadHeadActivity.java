@@ -54,6 +54,7 @@ public class UploadHeadActivity extends LeaseBaseActivity implements Imageutils.
     private Imageutils mImageutils;
 
     private File tempFile;
+    private Uri photoURI;
 
     @Override
     protected int getContentViewId() {
@@ -178,14 +179,44 @@ public class UploadHeadActivity extends LeaseBaseActivity implements Imageutils.
 
     private void useCamera() {
         Intent takeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        tempFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
-                + "/test/" + System.currentTimeMillis() + ".jpg");
-        tempFile.getParentFile().mkdirs();
 
-        //改变Uri  com.xykj.customview.fileprovider注意和xml中的一致
-        Uri uri = FileProvider.getUriForFile(UploadHeadActivity.this, "com.anshi.lease.fileprovider", tempFile);
-        takeIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-        startActivityForResult(takeIntent, RESULT_CAPTURE);
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "xglt");
+        if (!file.exists()) {
+            file.mkdir();
+        }
+        /**
+         * 这里将时间作为不同照片的名称
+         */
+        tempFile = new File(file, System.currentTimeMillis() + ".jpg");
+
+        try {
+            if (tempFile.exists()) {
+                tempFile.delete();
+            }
+            tempFile.createNewFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+//        tempFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
+//                + "/test/" + System.currentTimeMillis() + ".jpg");
+//        tempFile.getParentFile().mkdirs();
+
+        if (tempFile != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                //如果是7.0及以上的系统使用FileProvider的方式创建一个Uri
+                //改变Uri  com.xykj.customview.fileprovider注意和xml中的一致
+                photoURI = FileProvider.getUriForFile(UploadHeadActivity.this, "com.anshi.lease.fileprovider", tempFile);
+                takeIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                takeIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            } else {
+                //7.0以下使用这种方式创建一个Uri
+                photoURI = Uri.fromFile(tempFile);
+            }
+            takeIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+            startActivityForResult(takeIntent, RESULT_CAPTURE);
+        }
     }
 
     private void selectGallery() {
