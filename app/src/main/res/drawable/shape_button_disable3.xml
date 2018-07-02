@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <solid android:color="@color/common_btn_disable" />
+
+    <corners android:radius="5dp" />
+
+    <stroke android:color="@color/common_line_divider"
+        android:width="2px"/>
+
+</shape>

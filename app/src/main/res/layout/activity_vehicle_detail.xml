@@ -416,7 +416,8 @@
                     android:layout_marginRight="20dp"
                     android:gravity="center"
                     android:text="查看车辆配件信息"
-                    android:background="@drawable/selector_text_button"/>
+                    android:textColor="@color/common_font_content"
+                    android:background="@drawable/selector_text_button3"/>
 
                 <TextView
                     android:id="@+id/tv_set_default"
@@ -426,7 +427,7 @@
                     android:layout_margin="20dp"
                     android:gravity="center"
                     android:text="设为默认车辆"
-                    android:background="@drawable/selector_text_button"/>
+                    android:background="@drawable/selector_text_button2"/>
 
             </LinearLayout>
 
