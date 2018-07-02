@@ -1,5 +1,6 @@
 package com.anshi.lease.ui.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jme.common.ui.config.RxBusConfig;
 import com.jme.common.util.SharedPreUtils;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import java.lang.reflect.Type;
 
 
@@ -44,34 +46,39 @@ public class SplashActivity extends AppCompatActivity {
         final View view = View.inflate(this, R.layout.activity_splash, null);
         setContentView(view);
 
-        initData();
+        RxPermissions permissions = new RxPermissions(this);
+        permissions.request(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)
+                .subscribe(granted -> {
+                    initData();
 
-        //渐变展示启动屛
-        AlphaAnimation animation = new AlphaAnimation(0.5f, 1.0f);
-        animation.setDuration(1500);
-        view.startAnimation(animation);
+                    //渐变展示启动屛
+                    AlphaAnimation animation = new AlphaAnimation(0.5f, 1.0f);
+                    animation.setDuration(1500);
+                    view.startAnimation(animation);
 
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
+                    animation.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
 
-            }
+                        }
 
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                if (mUserVo != null) {
-                    UserInfo.getInstance().login(mUserVo, false);
-                    redirectToMain();
-                } else {
-                    redirectToLogin();
-                }
-            }
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            if (mUserVo != null) {
+                                UserInfo.getInstance().login(mUserVo, false);
+                                redirectToMain();
+                            } else {
+                                redirectToLogin();
+                            }
+                        }
 
-            @Override
-            public void onAnimationRepeat(Animation animation) {
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
 
-            }
-        });
+                        }
+                    });
+                });
+
     }
 
     private void initData() {

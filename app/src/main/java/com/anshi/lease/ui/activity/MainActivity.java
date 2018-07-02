@@ -152,7 +152,7 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                     if (granted) {
                         mLocationClient.restart();
                     } else {
-
+                        showShortToast("您没有授权定位权限，请在设置中打开授权");
                     }
                 });
     }
