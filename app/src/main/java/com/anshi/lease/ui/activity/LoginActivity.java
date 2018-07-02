@@ -34,7 +34,7 @@ public class LoginActivity extends LeaseBaseActivity {
     EditText et_password;
 
     private Gson gson = new Gson();
-    private UserVo mUserVo;
+//    private UserVo mUserVo;
     private Type type;
 
     @Override
@@ -46,16 +46,16 @@ public class LoginActivity extends LeaseBaseActivity {
     protected void initView() {
         super.initView();
         type = new TypeToken<UserVo>() {}.getType();
-        String loginUserInfoJson = SharedPreUtils.getString(this, RxBusConfig.LOGIN_USER_INFO);
-        if (!android.text.TextUtils.isEmpty(loginUserInfoJson)) {
-            mUserVo = gson.fromJson(loginUserInfoJson, type);
-        }
-
-        if (mUserVo != null) {
-            UserInfo.getInstance().login(mUserVo, false);
-            startAnimActivity(MainActivity.class);
-            this.finish();
-        }
+//        String loginUserInfoJson = SharedPreUtils.getString(this, RxBusConfig.LOGIN_USER_INFO);
+//        if (!android.text.TextUtils.isEmpty(loginUserInfoJson)) {
+//            mUserVo = gson.fromJson(loginUserInfoJson, type);
+//        }
+//
+//        if (mUserVo != null) {
+//            UserInfo.getInstance().login(mUserVo, false);
+//            startAnimActivity(MainActivity.class);
+//            this.finish();
+//        }
     }
 
     @OnClick({R.id.btn_login, R.id.tv_register, R.id.tv_forget_pwd})

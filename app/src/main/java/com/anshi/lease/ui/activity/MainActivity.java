@@ -267,6 +267,7 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                     mUserVo = (UserVo) response;
                 }
                 if (mUserVo != null) {
+                    UserInfo.getInstance().login(mUserVo, false);
                     String loginUserInfoJson = gson.toJson(mUserVo, type);
                     SharedPreUtils.setString(this, RxBusConfig.HEADER_LOGIN_TOKEN, mUserVo.getKey_login_token());
                     SharedPreUtils.setString(this, RxBusConfig.LOGIN_USER_INFO, loginUserInfoJson);
