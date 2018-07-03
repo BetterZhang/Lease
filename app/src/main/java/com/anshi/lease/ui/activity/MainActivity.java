@@ -195,13 +195,13 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                 userAuthFlag = "已实名";
                 break;
             case "UNAUTHORIZED":
-                userAuthFlag = "未实名";
+                userAuthFlag = "未实名 >";
                 break;
             case "TOAUTHORIZED":
-                userAuthFlag = "待实名";
+                userAuthFlag = "待审核";
                 break;
             case "REJECTAUTHORIZED":
-                userAuthFlag = "已驳回";
+                userAuthFlag = "已驳回 >";
                 break;
             default:
                 break;

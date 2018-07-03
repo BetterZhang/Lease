@@ -73,6 +73,6 @@
         android:layout_marginRight="20dp"
         android:gravity="center"
         android:text="完成"
-        android:background="@drawable/selector_text_button"/>
+        android:background="@drawable/selector_text_button2"/>
 
 </LinearLayout>
