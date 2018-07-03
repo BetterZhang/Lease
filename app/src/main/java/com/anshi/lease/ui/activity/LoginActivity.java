@@ -37,6 +37,8 @@ public class LoginActivity extends LeaseBaseActivity {
 //    private UserVo mUserVo;
     private Type type;
 
+    private String defaultVehicleCode;
+
     @Override
     protected int getContentViewId() {
         return R.layout.activity_login;
@@ -108,7 +110,9 @@ public class LoginActivity extends LeaseBaseActivity {
                     UserVo userVo = (UserVo) response;
                     if (userVo == null)
                         return;
-                    UserInfo.getInstance().login(userVo, true);
+
+                    defaultVehicleCode = SharedPreUtils.getString(mContext, RxBusConfig.DEFAULT_VEHICLE_CODE);
+                    UserInfo.getInstance().login(userVo, isDefaultVehicleDelete(userVo, defaultVehicleCode));
                     showShortToast("登录成功");
 
                     String loginUserInfoJson = gson.toJson(userVo, type);
@@ -121,5 +125,18 @@ public class LoginActivity extends LeaseBaseActivity {
             default:
                 break;
         }
+    }
+
+    private boolean isDefaultVehicleDelete(UserVo userVo, String defaultVehicleCode) {
+        boolean flag = true;
+        if (userVo.getKey_vehicle_info() != null && userVo.getKey_vehicle_info().size() > 0) {
+            for (UserVo.KeyVehicleInfoBean vehicleInfoBean : userVo.getKey_vehicle_info()) {
+                if (vehicleInfoBean.getVehicleCode().equals(defaultVehicleCode)) {
+                    flag = false;
+                    break;
+                }
+            }
+        }
+        return flag;
     }
 }

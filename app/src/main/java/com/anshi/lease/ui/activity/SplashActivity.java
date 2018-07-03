@@ -107,8 +107,8 @@ public class SplashActivity extends AppCompatActivity {
 
     private boolean isDefaultVehicleDelete(UserVo userVo, String defaultVehicleCode) {
         boolean flag = true;
-        if (userVo.getKey_vehicle_info() != null && mUserVo.getKey_vehicle_info().size() > 0) {
-            for (UserVo.KeyVehicleInfoBean vehicleInfoBean : mUserVo.getKey_vehicle_info()) {
+        if (userVo.getKey_vehicle_info() != null && userVo.getKey_vehicle_info().size() > 0) {
+            for (UserVo.KeyVehicleInfoBean vehicleInfoBean : userVo.getKey_vehicle_info()) {
                 if (vehicleInfoBean.getVehicleCode().equals(defaultVehicleCode)) {
                     flag = false;
                     break;
