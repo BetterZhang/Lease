@@ -27,7 +27,7 @@ public class AuthCompleteActivity extends LeaseBaseActivity {
 
     @OnClick(R.id.tv_complete)
     public void onClick() {
-        this.finish();
+        this.onBackPressed();
     }
 
     @Override

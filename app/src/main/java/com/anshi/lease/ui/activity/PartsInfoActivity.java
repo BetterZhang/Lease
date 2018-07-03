@@ -1,13 +1,17 @@
 package com.anshi.lease.ui.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.widget.TextView;
 import com.anshi.lease.R;
 import com.anshi.lease.domain.UserVo;
 import com.anshi.lease.service.UserDeviceService;
+import com.anshi.lease.ui.adapter.PartsInfoAdapter;
 import com.anshi.lease.ui.base.LeaseBaseActivity;
 import com.jme.common.network.DTRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import butterknife.BindView;
@@ -21,24 +25,13 @@ import butterknife.BindView;
  */
 public class PartsInfoActivity extends LeaseBaseActivity {
 
-    @BindView(R.id.tv_parts_type)
-    TextView tv_parts_type;
-    @BindView(R.id.tv_parts_code)
-    TextView tv_parts_code;
-    @BindView(R.id.tv_parts_name)
-    TextView tv_parts_name;
-    @BindView(R.id.tv_parts_brand)
-    TextView tv_parts_brand;
-    @BindView(R.id.tv_parts_pn)
-    TextView tv_parts_pn;
-    @BindView(R.id.tv_parts_parameters)
-    TextView tv_parts_parameters;
-    @BindView(R.id.tv_mfrsName)
-    TextView tv_mfrsName;
-    @BindView(R.id.tv_parts_status)
-    TextView tv_parts_status;
+    @BindView(R.id.rcv_parts_info)
+    RecyclerView rcv_parts_info;
+
+    private PartsInfoAdapter mAdapter;
 
     private String id;
+    private List<UserVo.KeyVehicleInfoBean.BizPartssBean> mPartssBeans = new ArrayList<>();
 
     @Override
     protected int getContentViewId() {
@@ -49,6 +42,15 @@ public class PartsInfoActivity extends LeaseBaseActivity {
     protected void initView() {
         super.initView();
         initToolbar("车辆配件信息", true);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rcv_parts_info.setLayoutManager(layoutManager);
+
+        mAdapter = new PartsInfoAdapter(null);
+        rcv_parts_info.setAdapter(mAdapter);
+
+        rcv_parts_info.setItemAnimator(new DefaultItemAnimator());
     }
 
     @Override
@@ -76,75 +78,17 @@ public class PartsInfoActivity extends LeaseBaseActivity {
         switch (request.getApi().getName()) {
             case "getByPR":
                 if (msgCode.equals("200")) {
-                    List<UserVo.KeyVehicleInfoBean.BizPartssBean> bizPartssBeanList = (List<UserVo.KeyVehicleInfoBean.BizPartssBean>) response;
-                    if (bizPartssBeanList == null || bizPartssBeanList.size() == 0)
+                    mPartssBeans = (List<UserVo.KeyVehicleInfoBean.BizPartssBean>) response;
+                    if (mPartssBeans == null || mPartssBeans.size() == 0) {
+                        showShortToast("该车辆暂无配件信息");
                         return;
-                    setBizPartssInfo(bizPartssBeanList.get(0));
+                    }
+                    mAdapter.setNewData(mPartssBeans);
                 }
                 break;
             default:
                 break;
         }
-    }
-
-    private void setBizPartssInfo(UserVo.KeyVehicleInfoBean.BizPartssBean bizPartssBean) {
-        tv_parts_type.setText(getPartsTypeStr(bizPartssBean.getPartsType()));
-        tv_parts_code.setText(bizPartssBean.getPartsCode());
-        tv_parts_name.setText(bizPartssBean.getPartsName());
-        tv_parts_brand.setText(bizPartssBean.getPartsBrand());
-        tv_parts_pn.setText(bizPartssBean.getPartsPn());
-        tv_parts_parameters.setText(bizPartssBean.getPartsParameters());
-        tv_mfrsName.setText(bizPartssBean.getMfrsName());
-        tv_parts_status.setText(getPartsStatusStr(bizPartssBean.getPartsStatus()));
-    }
-
-    private String getPartsTypeStr(String type) {
-        String partsTypeStr = "";
-        switch (type) {
-            case "SEATS":
-                partsTypeStr = "车座";
-                break;
-            case "FRAME":
-                partsTypeStr = "车架";
-                break;
-            case "HANDLEBAR":
-                partsTypeStr = "车把";
-                break;
-            case "BELL":
-                partsTypeStr = "车铃";
-                break;
-            case "TYRE":
-                partsTypeStr = "轮胎";
-                break;
-            case "PEDAL":
-                partsTypeStr = "脚蹬";
-                break;
-            case "DASHBOARD":
-                partsTypeStr = "仪表盘";
-                break;
-            default:
-                partsTypeStr = "";
-                break;
-        }
-        return partsTypeStr;
-    }
-
-    private String getPartsStatusStr(String status) {
-        String statusStr = "";
-        switch (status) {
-            case "INVALID":
-                statusStr = "作废";
-                break;
-            case "FREEZE":
-                statusStr = "冻结/维保";
-                break;
-            case "NORMAL":
-                statusStr = "正常";
-                break;
-            default:
-                break;
-        }
-        return statusStr;
     }
 
 }
