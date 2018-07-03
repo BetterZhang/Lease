@@ -49,8 +49,8 @@ public class UserInfo {
         userVo = null;
         SharedPreUtils.setString(LeaseApplication.getContext(), RxBusConfig.LOGIN_USER_INFO, "");
         SharedPreUtils.setString(LeaseApplication.getContext(), RxBusConfig.HEADER_LOGIN_TOKEN, "");
-        SharedPreUtils.setString(LeaseApplication.getContext(), RxBusConfig.DEFAULT_VEHICLE_CODE, "");
-        SharedPreUtils.setString(LeaseApplication.getContext(), RxBusConfig.DEFAULT_VEHICLE_ID, "");
+//        SharedPreUtils.setString(LeaseApplication.getContext(), RxBusConfig.DEFAULT_VEHICLE_CODE, "");
+//        SharedPreUtils.setString(LeaseApplication.getContext(), RxBusConfig.DEFAULT_VEHICLE_ID, "");
     }
 
     public boolean isLogin() {

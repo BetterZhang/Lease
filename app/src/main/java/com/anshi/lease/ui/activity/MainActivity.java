@@ -113,6 +113,8 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     private Gson gson = new Gson();
     private Type type;
 
+    private String defaultVehicleCode;
+
     private long exitTime = 0;
 
     @Override
@@ -267,7 +269,8 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                     mUserVo = (UserVo) response;
                 }
                 if (mUserVo != null) {
-                    UserInfo.getInstance().login(mUserVo, false);
+                    defaultVehicleCode = SharedPreUtils.getString(mContext, RxBusConfig.DEFAULT_VEHICLE_CODE);
+                    UserInfo.getInstance().login(mUserVo, isDefaultVehicleDelete(mUserVo, defaultVehicleCode));
                     String loginUserInfoJson = gson.toJson(mUserVo, type);
                     SharedPreUtils.setString(this, RxBusConfig.HEADER_LOGIN_TOKEN, mUserVo.getKey_login_token());
                     SharedPreUtils.setString(this, RxBusConfig.LOGIN_USER_INFO, loginUserInfoJson);
@@ -280,6 +283,19 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
             default:
                 break;
         }
+    }
+
+    private boolean isDefaultVehicleDelete(UserVo userVo, String defaultVehicleCode) {
+        boolean flag = true;
+        if (userVo.getKey_vehicle_info() != null && mUserVo.getKey_vehicle_info().size() > 0) {
+            for (UserVo.KeyVehicleInfoBean vehicleInfoBean : mUserVo.getKey_vehicle_info()) {
+                if (vehicleInfoBean.getVehicleCode().equals(defaultVehicleCode)) {
+                    flag = false;
+                    break;
+                }
+            }
+        }
+        return flag;
     }
 
     private void showPopWindow() {

@@ -35,6 +35,8 @@ public class SplashActivity extends AppCompatActivity {
     private UserVo mUserVo;
     private Type type;
 
+    private String defaultVehicleCode;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +67,8 @@ public class SplashActivity extends AppCompatActivity {
                         @Override
                         public void onAnimationEnd(Animation animation) {
                             if (mUserVo != null) {
-                                UserInfo.getInstance().login(mUserVo, false);
+                                defaultVehicleCode = SharedPreUtils.getString(SplashActivity.this, RxBusConfig.DEFAULT_VEHICLE_CODE);
+                                UserInfo.getInstance().login(mUserVo, isDefaultVehicleDelete(mUserVo, defaultVehicleCode));
                                 redirectToMain();
                             } else {
                                 redirectToLogin();
@@ -100,5 +103,18 @@ public class SplashActivity extends AppCompatActivity {
     private void redirectToLogin() {
         startActivity(new Intent(SplashActivity.this, LoginActivity.class));
         SplashActivity.this.finish();
+    }
+
+    private boolean isDefaultVehicleDelete(UserVo userVo, String defaultVehicleCode) {
+        boolean flag = true;
+        if (userVo.getKey_vehicle_info() != null && mUserVo.getKey_vehicle_info().size() > 0) {
+            for (UserVo.KeyVehicleInfoBean vehicleInfoBean : mUserVo.getKey_vehicle_info()) {
+                if (vehicleInfoBean.getVehicleCode().equals(defaultVehicleCode)) {
+                    flag = false;
+                    break;
+                }
+            }
+        }
+        return flag;
     }
 }
