@@ -24,6 +24,7 @@ public class AuthIdCardActivity extends LeaseBaseActivity {
     EditText et_idcard;
 
     private AuthDataVo mAuthDataVo;
+    private String idCardReg = "^(\\d{15}$|^\\d{18}$|^\\d{17}(\\d|X|x))$";
 
     @Override
     protected int getContentViewId() {
@@ -49,6 +50,9 @@ public class AuthIdCardActivity extends LeaseBaseActivity {
     public void onClick() {
         if (TextUtils.isEmpty(et_idcard)) {
             showShortToast("请输入身份证号");
+            return;
+        } else if (!TextUtils.getText(et_idcard).matches(idCardReg)) {
+            showShortToast("请输入正确的身份证号");
             return;
         }
         UserInfo.getInstance().getAuthDataVo().setUserPid(TextUtils.getText(et_idcard));
