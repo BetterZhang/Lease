@@ -20,7 +20,7 @@ public interface UserAuthApi {
      * 获得图片验证码
      * @return
      */
-    @POST("/mobile/v1/auth/getcaptcha")
+    @POST("mobile/v1/auth/getcaptcha")
     Call<DTResponse> getcaptcha();
 
 
@@ -28,7 +28,7 @@ public interface UserAuthApi {
      * 登录
      * @return
      */
-    @POST("/mobile/v1/auth/login")
+    @POST("mobile/v1/auth/login")
     Call<DTResponse> login(@Body HashMap<String, String> params);
 
 
@@ -37,7 +37,7 @@ public interface UserAuthApi {
      * @param params
      * @return
      */
-    @POST("/mobile/v1/auth/sendsms")
+    @POST("mobile/v1/auth/sendsms")
     Call<DTResponse> sendsms(@Body HashMap<String, String> params);
 
 
@@ -46,7 +46,7 @@ public interface UserAuthApi {
      * @param params
      * @return
      */
-    @POST("/mobile/v1/auth/register")
+    @POST("mobile/v1/auth/register")
     Call<DTResponse> register(@Body HashMap<String, String> params);
 
 
@@ -55,7 +55,7 @@ public interface UserAuthApi {
      * @param params
      * @return
      */
-    @POST("/mobile/v1/auth/resetpassword")
+    @POST("mobile/v1/auth/resetpassword")
     Call<DTResponse> resetpassword(@Body HashMap<String, String> params);
 
 
@@ -64,7 +64,7 @@ public interface UserAuthApi {
      * @param params
      * @return
      */
-    @POST("/mobile/v1/auth/logout")
+    @POST("mobile/v1/auth/logout")
     Call<DTResponse> logout(@Body HashMap<String, String> params);
 
 
@@ -73,7 +73,7 @@ public interface UserAuthApi {
      * @param params
      * @return
      */
-    @POST("/mobile/v1/auth/updateuserinfo")
+    @POST("mobile/v1/auth/updateuserinfo")
     Call<DTResponse> updateUserInfo(@Body HashMap<String, String> params);
 
 
@@ -82,7 +82,7 @@ public interface UserAuthApi {
      * @param params
      * @return
      */
-    @POST("/mobile/v1/auth/uplodeusericon")
+    @POST("mobile/v1/auth/uplodeusericon")
     Call<DTResponse> uplodeUserIcon(@Body HashMap<String, String> params);
 
 
@@ -90,7 +90,7 @@ public interface UserAuthApi {
      * 手机端用户注册时，需要看的所有企业
      * @return
      */
-    @GET("/mobile/v1/auth/userBindOrg")
+    @GET("mobile/v1/auth/userBindOrg")
     Call<DTResponse> userBindOrg();
 
 
@@ -99,7 +99,7 @@ public interface UserAuthApi {
      * @param params
      * @return
      */
-    @POST("/mobile/v1/auth/userrealnameauth")
+    @POST("mobile/v1/auth/userrealnameauth")
     Call<DTResponse> userRealNameAuth(@Body HashMap<String, String> params);
 
 
@@ -107,7 +107,7 @@ public interface UserAuthApi {
      * 用户状态查询
      * @return
      */
-    @GET("/mobile/v1/auth/userState")
+    @GET("mobile/v1/auth/userState")
     Call<DTResponse> userState();
 
 }

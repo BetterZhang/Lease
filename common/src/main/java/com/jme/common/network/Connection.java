@@ -138,123 +138,55 @@ public class Connection {
         // https://publicobject.com (Comodo) and https://squareup.com (Entrust). But they aren't
         // sufficient to connect to most HTTPS sites including https://godaddy.com and https://visa.com.
         // Typically developers will need to get a PEM file from their organization's TLS administrator.
-//        final  String DZ_INOUT_CERT ="-----BEGIN CERTIFICATE-----\n" +
-//                "MIIDIjCCAgoCCQDLWBYrY5bbJDANBgkqhkiG9w0BAQsFADBTMQswCQYDVQQGEwJD\n" +
-//                "TjETMBEGA1UECAwKU29tZS1TdGF0ZTEhMB8GA1UECgwYSW50ZXJuZXQgV2lkZ2l0\n" +
-//                "cyBQdHkgTHRkMQwwCgYDVQQDDANqbWUwHhcNMTQxMTI2MDc1MTUyWhcNMjQxMTIz\n" +
-//                "MDc1MTUyWjBTMQswCQYDVQQGEwJDTjETMBEGA1UECAwKU29tZS1TdGF0ZTEhMB8G\n" +
-//                "A1UECgwYSW50ZXJuZXQgV2lkZ2l0cyBQdHkgTHRkMQwwCgYDVQQDDANqbWUwggEi\n" +
-//                "MA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCYTPYFsxbKLcExuMEzuZhuvO90\n" +
-//                "MUUldmKPEmRA+AoeSEIcFDGB0ETMBEf/PmRRkP3ZE3kYD6i0xxeODOsdlddlnS1b\n" +
-//                "4PvIVFpGw46GaMUAZR9gP/BINaqt7cc1Kt0NfGDl6eqEiHNHYO8tk8tA0hhKV04x\n" +
-//                "+U60LdpLQNwEHl6mv4EotRL/C+k8y3zQSksfQMA3CJ+bdwQmkXd1d3TpYozS/o1X\n" +
-//                "wPxXB8nRa5InZbx9mbdPF2uQla52IvslQmll+o8gCGQhBZNpUxD32KVd1uwkTn2V\n" +
-//                "ieu/34hKj2ektQKMhG6UyjUvBDV/idVdF8qjUqo05FbWlHSTN8ayC35AN+EFAgMB\n" +
-//                "AAEwDQYJKoZIhvcNAQELBQADggEBABVGWDdDFTzhAvueQcwBJmJWpyuAp/78TMmB\n" +
-//                "KeXvTRFwxiI1d6t4RBCd1MxSyjmxanaDtB+1rQjDFpY3NvjIroqrGvSIowUS0Uxq\n" +
-//                "WASIf4k/lXqNrGe17wIIiEJ+Fu3rUx/LPhQ/0SWLlzy2Hyb4YO57uvvKsc1Bqc4v\n" +
-//                "SSFuGk24CaHK52FekfEB74vbcI8lM9l1Rix0izMtAG8GuIw9cfCxRaNzmv90uh/c\n" +
-//                "9VxUV6nlaIo/CsWphguBCq1PlXU4lF7Ts1xlYh8ti6mSJH6hdXcwAXZ3uWQa3Xn5\n" +
-//                "RPEzrH9+R+njIL0KJcsbKvAgELtkJRTCY5oVpzAr6dN0jNj+Kdk=\n" +
-//                "-----END CERTIFICATE-----\n";
-//
-//        final  String SPOT_REDWINE_CERT = "-----BEGIN CERTIFICATE-----\n" +
-//                "MIIDFTCCAf0CCQCwPbMNwvQNETANBgkqhkiG9w0BAQsFADBUMQswCQYDVQQGEwJD\n" +
-//                "TjETMBEGA1UECAwKU29tZS1TdGF0ZTEhMB8GA1UECgwYSW50ZXJuZXQgV2lkZ2l0\n" +
-//                "cyBQdHkgTHRkMQ0wCwYDVQQDDAREWVlUMB4XDTE0MTAwMjA3NTQyOFoXDTI0MDky\n" +
-//                "OTA3NTQyOFowRTELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUxITAf\n" +
-//                "BgNVBAoMGEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDCCASIwDQYJKoZIhvcNAQEB\n" +
-//                "BQADggEPADCCAQoCggEBALLBIYa6YQrwSaK1UB9ifZ49sct1woj/5W9VEYDYqy/5\n" +
-//                "5brQNgEC3f21Zr+XuMl2Gks7rPqbvPFEGVi4t6IY0pHa4zVx4k3PtTxjopBQk4NL\n" +
-//                "iOIn9Yma2cI/hxIfYrchm7a4TKBQ9kYsioGiJY//E+TbfUob9xsYMQrMzknkqbio\n" +
-//                "C0qG75gxXVlVeN+1oAinun5UJqCh5w5aDANmB4NjaRgCLkW847TfFtyTBOTqV5By\n" +
-//                "2x1zHzbsyj/FAIeoMSVASyHZFqjDzd1pJaghrRSvLXHsTISGoU1Kk1DEBd3WAvcJ\n" +
-//                "W8rrmwaz8klSyzi5g78fjLskN4PX7RgizXSwej/vZHMCAwEAATANBgkqhkiG9w0B\n" +
-//                "AQsFAAOCAQEAR9Y784uBDKSuozVLqxSXtqp1xGqwgGHX6h1KowdH7mGAb+2rg5si\n" +
-//                "rExoJDEQUbTB2r2Lgy/gpUHQ0ZuLHMOEmXb6Mwh5rlwjwyDrGmUuRI1PyApSCjve\n" +
-//                "l6PuMdMvphrwEYPnMfe4q9G9rrc32bvMxZsoH5cKq/tvYGpjQNKw4Dyt707OVK7u\n" +
-//                "QEwUiOrl5+hCo72SilqTQ3VpLXTZABnnpoa2W4xNnqerzHNUy6TrMC17WYdY7CN4\n" +
-//                "z34HiJ7OTgzy7k+1r3CBQJYUhp123SmXVEbPiCm7e4ttcXgDi+S8bdl3FkAFBS9j\n" +
-//                "kK7xJF9F0GUKrdSTLsep2nMKB5fmn5rlqg==\n" +
-//                "-----END CERTIFICATE-----\n";
-//
-//        final  String PUER_WARNING_APP_LAN_CERT = "-----BEGIN CERTIFICATE-----\n" +
-//                "MIIEDTCCAvWgAwIBAgIJANplpchsTeIVMA0GCSqGSIb3DQEBBQUAMIGcMQswCQYD\n" +
-//                "VQQGEwJDTjEQMA4GA1UECAwHamlhbmdzdTEQMA4GA1UEBwwHbmFuamluZzEUMBIG\n" +
-//                "A1UECgwLZGF0YWkgZ3JvdXAxFDASBgNVBAsMC2RhdGFpIHRlY2guMRcwFQYDVQQD\n" +
-//                "DA4xOTIuMTY4LjE1MC42MzEkMCIGCSqGSIb3DQEJARYVbGl4aXVtaWFvQGpzZHR0\n" +
-//                "ZWMuY29tMB4XDTE2MDUwNDA4MzIxOFoXDTE5MDEyOTA4MzIxOFowgZwxCzAJBgNV\n" +
-//                "BAYTAkNOMRAwDgYDVQQIDAdqaWFuZ3N1MRAwDgYDVQQHDAduYW5qaW5nMRQwEgYD\n" +
-//                "VQQKDAtkYXRhaSBncm91cDEUMBIGA1UECwwLZGF0YWkgdGVjaC4xFzAVBgNVBAMM\n" +
-//                "DjE5Mi4xNjguMTUwLjYzMSQwIgYJKoZIhvcNAQkBFhVsaXhpdW1pYW9AanNkdHRl\n" +
-//                "Yy5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCpsJjY8zjXlgbC\n" +
-//                "+cx9nkJwNUwSe47TjI4ZEM0ulqBKVm5n7E2jXDQOFVRxlncEtcunjsEkV5cWSXEK\n" +
-//                "LUIwNUL2sSc3gaEhv/smOh1UQemEJu/y1hyr+cTAAMVRDC84RRRQbahjtB3b+lE8\n" +
-//                "21OgBPNGYQQjmRQ9ecitnD4TAByJwBM0xQw4Gxzn2EOS7hm3efW9MLvLfFupq9uR\n" +
-//                "H6o7lqDokO6/bqM6PtgZoOMZgI/hOqJeO3xkFajMRIrARkrfEzpgJaILIzcdxoGy\n" +
-//                "W5jZ1yFyufW9VS/n/QOdL6bIbNgpkF7aRwuGubdOcLIm6bKw6I7RycS2aUMIAE8x\n" +
-//                "67mnjE1hAgMBAAGjUDBOMB0GA1UdDgQWBBTGsEhQwEthELs00mih40tGxMmkszAf\n" +
-//                "BgNVHSMEGDAWgBTGsEhQwEthELs00mih40tGxMmkszAMBgNVHRMEBTADAQH/MA0G\n" +
-//                "CSqGSIb3DQEBBQUAA4IBAQB73d3pHPBozH0AyBswELf0+Y8aXjVZLw3IRjkALZEw\n" +
-//                "Jjce81Nh/mJfDuYEhQulH/Nt53CbRRml+naP2RmTO+wOohutG7Te3Vw8+naipZQj\n" +
-//                "bAtXUyMNJK2/1psoQRLe8ZC7rbnjNaeHeymceFQa+91NrvnaHVfDX3uD8va7Nov+\n" +
-//                "O1POQRYccpAqMlbdtOxWYWQqWiGbw5fTM5OlNLCgygyP4EmEXK5gAgCkb/fT8cMq\n" +
-//                "95NsRebLZnxhPNbSgcU1aJXJvE25CTyZ4MLyeiU1I82C6Z+ZcSJ6W6L8TpmEgdR7\n" +
-//                "up0I2KluQfpVJlpILGiWfCWapo9C3fkSr6Q7zTM8jX3F\n" +
-//                "-----END CERTIFICATE-----\n";
-//
-//        final  String PUER_WARNING_APP_WAN_PRODUCE_CERT = "-----BEGIN CERTIFICATE-----\n" +
-//                "MIIFPjCCAyYCCQDeyNsJYQxUNTANBgkqhkiG9w0BAQsFADBhMQswCQYDVQQGEwJD\n" +
-//                "TjELMAkGA1UECAwCSlMxCzAJBgNVBAcMAk5KMQ0wCwYDVQQKDAREWVlUMQ0wCwYD\n" +
-//                "VQQLDAREWVlUMRowGAYDVQQDDBFhcHBjbGllbnQuamVtLmNvbTAeFw0xNjA2MDYw\n" +
-//                "NTQxMjFaFw0yNjA2MDQwNTQxMjFaMGExCzAJBgNVBAYTAkNOMQswCQYDVQQIDAJK\n" +
-//                "UzELMAkGA1UEBwwCTkoxDTALBgNVBAoMBERZWVQxDTALBgNVBAsMBERZWVQxGjAY\n" +
-//                "BgNVBAMMEWFwcGNsaWVudC5qZW0uY29tMIICIjANBgkqhkiG9w0BAQEFAAOCAg8A\n" +
-//                "MIICCgKCAgEAwotI4IXrUqQOCh3E2Ejx+ix9xLDNjCpJBJf4zzKB8+05iSjL94ZO\n" +
-//                "NaUhMPWw+8BzYpYCH9B6RsaOpP2NUT8EG72topINh/vWBy7R2IGPfPbpvMIBWn3K\n" +
-//                "TuJxQjDx/w/ns8QETEUQDAVkkWUv2qqUw6E2oPOWPY5dJvnWJ6Q0fbCs/r11cIKh\n" +
-//                "zLp/sMKfLq2MgZuoLGYSmFyHJRP0oattUbWEkadyFyXbn/3QTD0iU7jXhxkpVQlv\n" +
-//                "pbj3Zo/5+YnAWptXin9Sa5PEuqHTXZ6Y9BXrp+n6rlEo1Qi/15FZtIoMBnS2N3qX\n" +
-//                "uRX3RlehccSjOUgHbelyaj1Zw6wOS4b3zGYKqh+m2x+Kluwh45Z72xGz078OTjI0\n" +
-//                "hQXZPePj4lChRY3+Gpm3i3imHFuQwavnXs2a+yz8gyj0lSM9fmN5TSGNi1zgx9+N\n" +
-//                "X1W6kCm/KajlIp1yDMNxjI/pDdOcx69P3UqLp6hvdxfv7xjc03HRqUdvGzbi8ucI\n" +
-//                "dvPXknEuZQO7ofKeEMMvFv4sZcbciDPHMf0MNzRASarJleDcO0Xmf44VDn+nDxFq\n" +
-//                "XYhALECYO9Q+bX4pfzGqNRopf5XnRJBieFTLBX3oT6adNp4BsCxukTWRXOK3yQhV\n" +
-//                "zbR4icRziCh7yqmbf8gwAQvnvbX5UgGh5RaUtR3SOMgYfOA3PFIoG2kCAwEAATAN\n" +
-//                "BgkqhkiG9w0BAQsFAAOCAgEAeLshqhNM5f6q6aYwKNny1W2d+ROhxYaaGQ0vBwu+\n" +
-//                "lgCDnJ4WUlpXtyjUKXW4YU4Yjb1cuqwJp3GO8mSF/vI5DJ4/4SAWsaESIUAbdIDT\n" +
-//                "t24QWU1pJauNpzepnyf2RaX2PndiHahWp1xWLGLeED5PIfZxOfF+IE0yuPNtNLzy\n" +
-//                "5N/nMq8EMnloSZlTLdpbicSFvn/rPAcQ5yQQqICC8ZwvwDcBPTPyukbYaQDItHUT\n" +
-//                "b9AqNHN8OsOLDaB98YGKZfzttMWIXKLBSfjfIfieWYBZKgOXxjzhx2/Din+YiZMH\n" +
-//                "lXoUNmDbMponA2M7kHLxfLRzDeuPgEZUBkOVtS3Z2c0YlnIROYRVqVoHe96hk3AV\n" +
-//                "L1LznJrVO7nePjI6ZWVkP8Mj3/gFYa0gp/cYuYRG2kzgCiqMWrUn9k1LJ7+UK3f9\n" +
-//                "quvQQzqoXQGQPSWfeokZf+3k0DCRGAwkfXwz2DnGukN3WT6H7M2h6tXUPAvECNQp\n" +
-//                "dA/Es3mRWVPvBdUUMo/XULAf+dU/NTMJdm+C69x0SwPAeaQg25W/mS0IPenQU5Z9\n" +
-//                "vKLdwmrgHXL7r8KrZWhR+M3TH/Vxx9KR8XepV5qk559HLT0nlp18cIcTnbzGenq4\n" +
-//                "50bil2YZ9nSwYaMRYj1+e7VvhW5dfS4yCnyN2XTSKyMLaJhlynjXj0sgmpuFOSOf\n" +
-//                "4uY=\n" +
-//                "-----END CERTIFICATE-----\n";
-//
-//        final String NJ_UAT_REDWINE_CERT = "-----BEGIN CERTIFICATE-----\n" +
-//                "MIIDOzCCAiOgAwIBAgIJAJJnzD6/wH7MMA0GCSqGSIb3DQEBBQUAMDQxFTATBgNV\n" +
-//                "BAMMDHd3dy5kYXRlay5jbjEOMAwGA1UECgwFRGF0ZWsxCzAJBgNVBAYTAkNOMB4X\n" +
-//                "DTE2MTEyOTA2NTUzMFoXDTE2MTIyOTA2NTUzMFowNDEVMBMGA1UEAwwMd3d3LmRh\n" +
-//                "dGVrLmNuMQ4wDAYDVQQKDAVEYXRlazELMAkGA1UEBhMCQ04wggEiMA0GCSqGSIb3\n" +
-//                "DQEBAQUAA4IBDwAwggEKAoIBAQCp3XnVTnH+4oPWH7trFgZgI+xst2u2hvrkUMIZ\n" +
-//                "QLYhYG/eapF2Eqrr4TnuKR6+58UAtrcm0jwXsYeJ3TLPv54XO1kGQTtRtYQ3YXf4\n" +
-//                "Loyog0Xvy1fCZM57X3RlfpvyKzrh8NePBQcDzf7lRiF26lDxcEKcb2KQK228kAuL\n" +
-//                "QHhDmTt53dOK+o/tpfHA/gYd5ULfkdlWSm+Ai21lZi+1RdrT7sb2dCm31z35/l/y\n" +
-//                "+cobCWyC8KlHoajluwr4WMdUrdpog+mh8JO2nHr604luPEF+imBmhAlIhLqHP5Zy\n" +
-//                "ozZ2EJYJu+QU9jZYuWcNsg2WZ7zHzz5xREBWv1im8fAosN1xAgMBAAGjUDBOMB0G\n" +
-//                "A1UdDgQWBBSLETO+OgPYOBbV3+SFSAMoHtn0ezAfBgNVHSMEGDAWgBSLETO+OgPY\n" +
-//                "OBbV3+SFSAMoHtn0ezAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBQUAA4IBAQAU\n" +
-//                "wfA/noOA0asQ2MOCX3MbAgsXT8eWQVl8YMZPMamwv3gvlY1nOpgDFPnkgvRCxHvt\n" +
-//                "h2QNkZrsebx3wb0Cn56dL806TYW7Bh/MCW3ebyEJGxv+LQjy4vFfMNkI4YcBOL7U\n" +
-//                "5lHWfamBmRPNvUmcm1cxcEwiJA1Iigz1pnAKgLKyb72hOgo8EwkpL8Z14sz8uIEf\n" +
-//                "sRBMUNJ+ZUTqRfqUyTpyXR4/lW1RMkY6PEwavCfNg39uLVTnOtfyY5ENgrw4XGuh\n" +
-//                "l3BM4IQ9HRzIDgotFkNr1YtAdt++EeX8teuB8FF2TV+XBfEpwzddZP3DoHOXefvd\n" +
-//                "GvyuPti6Wts+5BCM2oMK\n" +
-//                "-----END CERTIFICATE-----";
+
+        final String XGLT = "-----BEGIN CERTIFICATE-----\n" +
+                "MIIEDDCCA7GgAwIBAgIQAtazThN5bwvv4tiLTlV+ZjAKBggqhkjOPQQDAjByMQsw\n" +
+                "CQYDVQQGEwJDTjElMCMGA1UEChMcVHJ1c3RBc2lhIFRlY2hub2xvZ2llcywgSW5j\n" +
+                "LjEdMBsGA1UECxMURG9tYWluIFZhbGlkYXRlZCBTU0wxHTAbBgNVBAMTFFRydXN0\n" +
+                "QXNpYSBUTFMgRUNDIENBMB4XDTE4MDYyOTAwMDAwMFoXDTE5MDYyOTEyMDAwMFow\n" +
+                "HzEdMBsGA1UEAxMUbS5kcGMueGlhb2dlbGV0dS5jb20wWTATBgcqhkjOPQIBBggq\n" +
+                "hkjOPQMBBwNCAAS49xlTQKz2n7Bckt3d9XHbFLrn9Hz2sdr0fMTTULtRRRPlTPlW\n" +
+                "S0PsT4V2GSKNmVlef2HKCeD1e/CyYZ0B5Fqso4ICejCCAnYwHwYDVR0jBBgwFoAU\n" +
+                "EoZEZiYIVCaPZTeyKU4mIeCTvtswHQYDVR0OBBYEFEK/fivQqbYB6PYlzg3Ustlc\n" +
+                "Hfu7MB8GA1UdEQQYMBaCFG0uZHBjLnhpYW9nZWxldHUuY29tMA4GA1UdDwEB/wQE\n" +
+                "AwIHgDAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwTAYDVR0gBEUwQzA3\n" +
+                "BglghkgBhv1sAQIwKjAoBggrBgEFBQcCARYcaHR0cHM6Ly93d3cuZGlnaWNlcnQu\n" +
+                "Y29tL0NQUzAIBgZngQwBAgEwgYEGCCsGAQUFBwEBBHUwczAlBggrBgEFBQcwAYYZ\n" +
+                "aHR0cDovL29jc3AyLmRpZ2ljZXJ0LmNvbTBKBggrBgEFBQcwAoY+aHR0cDovL2Nh\n" +
+                "Y2VydHMuZGlnaXRhbGNlcnR2YWxpZGF0aW9uLmNvbS9UcnVzdEFzaWFUTFNFQ0ND\n" +
+                "QS5jcnQwCQYDVR0TBAIwADCCAQUGCisGAQQB1nkCBAIEgfYEgfMA8QB2AKS5CZC0\n" +
+                "GFgUh7sTosxncAo8NZgE+RvfuON3zQ7IDdwQAAABZEqtbAQAAAQDAEcwRQIgLWqF\n" +
+                "Ls9PpuFs3Dvl46obwCAFn4Hr1DyBueXwaA4QaVwCIQDu0Ouq01wfqyvjiPg8RRCV\n" +
+                "IZ6AX/EyvD1M8Gy/lZ3gqwB3AId1v+dZfPiMQ5lfvfNu/1aNR1Y2/0q1YMG06v9e\n" +
+                "oIMPAAABZEqtbNoAAAQDAEgwRgIhAPYFeXlAUyt+7o+50grxqKA+b+WGvw+/NSY8\n" +
+                "bTl4WNZAAiEAz1D8jsRsXczLJpIpU411g58Xu/VVXS+mPgo+/sCu8KcwCgYIKoZI\n" +
+                "zj0EAwIDSQAwRgIhAPN2hrL3JLvM5yRB6adDB58z0V8lQAJxvA5rRBFT7o78AiEA\n" +
+                "tCk3QTrke0qQngJCgEheVKmb4zpZhtVz0KWhoRCtb0o=\n" +
+                "-----END CERTIFICATE-----\n" +
+                "-----BEGIN CERTIFICATE-----\n" +
+                "MIID4zCCAsugAwIBAgIQBz/JpHsGAhj24Khq6fw+OzANBgkqhkiG9w0BAQsFADBh\n" +
+                "MQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3\n" +
+                "d3cuZGlnaWNlcnQuY29tMSAwHgYDVQQDExdEaWdpQ2VydCBHbG9iYWwgUm9vdCBD\n" +
+                "QTAeFw0xNzEyMDgxMjI4NTdaFw0yNzEyMDgxMjI4NTdaMHIxCzAJBgNVBAYTAkNO\n" +
+                "MSUwIwYDVQQKExxUcnVzdEFzaWEgVGVjaG5vbG9naWVzLCBJbmMuMR0wGwYDVQQL\n" +
+                "ExREb21haW4gVmFsaWRhdGVkIFNTTDEdMBsGA1UEAxMUVHJ1c3RBc2lhIFRMUyBF\n" +
+                "Q0MgQ0EwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASdQvDzv44jBee0APcvKOWs\n" +
+                "zZsRjc4j+L6DLlYOf9tSgvfOJplfMeDNDZzOQEcJbVPD+yekJQUmObCPOrgMhqMI\n" +
+                "o4IBTzCCAUswHQYDVR0OBBYEFBKGRGYmCFQmj2U3silOJiHgk77bMB8GA1UdIwQY\n" +
+                "MBaAFAPeUDVW0Uy7ZvCj4hsbw5eyPdFVMA4GA1UdDwEB/wQEAwIBhjAdBgNVHSUE\n" +
+                "FjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwEgYDVR0TAQH/BAgwBgEB/wIBADA0Bggr\n" +
+                "BgEFBQcBAQQoMCYwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNv\n" +
+                "bTBCBgNVHR8EOzA5MDegNaAzhjFodHRwOi8vY3JsMy5kaWdpY2VydC5jb20vRGln\n" +
+                "aUNlcnRHbG9iYWxSb290Q0EuY3JsMEwGA1UdIARFMEMwNwYJYIZIAYb9bAECMCow\n" +
+                "KAYIKwYBBQUHAgEWHGh0dHBzOi8vd3d3LmRpZ2ljZXJ0LmNvbS9DUFMwCAYGZ4EM\n" +
+                "AQIBMA0GCSqGSIb3DQEBCwUAA4IBAQBZcGGhLE09CbQD5xP93NAuNC85G1BMa1OG\n" +
+                "2Q01TWvvgp7Qt1wNfRLAnhQT5pb7kRs+E7nM4IS894ufmuL452q8gYaq5HmvOmfh\n" +
+                "XMmL6K+eICfvyqjb/tSi8iy20ULO/TZhLhPor9tle52Yx811FG4i5vqwPIUEOEJ7\n" +
+                "pXe6RPVoBiwi4rbLspQGD/vYqrj9OJV4JctoIhhGq+y/sozU6nBXHfhVSD3x+hkO\n" +
+                "Ost6tyRq481IyUWQHcFtwda3gfMnaA3dsag2dtJz33RIJIUfxXmVK7w4YzHOHifn\n" +
+                "7TYk8iNrDDLtql6vS8FjiUx3kJnI6zge1C9lUHhZ/aD3RiTJrwWI\n" +
+                "-----END CERTIFICATE----- \n" +
+                "\n";
 
         final String WX_LOGIN = "-----BEGIN CERTIFICATE-----\n" +
                 "MIIFCTCCA/GgAwIBAgIQDK/JgIu8mXGqC9aWazNgZTANBgkqhkiG9w0BAQsFADBe\n" +
@@ -292,8 +224,7 @@ public class Connection {
 //                .writeUtf8(SPOT_REDWINE_CERT)
 //                .writeUtf8(PUER_WARNING_APP_LAN_CERT)
 //                .writeUtf8(PUER_WARNING_APP_WAN_PRODUCE_CERT)
-//                .writeUtf8(NJ_UAT_REDWINE_CERT)
-//                .writeUtf8(NJ_UAT_TEA)
+                .writeUtf8(XGLT)
                 .writeUtf8(WX_LOGIN)
                 .inputStream();
     }
