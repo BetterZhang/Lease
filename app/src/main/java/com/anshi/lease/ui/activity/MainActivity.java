@@ -176,11 +176,11 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
             userIconUrl = mUserVo.getKey_user_info().getUserIcon();
         else
             userIconUrl = Constants.HttpConst.URL_BASE_IMG + mUserVo.getKey_user_info().getUserIcon();
-        Picasso.get()
+        Picasso.with(this)
                 .load(userIconUrl)
                 .placeholder(R.mipmap.ic_head_default)
                 .into(iv_head_back);
-        Picasso.get()
+        Picasso.with(this)
                 .load(userIconUrl)
                 .placeholder(R.mipmap.ic_head_default)
                 .into(iv_head);

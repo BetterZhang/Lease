@@ -78,7 +78,7 @@ public class UploadHeadActivity extends LeaseBaseActivity implements Imageutils.
             userIconUrl = mUserVo.getKey_user_info().getUserIcon();
         else
             userIconUrl = Constants.HttpConst.URL_BASE_IMG + mUserVo.getKey_user_info().getUserIcon();
-        Picasso.get()
+        Picasso.with(this)
                 .load(userIconUrl)
                 .placeholder(R.mipmap.ic_head_default)
                 .into(iv_head_upload);
