@@ -13,6 +13,7 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.KeyManagerFactory;
@@ -22,10 +23,13 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
+import okhttp3.CipherSuite;
+import okhttp3.ConnectionSpec;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.TlsVersion;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okio.Buffer;
 
@@ -36,6 +40,25 @@ import okio.Buffer;
 public class Connection {
 
     static Collection<? extends Certificate> dzInoutCert;
+
+    private static ConnectionSpec spec = new ConnectionSpec.Builder(ConnectionSpec.COMPATIBLE_TLS)
+            .supportsTlsExtensions(true)
+            .tlsVersions(TlsVersion.TLS_1_2, TlsVersion.TLS_1_1, TlsVersion.TLS_1_0)
+            .cipherSuites(
+                    CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
+                    CipherSuite.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+                    CipherSuite.TLS_DHE_RSA_WITH_AES_128_GCM_SHA256,
+                    CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,
+                    CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,
+                    CipherSuite.TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
+                    CipherSuite.TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
+                    CipherSuite.TLS_ECDHE_ECDSA_WITH_RC4_128_SHA,
+                    CipherSuite.TLS_ECDHE_RSA_WITH_RC4_128_SHA,
+                    CipherSuite.TLS_DHE_RSA_WITH_AES_128_CBC_SHA,
+                    CipherSuite.TLS_DHE_DSS_WITH_AES_128_CBC_SHA,
+                    CipherSuite.TLS_DHE_RSA_WITH_AES_256_CBC_SHA)
+            .build();
+
 
     public static OkHttpClient getUnsafeOkHttpClient(Interceptor interceptor) {
         OkHttpClient okHttpClient = null;
@@ -84,7 +107,7 @@ public class Connection {
                     return true;
                 }
             }).build();
-            okHttpClient = builder.build();
+            okHttpClient = builder.connectionSpecs(Collections.singletonList(spec)).build();
 
             return okHttpClient;
         } catch (Exception e) {
@@ -188,6 +211,31 @@ public class Connection {
                 "-----END CERTIFICATE----- \n" +
                 "\n";
 
+        final String XGLE2 = "-----BEGIN CERTIFICATE-----\n" +
+                "MIIEDDCCA7GgAwIBAgIQAtazThN5bwvv4tiLTlV+ZjAKBggqhkjOPQQDAjByMQsw\n" +
+                "CQYDVQQGEwJDTjElMCMGA1UEChMcVHJ1c3RBc2lhIFRlY2hub2xvZ2llcywgSW5j\n" +
+                "LjEdMBsGA1UECxMURG9tYWluIFZhbGlkYXRlZCBTU0wxHTAbBgNVBAMTFFRydXN0\n" +
+                "QXNpYSBUTFMgRUNDIENBMB4XDTE4MDYyOTAwMDAwMFoXDTE5MDYyOTEyMDAwMFow\n" +
+                "HzEdMBsGA1UEAxMUbS5kcGMueGlhb2dlbGV0dS5jb20wWTATBgcqhkjOPQIBBggq\n" +
+                "hkjOPQMBBwNCAAS49xlTQKz2n7Bckt3d9XHbFLrn9Hz2sdr0fMTTULtRRRPlTPlW\n" +
+                "S0PsT4V2GSKNmVlef2HKCeD1e/CyYZ0B5Fqso4ICejCCAnYwHwYDVR0jBBgwFoAU\n" +
+                "EoZEZiYIVCaPZTeyKU4mIeCTvtswHQYDVR0OBBYEFEK/fivQqbYB6PYlzg3Ustlc\n" +
+                "Hfu7MB8GA1UdEQQYMBaCFG0uZHBjLnhpYW9nZWxldHUuY29tMA4GA1UdDwEB/wQE\n" +
+                "AwIHgDAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwTAYDVR0gBEUwQzA3\n" +
+                "BglghkgBhv1sAQIwKjAoBggrBgEFBQcCARYcaHR0cHM6Ly93d3cuZGlnaWNlcnQu\n" +
+                "Y29tL0NQUzAIBgZngQwBAgEwgYEGCCsGAQUFBwEBBHUwczAlBggrBgEFBQcwAYYZ\n" +
+                "aHR0cDovL29jc3AyLmRpZ2ljZXJ0LmNvbTBKBggrBgEFBQcwAoY+aHR0cDovL2Nh\n" +
+                "Y2VydHMuZGlnaXRhbGNlcnR2YWxpZGF0aW9uLmNvbS9UcnVzdEFzaWFUTFNFQ0ND\n" +
+                "QS5jcnQwCQYDVR0TBAIwADCCAQUGCisGAQQB1nkCBAIEgfYEgfMA8QB2AKS5CZC0\n" +
+                "GFgUh7sTosxncAo8NZgE+RvfuON3zQ7IDdwQAAABZEqtbAQAAAQDAEcwRQIgLWqF\n" +
+                "Ls9PpuFs3Dvl46obwCAFn4Hr1DyBueXwaA4QaVwCIQDu0Ouq01wfqyvjiPg8RRCV\n" +
+                "IZ6AX/EyvD1M8Gy/lZ3gqwB3AId1v+dZfPiMQ5lfvfNu/1aNR1Y2/0q1YMG06v9e\n" +
+                "oIMPAAABZEqtbNoAAAQDAEgwRgIhAPYFeXlAUyt+7o+50grxqKA+b+WGvw+/NSY8\n" +
+                "bTl4WNZAAiEAz1D8jsRsXczLJpIpU411g58Xu/VVXS+mPgo+/sCu8KcwCgYIKoZI\n" +
+                "zj0EAwIDSQAwRgIhAPN2hrL3JLvM5yRB6adDB58z0V8lQAJxvA5rRBFT7o78AiEA\n" +
+                "tCk3QTrke0qQngJCgEheVKmb4zpZhtVz0KWhoRCtb0o=\n" +
+                "-----END CERTIFICATE-----\n";
+
         final String WX_LOGIN = "-----BEGIN CERTIFICATE-----\n" +
                 "MIIFCTCCA/GgAwIBAgIQDK/JgIu8mXGqC9aWazNgZTANBgkqhkiG9w0BAQsFADBe\n" +
                 "MQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3\n" +
@@ -225,6 +273,7 @@ public class Connection {
 //                .writeUtf8(PUER_WARNING_APP_LAN_CERT)
 //                .writeUtf8(PUER_WARNING_APP_WAN_PRODUCE_CERT)
                 .writeUtf8(XGLT)
+                .writeUtf8(XGLE2)
                 .writeUtf8(WX_LOGIN)
                 .inputStream();
     }
