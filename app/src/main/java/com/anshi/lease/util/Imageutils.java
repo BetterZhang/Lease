@@ -424,17 +424,17 @@ public class Imageutils {
         int hasCameraPermission = ContextCompat.checkSelfPermission(current_activity,
                 Manifest.permission.CAMERA);
 
-        if (code == 1 && hasCameraPermission != PackageManager.PERMISSION_GRANTED) {
-            if (!ActivityCompat.shouldShowRequestPermissionRationale(current_activity,
-                    Manifest.permission.CAMERA)) {
+        if (code == 1 && (hasCameraPermission != PackageManager.PERMISSION_GRANTED || hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED)) {
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(current_activity, Manifest.permission.CAMERA) ||
+                    !ActivityCompat.shouldShowRequestPermissionRationale(current_activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 
-                showMessageOKCancel("选择照片需要相机权限",
+                showMessageOKCancel("选择照片需要开启相机和访问文件权限",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
                                 ActivityCompat.requestPermissions(current_activity,
-                                        new String[]{Manifest.permission.CAMERA},
+                                        new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                                         code);
                             }
                         });
@@ -442,7 +442,7 @@ public class Imageutils {
             }
 
             ActivityCompat.requestPermissions(current_activity,
-                    new String[]{Manifest.permission.CAMERA},
+                    new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     code);
             return;
         }
@@ -451,7 +451,7 @@ public class Imageutils {
             if (!ActivityCompat.shouldShowRequestPermissionRationale(current_activity,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 
-                showMessageOKCancel("选择照片需要开始访问文件权限",
+                showMessageOKCancel("选择照片需要开启访问文件权限",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -491,17 +491,17 @@ public class Imageutils {
         int hasCameraPermission = ContextCompat.checkSelfPermission(current_activity,
                 Manifest.permission.CAMERA);
 
-        if (code == 1 && hasCameraPermission != PackageManager.PERMISSION_GRANTED) {
-            if (!ActivityCompat.shouldShowRequestPermissionRationale(current_activity,
-                    Manifest.permission.CAMERA)) {
+        if (code == 1 && (hasCameraPermission != PackageManager.PERMISSION_GRANTED || hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED)) {
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(current_activity, Manifest.permission.CAMERA) ||
+                    !ActivityCompat.shouldShowRequestPermissionRationale(current_activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 
-                showMessageOKCancel("选择照片需要相机权限",
+                showMessageOKCancel("选择照片需要开启相机和访问文件权限",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
                                 current_fragment.requestPermissions(
-                                        new String[]{Manifest.permission.CAMERA},
+                                        new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                                         code);
                             }
                         });
@@ -509,7 +509,7 @@ public class Imageutils {
             }
 
             current_fragment.requestPermissions(
-                    new String[]{Manifest.permission.CAMERA},
+                    new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     code);
             return;
         }
@@ -518,7 +518,7 @@ public class Imageutils {
             if (!ActivityCompat.shouldShowRequestPermissionRationale(current_activity,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 
-                showMessageOKCancel("选择照片需要开始访问文件权限",
+                showMessageOKCancel("选择照片需要开启访问文件权限",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -599,10 +599,10 @@ public class Imageutils {
     public void request_permission_result(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case 1:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     camera_call();
                 } else {
-                    Toast.makeText(current_activity, "Permission denied", Toast.LENGTH_LONG).show();
+                    Toast.makeText(current_activity, "相关权限开启失败", Toast.LENGTH_LONG).show();
                 }
                 break;
 
@@ -612,7 +612,7 @@ public class Imageutils {
                     galley_call();
                 } else {
 
-                    Toast.makeText(current_activity, "Permission denied", Toast.LENGTH_LONG).show();
+                    Toast.makeText(current_activity, "相关权限开启失败", Toast.LENGTH_LONG).show();
                 }
                 break;
         }
