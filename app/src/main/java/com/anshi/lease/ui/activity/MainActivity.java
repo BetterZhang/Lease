@@ -301,7 +301,7 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     private void showPopWindow() {
         Button button = new Button(getApplicationContext());
         button.setBackgroundResource(R.drawable.bg_popup);
-        button.setText("剩余电量" + mVehiclePowerVo.getRSOC() + "%");
+        button.setText("剩余电量" + mVehiclePowerVo.getRsoc() + "%");
         button.setTextColor(Color.BLACK);
         button.setWidth(300);
 

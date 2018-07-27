@@ -21,7 +21,7 @@ public class VehiclePowerVo {
      */
 
     private String DeviceType;
-    private String RSOC;
+    private String Rsoc;
     private String PS;
     private String DeviceID;
     private String Quanity;
@@ -34,14 +34,6 @@ public class VehiclePowerVo {
 
     public void setDeviceType(String DeviceType) {
         this.DeviceType = DeviceType;
-    }
-
-    public String getRSOC() {
-        return RSOC;
-    }
-
-    public void setRSOC(String RSOC) {
-        this.RSOC = RSOC;
     }
 
     public String getPS() {
@@ -82,5 +74,13 @@ public class VehiclePowerVo {
 
     public void setVehicleID(String VehicleID) {
         this.VehicleID = VehicleID;
+    }
+
+    public String getRsoc() {
+        return Rsoc;
+    }
+
+    public void setRsoc(String rsoc) {
+        Rsoc = rsoc;
     }
 }
