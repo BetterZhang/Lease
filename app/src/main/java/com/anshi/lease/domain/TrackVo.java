@@ -18,6 +18,7 @@ public class TrackVo {
      */
 
     private long LocTime;
+    private double RunDistance;
     private double LON;
     private long StayTime;
     private double LAT;
@@ -52,5 +53,13 @@ public class TrackVo {
 
     public void setLAT(double LAT) {
         this.LAT = LAT;
+    }
+
+    public double getRunDistance() {
+        return RunDistance;
+    }
+
+    public void setRunDistance(double runDistance) {
+        RunDistance = runDistance;
     }
 }

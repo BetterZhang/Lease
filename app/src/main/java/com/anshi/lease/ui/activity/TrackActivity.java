@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import com.anshi.lease.R;
 import com.anshi.lease.common.UserInfo;
@@ -16,9 +17,13 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.Marker;
+import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.Polyline;
 import com.baidu.mapapi.map.PolylineOptions;
@@ -29,6 +34,7 @@ import com.jme.common.util.SharedPreUtils;
 import com.jzxiang.pickerview.TimePickerDialog;
 import com.jzxiang.pickerview.data.Type;
 import com.jzxiang.pickerview.listener.OnDateSetListener;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -78,6 +84,9 @@ public class TrackActivity extends LeaseBaseActivity implements OnDateSetListene
     private Polyline mPolyline;
 
     private UserVo mUserVo;
+
+    private Marker mMarker;
+    private InfoWindow mInfoWindow;
 
     @Override
     protected int getContentViewId() {
@@ -161,12 +170,49 @@ public class TrackActivity extends LeaseBaseActivity implements OnDateSetListene
                     LatLng ll = new LatLng(mTrackVoList.get(0).getLAT(), mTrackVoList.get(0).getLON());
                     MapStatus.Builder builder = new MapStatus.Builder();
                     builder.target(ll).zoom(18.0f);
+                    MarkerOptions markerOptions = new MarkerOptions().position(ll).
+                            icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_locate_vehicle));
+                    mMarker = (Marker) mBaiduMap.addOverlay(markerOptions);
                     mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(ll));
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    protected void initListener() {
+        super.initListener();
+        mBaiduMap.setOnMarkerClickListener(marker -> {
+            if (marker == mMarker) {
+                getRunDistanceAndTime();
+            }
+            return true;
+        });
+    }
+
+    private void getRunDistanceAndTime() {
+        BigDecimal distance = new BigDecimal(0);
+        long time = 0;
+        for (int i = 0; i < mTrackVoList.size(); i++) {
+            distance = distance.add(new BigDecimal(mTrackVoList.get(i).getRunDistance()));
+            time = time + mTrackVoList.get(i).getStayTime();
+        }
+
+        int minutes = (int) (time / (1000 * 60));
+        Button button = new Button(getApplicationContext());
+        button.setBackgroundResource(R.drawable.bg_popup);
+        button.setText("行驶距离：" + distance.toPlainString() + "米\n行驶时长：" + minutes + "分钟");
+        button.setTextColor(Color.BLACK);
+        button.setWidth(600);
+        button.setHeight(250);
+
+        InfoWindow.OnInfoWindowClickListener listener = () -> mBaiduMap.hideInfoWindow();
+
+        LatLng ll = mMarker.getPosition();
+        mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(button), ll, -100, listener);
+        mBaiduMap.showInfoWindow(mInfoWindow);
     }
 
     @OnClick({R.id.tv_start_time, R.id.tv_end_time, R.id.tv_confirm})
