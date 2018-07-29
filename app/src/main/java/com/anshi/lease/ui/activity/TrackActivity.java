@@ -174,6 +174,8 @@ public class TrackActivity extends LeaseBaseActivity implements OnDateSetListene
                             icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_locate_vehicle));
                     mMarker = (Marker) mBaiduMap.addOverlay(markerOptions);
                     mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(ll));
+
+                    getRunDistanceAndTime();
                 }
                 break;
             default:
