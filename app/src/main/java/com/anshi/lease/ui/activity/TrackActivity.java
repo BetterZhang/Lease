@@ -30,6 +30,7 @@ import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.jme.common.network.DTRequest;
 import com.jme.common.ui.config.RxBusConfig;
+import com.jme.common.util.BigDecimalUtil;
 import com.jme.common.util.SharedPreUtils;
 import com.jzxiang.pickerview.TimePickerDialog;
 import com.jzxiang.pickerview.data.Type;
@@ -203,9 +204,10 @@ public class TrackActivity extends LeaseBaseActivity implements OnDateSetListene
         }
 
         int minutes = (int) (time / (1000 * 60));
+        String distanceStr = BigDecimalUtil.format2Number(distance.divide(new BigDecimal(1000)).toPlainString(), 3);
         Button button = new Button(getApplicationContext());
         button.setBackgroundResource(R.drawable.bg_popup);
-        button.setText("行驶距离：" + distance.toPlainString() + "米\n行驶时长：" + minutes + "分钟");
+        button.setText("行驶距离：" + distanceStr + "千米\n行驶时长：" + minutes + "分钟");
         button.setTextColor(Color.BLACK);
         button.setWidth(600);
         button.setHeight(250);
