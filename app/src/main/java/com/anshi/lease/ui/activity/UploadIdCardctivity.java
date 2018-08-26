@@ -198,9 +198,9 @@ public class UploadIdCardctivity extends LeaseBaseActivity implements Imageutils
 //                // 设置水印文字位置
                 .setWaterMarkTextLocation(TextLocation.CENTER)
                 // 设置水印文字旋转角度
-                .setWaterMarkTextRotationAngle(0)
+                .setWaterMarkTextRotationAngle(-45)
                 // 设置水印文字颜色
-                .setWaterMarkTextColor(Color.RED)
+                .setWaterMarkTextColor(Color.DKGRAY)
                 // 设置水印文字大小
                 .setWaterMarkTextSize(getResources()
                         .getDimension(R.dimen.water_mark_text_size))
