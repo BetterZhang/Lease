@@ -2,6 +2,8 @@ package com.anshi.lease.ui.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -18,6 +20,8 @@ import com.anshi.lease.service.UserAuthService;
 import com.anshi.lease.ui.base.LeaseBaseActivity;
 import com.anshi.lease.util.Imageutils;
 import com.jme.common.network.DTRequest;
+import com.rmondjone.watermarkimage.TextLocation;
+import com.rmondjone.watermarkimage.WaterMarkImage;
 import java.io.File;
 import java.util.HashMap;
 import butterknife.BindView;
@@ -87,7 +91,7 @@ public class UploadIdCardctivity extends LeaseBaseActivity implements Imageutils
     }
 
     @OnClick({R.id.tv_upload, R.id.layout_add1, R.id.layout_add2, R.id.layout_add3,
-                R.id.tv_front, R.id.tv_back, R.id.tv_group})
+            R.id.tv_front, R.id.tv_back, R.id.tv_group})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_upload:
@@ -185,31 +189,51 @@ public class UploadIdCardctivity extends LeaseBaseActivity implements Imageutils
 
     @Override
     public void image_attachment(int from, String filename, Bitmap file, Uri uri) {
+        WaterMarkImage waterMarkImage = new WaterMarkImage(file);
+        Bitmap bitmap = waterMarkImage
+//                // 设置水印遮罩图片
+//                .setWaterMarkBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.watermarkimage))
+                // 设置水印文字
+                .setWaterMarkString("仅供注册小哥乐途账号实名认证用")
+//                // 设置水印文字位置
+                .setWaterMarkTextLocation(TextLocation.CENTER)
+                // 设置水印文字旋转角度
+                .setWaterMarkTextRotationAngle(0)
+                // 设置水印文字颜色
+                .setWaterMarkTextColor(Color.RED)
+                // 设置水印文字大小
+                .setWaterMarkTextSize(getResources()
+                        .getDimension(R.dimen.water_mark_text_size))
+                // 设置水印文字字体
+                .setWaterMarkTextTypeface(Typeface.create("宋体",
+                        Typeface.BOLD))
+                // 此方法必须调用，得到水印图片
+                .getBitmap();
         if (from == 1) {
             iv_add1.setVisibility(View.GONE);
             iv_front.setVisibility(View.VISIBLE);
-            this.frontBitmap = file;
+            this.frontBitmap = bitmap;
             this.frontFileName = filename;
-            iv_front.setImageBitmap(file);
+            iv_front.setImageBitmap(bitmap);
             UserInfo.getInstance().getAuthDataVo().setUserIcFront(mImageutils.BitMapToString(frontBitmap));
         } else if (from == 2) {
             iv_add2.setVisibility(View.GONE);
             iv_back.setVisibility(View.VISIBLE);
-            this.backBitmap = file;
+            this.backBitmap = bitmap;
             this.backFileName = filename;
-            iv_back.setImageBitmap(file);
+            iv_back.setImageBitmap(bitmap);
             UserInfo.getInstance().getAuthDataVo().setUserIcBack(mImageutils.BitMapToString(backBitmap));
         } else if (from == 3) {
             iv_add3.setVisibility(View.GONE);
             iv_group.setVisibility(View.VISIBLE);
-            this.groupBitmap = file;
+            this.groupBitmap = bitmap;
             this.groupFileName = filename;
-            iv_group.setImageBitmap(file);
+            iv_group.setImageBitmap(bitmap);
             UserInfo.getInstance().getAuthDataVo().setUserIcGroup(mImageutils.BitMapToString(groupBitmap));
         }
 
         String path = Environment.getExternalStorageDirectory() + File.separator + "ImageAttach" + File.separator;
-        mImageutils.createImage(file, filename, path, false);
+        mImageutils.createImage(bitmap, filename, path, false);
     }
 
     @Override
