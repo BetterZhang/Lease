@@ -3,21 +3,19 @@ package com.anshi.lease.ui.activity;
 import android.Manifest;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.anshi.lease.R;
 import com.anshi.lease.common.Constants;
@@ -79,8 +77,15 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     MapView mapView;
     @BindView(R.id.iv_head)
     ImageView iv_head_back;
-    @BindView(R.id.layout_vehicle)
-    LinearLayout layout_vehicle;
+
+    @BindView(R.id.tv_state1)
+    TextView tv_state1;
+    @BindView(R.id.tv_state2)
+    TextView tv_state2;
+    @BindView(R.id.card_down)
+    CardView card_down;
+    @BindView(R.id.card_up)
+    CardView card_up;
 
     ImageView iv_head;
     TextView tv_name;
@@ -327,50 +332,40 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     @Override
     protected void initListener() {
         super.initListener();
-        iv_head_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggle();
+        iv_head_back.setOnClickListener(view -> toggle());
+        mBaiduMap.setOnMarkerClickListener(marker -> {
+            if (marker == mMarker) {
+                getPowerByVehiclePK();
             }
+            return true;
         });
-        mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                if (marker == mMarker) {
-                    getPowerByVehiclePK();
-                }
-                return true;
+        navigation_view.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.item_bike:
+                    if (mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED"))
+                        gotoMyVehicleActivity();
+                    else if (mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("TOAUTHORIZED"))
+                        showShortToast("您已经提交实名认证，请等待审核通过之后再使用该功能");
+                    else
+                        gotoAuthTipActivity();
+                    break;
+                case R.id.item_personal:
+                    gotoPersonalActivity();
+                    break;
+                case R.id.item_editpwd:
+                    gotoEditPwdActivity();
+                    break;
+                case R.id.item_logout:
+                    logout();
+                    break;
+                default:
+                    break;
             }
-        });
-        navigation_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.item_bike:
-                        if (mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED"))
-                            gotoMyVehicleActivity();
-                        else if (mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("TOAUTHORIZED"))
-                            showShortToast("您已经提交实名认证，请等待审核通过之后再使用该功能");
-                        else
-                            gotoAuthTipActivity();
-                        break;
-                    case R.id.item_personal:
-                        gotoPersonalActivity();
-                        break;
-                    case R.id.item_editpwd:
-                        gotoEditPwdActivity();
-                        break;
-                    case R.id.item_logout:
-                        logout();
-                        break;
-                    default:
-                        break;
-                }
-                return false;
-            }
+            return false;
         });
         tv_status.setOnClickListener(this);
-        layout_vehicle.setOnClickListener(this);
+        tv_state1.setOnClickListener(this);
+        tv_state2.setOnClickListener(this);
     }
 
     private void toggle() {
@@ -411,15 +406,23 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                     gotoAuthIdCardActivity();
                 }
                 break;
-            case R.id.layout_vehicle:
-                if (!mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED")) {
-                    showShortToast("请先进行实名认证并从企业申领车辆后才能使用本功能");
-                } else if (mUserVo.getKey_vehicle_info().size() == 0) {
-                    showShortToast("从企业申领车辆后才能使用本功能");
-                } else {
-                    getLocByVehiclePK();
-                }
+            case R.id.tv_state1:
+                card_down.setVisibility(View.GONE);
+                card_up.setVisibility(View.VISIBLE);
                 break;
+            case R.id.tv_state2:
+                card_down.setVisibility(View.VISIBLE);
+                card_up.setVisibility(View.GONE);
+                break;
+//            case R.id.layout_vehicle:
+//                if (!mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED")) {
+//                    showShortToast("请先进行实名认证并从企业申领车辆后才能使用本功能");
+//                } else if (mUserVo.getKey_vehicle_info().size() == 0) {
+//                    showShortToast("从企业申领车辆后才能使用本功能");
+//                } else {
+//                    getLocByVehiclePK();
+//                }
+//                break;
         }
     }
 
