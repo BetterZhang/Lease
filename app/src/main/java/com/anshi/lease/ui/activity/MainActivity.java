@@ -44,7 +44,6 @@ import com.baidu.mapapi.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jme.common.network.DTRequest;
-import com.jme.common.ui.base.ToolbarHelper;
 import com.jme.common.ui.config.RxBusConfig;
 import com.jme.common.util.SharedPreUtils;
 import com.squareup.picasso.Picasso;
@@ -78,6 +77,10 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     @BindView(R.id.iv_head)
     ImageView iv_head_back;
 
+    @BindView(R.id.tv_vehicle_code1)
+    TextView tv_vehicle_code1;
+    @BindView(R.id.tv_vehicle_code2)
+    TextView tv_vehicle_code2;
     @BindView(R.id.tv_state1)
     TextView tv_state1;
     @BindView(R.id.tv_state2)
@@ -86,6 +89,10 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     CardView card_down;
     @BindView(R.id.card_up)
     CardView card_up;
+    @BindView(R.id.tv_power)
+    TextView tv_power;
+    @BindView(R.id.tv_distance)
+    TextView tv_distance;
 
     ImageView iv_head;
     TextView tv_name;
@@ -133,12 +140,7 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
         type = new TypeToken<UserVo>() {}.getType();
         initToolbar("小哥乐途", false);
 
-        setRightNavigation("", R.mipmap.ic_track, new ToolbarHelper.OnSingleMenuItemClickListener() {
-            @Override
-            public void onSingleMenuItemClick() {
-                startAnimActivity(TrackActivity.class);
-            }
-        });
+        setRightNavigation("", R.mipmap.ic_track, () -> startAnimActivity(TrackActivity.class));
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, layout_drawer, toolbar, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
@@ -191,6 +193,23 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                 .into(iv_head);
         tv_name.setText(mUserVo.getKey_user_info().getNickName());
         tv_status.setText(getUserAuthFlag(mUserVo.getKey_user_info().getUserRealNameAuthFlag()));
+
+        if (!mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED")) {
+            setCardTip("请先进行实名认证并从企业申领车辆后才能使用本功能");
+        } else if (mUserVo.getKey_vehicle_info().size() == 0) {
+            setCardTip("从企业申领车辆后才能使用本功能");
+        } else {
+            tv_vehicle_code1.setText("车辆" + mUserVo.getKey_vehicle_info().get(0).getVehicleCode());
+            tv_vehicle_code2.setText("车辆" + mUserVo.getKey_vehicle_info().get(0).getVehicleCode());
+            getLocByVehiclePK();
+        }
+    }
+
+    private void setCardTip(String tip) {
+        card_down.setVisibility(View.GONE);
+        card_up.setVisibility(View.VISIBLE);
+        tv_vehicle_code2.setText(tip);
+        tv_state2.setVisibility(View.GONE);
     }
 
     private String getUserAuthFlag(String userAuthStr) {
@@ -254,6 +273,8 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                             icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_locate_vehicle));
                     mMarker = (Marker) mBaiduMap.addOverlay(markerOptions);
                     mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(ll));
+
+                    getPowerByVehiclePK();
                 } else {
                     showShortToast("未查询到本车辆的定位信息");
                 }
@@ -266,7 +287,11 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                     mVehiclePowerVo = mVehiclePowerVoList.get(0);
                     if (mVehiclePowerVo == null)
                         return;
-                    showPopWindow();
+
+                    tv_power.setText(mVehiclePowerVo.getRsoc());
+                    tv_distance.setText("--");
+
+//                    showPopWindow();
                 }
                 break;
             case "userState":
@@ -310,14 +335,12 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
         button.setTextColor(Color.BLACK);
         button.setWidth(300);
 
-        InfoWindow.OnInfoWindowClickListener listener = new InfoWindow.OnInfoWindowClickListener() {
-            public void onInfoWindowClick() {
+        InfoWindow.OnInfoWindowClickListener listener = () -> {
 //                            LatLng ll = marker.getPosition();
 //                            LatLng llNew = new LatLng(ll.latitude + 0.005,
 //                                    ll.longitude + 0.005);
 //                            marker.setPosition(llNew);
-                mBaiduMap.hideInfoWindow();
-            }
+            mBaiduMap.hideInfoWindow();
         };
 
         LatLng ll = mMarker.getPosition();
@@ -333,12 +356,12 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     protected void initListener() {
         super.initListener();
         iv_head_back.setOnClickListener(view -> toggle());
-        mBaiduMap.setOnMarkerClickListener(marker -> {
-            if (marker == mMarker) {
-                getPowerByVehiclePK();
-            }
-            return true;
-        });
+//        mBaiduMap.setOnMarkerClickListener(marker -> {
+//            if (marker == mMarker) {
+//                getPowerByVehiclePK();
+//            }
+//            return true;
+//        });
         navigation_view.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.item_bike:
@@ -409,10 +432,12 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
             case R.id.tv_state1:
                 card_down.setVisibility(View.GONE);
                 card_up.setVisibility(View.VISIBLE);
+                tv_state2.setVisibility(View.VISIBLE);
                 break;
             case R.id.tv_state2:
                 card_down.setVisibility(View.VISIBLE);
                 card_up.setVisibility(View.GONE);
+                tv_state1.setVisibility(View.VISIBLE);
                 break;
 //            case R.id.layout_vehicle:
 //                if (!mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED")) {
