@@ -212,6 +212,14 @@
 
         </android.support.v7.widget.CardView>
 
+        <ImageView
+            android:id="@+id/iv_locate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:src="@mipmap/ic_locate"
+            android:layout_gravity="bottom|right"/>
+
         <!--<FrameLayout-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content"-->

@@ -93,6 +93,8 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     TextView tv_power;
     @BindView(R.id.tv_distance)
     TextView tv_distance;
+    @BindView(R.id.iv_locate)
+    ImageView iv_locate;
 
     ImageView iv_head;
     TextView tv_name;
@@ -389,6 +391,7 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
         tv_status.setOnClickListener(this);
         tv_state1.setOnClickListener(this);
         tv_state2.setOnClickListener(this);
+        iv_locate.setOnClickListener(this);
     }
 
     private void toggle() {
@@ -439,15 +442,18 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                 card_up.setVisibility(View.GONE);
                 tv_state1.setVisibility(View.VISIBLE);
                 break;
-//            case R.id.layout_vehicle:
-//                if (!mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED")) {
-//                    showShortToast("请先进行实名认证并从企业申领车辆后才能使用本功能");
-//                } else if (mUserVo.getKey_vehicle_info().size() == 0) {
-//                    showShortToast("从企业申领车辆后才能使用本功能");
-//                } else {
-//                    getLocByVehiclePK();
-//                }
-//                break;
+            case R.id.iv_locate:
+                if (!mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED") || mUserVo.getKey_vehicle_info().size() == 0) {
+                    mLocationClient.start();
+//                    mLocationClient.requestLocation();
+                } else {
+                    tv_vehicle_code1.setText("车辆" + mUserVo.getKey_vehicle_info().get(0).getVehicleCode());
+                    tv_vehicle_code2.setText("车辆" + mUserVo.getKey_vehicle_info().get(0).getVehicleCode());
+                    getLocByVehiclePK();
+                }
+                break;
+            default:
+                break;
         }
     }
 
@@ -468,6 +474,7 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     }
 
     private void initMap() {
+        mapView.showZoomControls(false);
         //获取地图控件引用
         mBaiduMap = mapView.getMap();
 
