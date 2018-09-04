@@ -1,5 +1,7 @@
 package com.anshi.lease.domain;
 
+import java.math.BigDecimal;
+
 /**
  * Created by Android Studio.
  * Author : zhangzhongqiang
@@ -18,7 +20,7 @@ public class TrackVo {
      */
 
     private long LocTime;
-    private double RunDistance;
+    private BigDecimal RunDistance;
     private double LON;
     private long StayTime;
     private double LAT;
@@ -55,11 +57,11 @@ public class TrackVo {
         this.LAT = LAT;
     }
 
-    public double getRunDistance() {
+    public BigDecimal getRunDistance() {
         return RunDistance;
     }
 
-    public void setRunDistance(double runDistance) {
+    public void setRunDistance(BigDecimal runDistance) {
         RunDistance = runDistance;
     }
 }

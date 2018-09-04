@@ -199,7 +199,11 @@ public class TrackActivity extends LeaseBaseActivity implements OnDateSetListene
         BigDecimal distance = new BigDecimal(0);
         long time = 0;
         for (int i = 0; i < mTrackVoList.size(); i++) {
-            distance = distance.add(new BigDecimal(mTrackVoList.get(i).getRunDistance()));
+            if (mTrackVoList.get(i).getStayTime() == 0 || mTrackVoList.get(i).getRunDistance().multiply(new BigDecimal(1000)).
+                    divide(new BigDecimal(mTrackVoList.get(i).getStayTime()), 2, BigDecimal.ROUND_DOWN).compareTo(new BigDecimal(1)) < 0)
+                continue;
+
+            distance = distance.add(mTrackVoList.get(i).getRunDistance());
             time = time + mTrackVoList.get(i).getStayTime();
         }
 
