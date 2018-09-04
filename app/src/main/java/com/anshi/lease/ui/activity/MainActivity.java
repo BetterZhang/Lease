@@ -293,7 +293,7 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                     tv_power.setText(mVehiclePowerVo.getRsoc());
                     tv_distance.setText("--");
 
-//                    showPopWindow();
+                    showPopWindow();
                 }
                 break;
             case "userState":
@@ -358,12 +358,12 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     protected void initListener() {
         super.initListener();
         iv_head_back.setOnClickListener(view -> toggle());
-//        mBaiduMap.setOnMarkerClickListener(marker -> {
-//            if (marker == mMarker) {
-//                getPowerByVehiclePK();
-//            }
-//            return true;
-//        });
+        mBaiduMap.setOnMarkerClickListener(marker -> {
+            if (marker == mMarker) {
+                getPowerByVehiclePK();
+            }
+            return true;
+        });
         navigation_view.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.item_bike:
@@ -444,8 +444,10 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                 break;
             case R.id.iv_locate:
                 if (!mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED") || mUserVo.getKey_vehicle_info().size() == 0) {
+                    mBaiduMap.clear();
+                    initLocation();
                     mLocationClient.start();
-//                    mLocationClient.requestLocation();
+                    mLocationClient.requestLocation();
                 } else {
                     tv_vehicle_code1.setText("车辆" + mUserVo.getKey_vehicle_info().get(0).getVehicleCode());
                     tv_vehicle_code2.setText("车辆" + mUserVo.getKey_vehicle_info().get(0).getVehicleCode());
