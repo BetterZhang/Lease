@@ -17,6 +17,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.anshi.lease.R;
 import com.anshi.lease.common.Constants;
@@ -100,8 +101,8 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     TextView tv_power;
     @BindView(R.id.tv_distance)
     TextView tv_distance;
-    @BindView(R.id.iv_locate)
-    ImageView iv_locate;
+    @BindView(R.id.layout_locate)
+    LinearLayout layout_locate;
     @BindView(R.id.tv_location)
     TextView tv_location;
 
@@ -407,7 +408,7 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
         tv_status.setOnClickListener(this);
         tv_state1.setOnClickListener(this);
         tv_state2.setOnClickListener(this);
-        iv_locate.setOnClickListener(this);
+        layout_locate.setOnClickListener(this);
     }
 
     private void toggle() {
@@ -458,7 +459,7 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                 card_up.setVisibility(View.GONE);
                 tv_state1.setVisibility(View.VISIBLE);
                 break;
-            case R.id.iv_locate:
+            case R.id.layout_locate:
                 if (!mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED") || mUserVo.getKey_vehicle_info().size() == 0) {
                     LatLng ll = new LatLng(mCurrentLat, mCurrentLon);
                     MapStatus.Builder builder = new MapStatus.Builder();
