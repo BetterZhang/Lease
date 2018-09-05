@@ -465,8 +465,8 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                     builder.target(ll).zoom(18.0f);
                     mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
                 } else {
-                    tv_vehicle_code1.setText("车辆" + mUserVo.getKey_vehicle_info().get(0).getVehicleCode());
-                    tv_vehicle_code2.setText("车辆" + mUserVo.getKey_vehicle_info().get(0).getVehicleCode());
+                    tv_vehicle_code1.setText("车辆" + SharedPreUtils.getString(this, RxBusConfig.DEFAULT_VEHICLE_CODE));
+                    tv_vehicle_code2.setText("车辆" + SharedPreUtils.getString(this, RxBusConfig.DEFAULT_VEHICLE_CODE));
                     getLocByVehiclePK();
                 }
                 break;
