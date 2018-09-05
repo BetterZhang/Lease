@@ -95,6 +95,8 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     TextView tv_distance;
     @BindView(R.id.iv_locate)
     ImageView iv_locate;
+    @BindView(R.id.tv_location)
+    TextView tv_location;
 
     ImageView iv_head;
     TextView tv_name;
@@ -113,6 +115,7 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     private double mCurrentLat = 0.0;
     private double mCurrentLon = 0.0;
     private float mCurrentAccracy;
+    private String mAddrStr = "";
 
     private MyLocationData locData;
 
@@ -275,6 +278,8 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                             icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_locate_vehicle));
                     mMarker = (Marker) mBaiduMap.addOverlay(markerOptions);
                     mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(ll));
+
+                    mLocationClient.requestLocation();
 
                     getPowerByVehiclePK();
                 } else {
@@ -444,10 +449,10 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                 break;
             case R.id.iv_locate:
                 if (!mUserVo.getKey_user_info().getUserRealNameAuthFlag().equals("AUTHORIZED") || mUserVo.getKey_vehicle_info().size() == 0) {
-                    mBaiduMap.clear();
-                    initLocation();
-                    mLocationClient.start();
-                    mLocationClient.requestLocation();
+                    LatLng ll = new LatLng(mCurrentLat, mCurrentLon);
+                    MapStatus.Builder builder = new MapStatus.Builder();
+                    builder.target(ll).zoom(18.0f);
+                    mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
                 } else {
                     tv_vehicle_code1.setText("车辆" + mUserVo.getKey_vehicle_info().get(0).getVehicleCode());
                     tv_vehicle_code2.setText("车辆" + mUserVo.getKey_vehicle_info().get(0).getVehicleCode());
@@ -523,6 +528,7 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
         option.setOpenGps(true); // 打开gps
         option.setCoorType("bd09ll"); // 设置坐标类型
         option.setScanSpan(1000);
+        option.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
         mLocationClient.setLocOption(option);
     }
 
@@ -537,6 +543,9 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
             if (location == null || mapView == null) {
                 return;
             }
+            mAddrStr = location.getAddrStr();
+            tv_location.setText(mAddrStr);
+
             mCurrentLat = location.getLatitude();
             mCurrentLon = location.getLongitude();
             mCurrentAccracy = location.getRadius();
