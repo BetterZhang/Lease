@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -41,6 +42,12 @@ import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.geocode.GeoCodeResult;
+import com.baidu.mapapi.search.geocode.GeoCoder;
+import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jme.common.network.DTRequest;
@@ -61,7 +68,7 @@ import butterknife.BindView;
  * Time   : 2018/05/15 下午 12:10
  * Desc   : App主页面
  */
-public class MainActivity extends LeaseBaseActivity implements View.OnClickListener {
+public class MainActivity extends LeaseBaseActivity implements View.OnClickListener, OnGetGeoCoderResultListener {
 
     private static final int accuracyCircleFillColor = 0xAAFFFF88;
     private static final int accuracyCircleStrokeColor = 0xAA00FF00;
@@ -134,6 +141,8 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
 
     private long exitTime = 0;
 
+    GeoCoder mSearch = null; // 搜索模块，也可去掉地图模块独立使用
+
     @Override
     protected int getContentViewId() {
         return R.layout.activity_main;
@@ -175,6 +184,8 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 //        getUserState();
+        mSearch = GeoCoder.newInstance();
+        mSearch.setOnGetGeoCodeResultListener(this);
     }
 
     private void getUserState() {
@@ -279,7 +290,7 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
                     mMarker = (Marker) mBaiduMap.addOverlay(markerOptions);
                     mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(ll));
 
-                    mLocationClient.requestLocation();
+                    mSearch.reverseGeoCode(new ReverseGeoCodeOption().location(ll));
 
                     getPowerByVehiclePK();
                 } else {
@@ -532,6 +543,20 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
         mLocationClient.setLocOption(option);
     }
 
+    @Override
+    public void onGetGeoCodeResult(GeoCodeResult result) {
+
+    }
+
+    @Override
+    public void onGetReverseGeoCodeResult(ReverseGeoCodeResult result) {
+        if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
+            Log.i("GeoLog", "GeoError");
+            return;
+        }
+        tv_location.setText(result.getAddress());
+    }
+
     /**
      * 定位SDK监听函数
      */
@@ -543,8 +568,6 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
             if (location == null || mapView == null) {
                 return;
             }
-            mAddrStr = location.getAddrStr();
-            tv_location.setText(mAddrStr);
 
             mCurrentLat = location.getLatitude();
             mCurrentLon = location.getLongitude();
