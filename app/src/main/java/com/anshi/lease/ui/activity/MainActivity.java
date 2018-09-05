@@ -638,6 +638,7 @@ public class MainActivity extends LeaseBaseActivity implements View.OnClickListe
         mBaiduMap.setMyLocationEnabled(false);
         // 在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
         mapView.onDestroy();
+        mSearch.destroy();
         mapView = null;
         super.onDestroy();
     }
